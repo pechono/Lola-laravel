@@ -128,7 +128,7 @@
 
         <x-slot name="footer">
             <x-secondary-button wire:click="$toggle('verOperacion', false)" wire:loading.attr="disabled">
-                {{ __('Cancelar') }}
+                'Cancelar'
             </x-secondary-button>
 
         </x-slot>
