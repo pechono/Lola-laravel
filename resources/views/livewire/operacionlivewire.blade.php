@@ -48,13 +48,13 @@
 
          </div>
         <div name="footer">
-            <x-secondary-button wire:click="$toggle('confirmingArticuloOperacion', false)" wire:loading.attr="disabled">
+            <x-danger-button wire:click="$toggle('confirmingArticuloOperacion', false)" wire:loading.attr="disabled">
                 {{ __('Cancelar') }}
-            </x-secondary-button>
-
-            <x-danger-button class="ms-3" wire:click="ConfirmarVenta()" wire:loading.attr="disabled">
-                {{ __('Eliminar') }}
             </x-danger-button>
+
+            <x-secondary-button class="ms-3" wire:click="ConfirmarVenta()" wire:loading.attr="disabled">
+                {{ __('Eliminar') }}
+            </x-secondary-button>
         </div>
 
 
@@ -85,13 +85,13 @@
     </x-slot>
 
     <x-slot name="footer">
-        <x-secondary-button wire:click="$toggle('confirmingClienteAdd', false)" wire:loading.attr="disabled">
+        <x-danger-button wire:click="$toggle('confirmingClienteAdd', false)" wire:loading.attr="disabled">
             {{ __('Cancelar') }}
-        </x-secondary-button>
-
-        <x-danger-button class="ms-3" wire:click="saveCliente()" wire:loading.attr="disabled">
-            {{ __('Guardar') }}
         </x-danger-button>
+
+        <x-secondary-button class="ms-3" wire:click="saveCliente()" wire:loading.attr="disabled">
+            {{ __('Guardar') }}
+        </x-secondary-button>
     </x-slot>
 </x-dialog-modal>
   <!--Fin Add  Confirmation Modal --></div>

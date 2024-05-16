@@ -29,6 +29,10 @@ class Ventalivewire extends Component
         'sortBy'=>['except'=>'id'],
         'sortAsc'=>['except'=>true],
     ];
+
+
+
+
     public function render()
     {
         $articulos=Articulo::where('activo',$this->active)
@@ -56,8 +60,9 @@ class Ventalivewire extends Component
         'articulos.suelto', 'articulos.activo','stocks.stock','stocks.stockMinimo', 'cars.cantidad','cars.articulo_id','cars.descuento')->get();
 
 
-       // $inTheCar=Car::all();
-        return view('livewire.ventalivewire', compact('articulos','inTheCar'));
+       $countCar=Car::count();
+
+        return view('livewire.ventalivewire', compact('articulos','inTheCar','countCar'));
     }
     public $id;
     public $art;
@@ -72,10 +77,18 @@ class Ventalivewire extends Component
     public $detalles;
     public $suelto;
     public $porcentaje;
-
+    public $msj;
+    public $descArt=0;
+    public $cantidadArt;
     public $proveedor_id;
     public $stock;
     public $stockMinimo;
+
+    protected $rules=[
+        'cantidadArt'=>'required|numeric',
+        'descArt'=>'required|numeric',
+
+    ];
 
     public $confirmingVenta=false;
     public function addCar($id)
@@ -107,12 +120,10 @@ class Ventalivewire extends Component
 
             $this->confirmingVenta=true;
     }
-    public $msj;
-    public $descArt=0;
-    public $cantidadArt;
+
     public function save($idart){
 
-
+        $this->validate();
         Car::create([
             'articulo_id'=>$idart,
             'cantidad'=>$this->cantidadArt,
@@ -158,10 +169,11 @@ class Ventalivewire extends Component
             $this->cDescuento=true;
     }
     public function saveDescuento($idart){
+        $this->validate();
         Car::where('articulo_id',$idart)->update([
             'descuento'=>$this->descArt
         ]);
         $this->cDescuento=false;
-
     }
+
 }

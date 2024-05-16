@@ -14,7 +14,13 @@
     </x-nav-link>
 
     <x-nav-link href="{{ route('operacion.list') }}" :active="request()->routeIs('operacion.list')">
-       operacion
+       Operacion
      </x-nav-link>
     {{-- ----------------- --}}
+    <x-nav-link href="{{ route('venta.list') }}" :active="request()->routeIs('venta.list')">
+        venta
+        
+      </x-nav-link>
+     {{-- ----------------- --}}
+
 </div>

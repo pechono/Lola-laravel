@@ -10,6 +10,8 @@ use App\Models\TipoVenta;
 use App\Models\Venta;
 use Livewire\Component;
 
+
+
 class Operacionlivewire extends Component
 {
     public $confirmingArticuloOperacion=false;
@@ -20,6 +22,19 @@ class Operacionlivewire extends Component
     public $tipo_id;
     public $cliente_id;
     public $ac='display:none';
+
+
+    protected $rules=[
+        'tipo_id'=>'required|integer',
+        'cliente_id'=>'required|integer',
+        'detalles'=>'required|string|min:4',
+        'cuentaCorriente'=>'required|float',
+        'apellido'=>'required|string|min:4',
+        'nombre'=>'required|string|min:4',
+        'telefono'=>'required|string|min:4',
+        'activo'=>'boolean'
+    ];
+
     public function render()
     {
 
@@ -116,12 +131,9 @@ class Operacionlivewire extends Component
         //$this->reset(['cliente']);
         $this->confirmingClienteAdd=true;
     }
-    protected $rules=[
-        'apellido'=>'required|string|min:4',
-        'nombre'=>'required|string|min:4',
-        'telefono'=>'required|string|min:4',
-        'activo'=>'boolean'
-    ];
+    /* protected $rules=[
+
+    ]; */
     public function saveCliente(){
 
         $this->validate();

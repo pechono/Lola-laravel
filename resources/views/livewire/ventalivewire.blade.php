@@ -88,9 +88,13 @@
                             <tr>
                                 <td class="rounder border px-4 py-2 shadow-inner m-10 text-xl">{{ $total }}</td>
                                 <td class="rounder border px-4 py-2 shadow-inner m-10">
-                                    <x-nav-link href="{{ route('operacion.index') }}" :active="request()->routeIs('operacion.index')">
-                                        Prepara Venta
-                                     </x-nav-link>
+                                    @if (!$countCar==0)
+                                        <x-nav-link href="{{ route('operacion.index') }}" :active="request()->routeIs('operacion.index')" class="inline-flex items-center px-4 py-2 bg-sky-400 dark:bg-gray-300 hover:bg-sky-600  border border-gray-300 dark:border-gray-500 rounded-md  font-semibold text-xs hover:text-white dark:text-gray-300 uppercase tracking-widest shadow-sm  dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 disabled:opacity-25 transition ease-in-out duration-150">
+                                          Prepara Venta
+                                         </x-nav-link>
+                                    @else
+                                     {{$countCar}} Elementos selecionados
+                                    @endif
                                 </td>
                             </tr>
                         </tbody>
@@ -108,12 +112,7 @@
             <div class="w-full p-2 sm:px-20 bg-white dark:bg-gray-800 dark:bg-gradient-to-bl dark:from-gray-700/50 dark:via-transparent border-b border-gray-200 dark:border-gray-700">
                 <div class="mt-4 text-2xl flex justify-between shadow-inner">
                     <div>Articulo</div>
-                    <div class="mr-2">
 
-                        <x-button wire:click='ver()' class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                            Crear Nuevo articulo
-                        </x-button>
-                    </div>
                 </div>
 
                 <div class="mt-3w-full ">
@@ -325,7 +324,9 @@
                             </td>
 
                             <td colspan="2"  class=" px-4 py-2 border border-slate-300 bg-sky-400/50   font-semibold">
-                                <input wire:model='cantidadArt' type="text" placeholder="0" class=" text-4xl shadow appearance-none border rounded w-full h-20 py-2 px-3">
+                                <input id='cantidadArt' wire:model='cantidadArt' type="text" placeholder="0" class="text-center text-4xl shadow appearance-none border rounded w-full h-20 py-2 px-3">
+                                <x-input-error for="cantidadArt" class="mt-2" />
+
                             </td>
 
                         </tr>
@@ -336,13 +337,13 @@
         </x-slot>
 
         <x-slot name="footer">
-            <x-secondary-button wire:click="$toggle('confirmingVenta', false)" wire:loading.attr="disabled">
+            <x-danger-button wire:click="$toggle('confirmingVenta', false)" wire:loading.attr="disabled">
                 {{ __('Cancelar') }}
-            </x-secondary-button>
-
-            <x-danger-button class="ms-3" wire:click="save({{ $id }})" wire:loading.attr="disabled">
-                {{ __('Editar') }}
             </x-danger-button>
+
+            <x-secondary-button class="ms-3" wire:click="save({{ $id }})" wire:loading.attr="disabled">
+                {{ __('Agregar Cantidad') }}
+            </x-secondary-button>
         </x-slot>
     </x-dialog-modal>
     {{-- modal---------------------------------------fin---------------------------------------- --}}
@@ -399,7 +400,8 @@
                             Aplicar Descuento
                             </td>
                             <td colspan="2"  class=" px-4 py-2 border border-slate-300 bg-sky-400/50   font-semibold">
-                                <input wire:model='descArt' type="text" placeholder="0" class=" text-4xl shadow appearance-none border rounded w-full h-20 py-2 px-3">
+                                <input id="descArt" wire:model='descArt' type="text" placeholder="0" class="text-center text-4xl shadow appearance-none border rounded w-full h-20 py-2 px-3">
+                                <x-input-error for="descArt" class="mt-2" />
                             </td>
                         </tr>
                     </tfoot>
@@ -407,13 +409,13 @@
             </div>
         </x-slot>
         <x-slot name="footer">
-            <x-secondary-button wire:click="$toggle('cDescuento', false)" wire:loading.attr="disabled">
+            <x-danger-button wire:click="$toggle('cDescuento', false)" wire:loading.attr="disabled">
                 {{ __('Cancelar') }}
-            </x-secondary-button>
-
-           <x-danger-button class="ms-3" wire:click="saveDescuento({{ $id }})" wire:loading.attr="disabled">
-                {{ __('Editar') }}
             </x-danger-button>
+
+           <x-secondary-button class="ms-3" wire:click="saveDescuento({{ $id }})" wire:loading.attr="disabled">
+                {{ __('Aceptar Descuento') }}
+            </x-secondary-button>
         </x-slot>
     </x-dialog-modal>
     {{-- modal---------------------------------------fin---------------------------------------- --}}

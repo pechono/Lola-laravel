@@ -18,6 +18,7 @@ Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified',])
 });
 Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified',])->group(function () {
     Route::get('/venta', function () {return view('venta.index'); })->name('venta.index');
+    Route::get('/venta/list', function () {return view('venta.list'); })->name('venta.list');
 });
 Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified',])->group(function () {
     Route::get('/operacion', function () {return view('operacion.index'); })->name('operacion.index');
