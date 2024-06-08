@@ -18,9 +18,12 @@
      </x-nav-link>
     {{-- ----------------- --}}
     <x-nav-link href="{{ route('venta.list') }}" :active="request()->routeIs('venta.list')">
-        venta
-        
+        Venta
+
       </x-nav-link>
      {{-- ----------------- --}}
+     <x-nav-link href="{{ route('stock.index') }}" :active="request()->routeIs('stock.index')">
+        Stock
 
+      </x-nav-link>
 </div>

@@ -124,15 +124,19 @@
                     <td class="rounder border px-4 py-2">
                         @if ($articulo->suelto==1)
                             <div class="w-8 h-8 p-2 grid justify-items-center content-center bg-green-400 rounded-full">{{ $articulo->stock }}</div>
-
                         @else
                             {{ $articulo->stock }}
-
                         @endif
+                    </td>
+                    @if ($articulo->activo!=1)
 
+                    <td class="rounder border px-4 py-2">
+                        <x-secondary-button  wire:click="ActivarArticuloEdit({{ $articulo->id }})" wire:loading.attr="disabled" class="bg-green-700 hover:bg-green-500">
+                            Activar
+                        </x-secondary-button>
                     </td>
 
-
+                    @else   
                     <td class="rounder border px-4 py-2">
                         <x-secondary-button wire:click="confirmarArticuloEdit({{ $articulo->id }})" wire:loading.attr="disabled" class="bg-green-700 hover:bg-green-500">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
@@ -147,6 +151,7 @@
 
                         </x-danger-button>
                     </td>
+                    @endif
                 </tr>
                 @endforeach
             </tbody>
@@ -461,16 +466,29 @@
     </x-dialog-modal>
       <!--Fin Add  Confirmation Modal **************************************************************-->
 
+       {{-- ----modal confirmar venta---- --}}
+       <x-dialog-modal wire:model.live="activarArt">
+        <x-slot name="title">
+            {{ __('Cambio de estado del Articulo') }}
+        </x-slot>
+
+        <x-slot name="content">
+            {{ __('¿Esta seguro de Desea Activar este Articulo? Este Estara disponible Nuevamente') }}
+        </x-slot>
+
+        <x-slot name="footer">
+            <x-danger-button wire:click="$toggle('activarArt', false)" wire:loading.attr="disabled">
+                {{ __('Cancelar') }}
+            </x-danguer-button>
+
+            <x-secondary-button class="ms-3" wire:click="ConfirmarActivar()" wire:loading.attr="disabled">
+                {{ __('Activar') }}
+            </x-secondary-button>
+        </x-slot>
+    </x-dialog-modal>
+     {{-- ---- Fin modal confirmar venta---- --}}
 
 
 
 
-
-
-
-
-
-
-
-<button wire:click='cargar()'>cargar</button>
 </div>

@@ -6,6 +6,7 @@ use App\Models\Car;
 use App\Models\Cliente;
 use App\Models\CuentaCorriente;
 use App\Models\Operacion;
+use App\Models\Stock;
 use App\Models\TipoVenta;
 use App\Models\Venta;
 use Livewire\Component;
@@ -22,6 +23,7 @@ class Operacionlivewire extends Component
     public $tipo_id;
     public $cliente_id;
     public $ac='display:none';
+    public $operacion;
 
 
     protected $rules=[
@@ -94,7 +96,7 @@ class Operacionlivewire extends Component
 
         ]);
         $operacion=Operacion::latest()->first();
-
+        $id=$operacion->id;
         foreach($inTheCar as $car){
             Venta::create([
                 'articulo_id'=>$car->articulo_id,
@@ -105,6 +107,13 @@ class Operacionlivewire extends Component
                 'operacion'=>$operacion->id,
 
             ]);
+            $changeStock=Stock::where('articulo_id',$car->articulo_id)->first();
+            $changeStock->update([
+                'stock'=>$changeStock->stock - $car->cantidad,
+            ]);
+            /* Stock::where('articulo_id',$car->articulo_id)->update([
+                'stock'=>$changeStock->stock - $car->cantidad,
+            ]); */
         }
 
         if($this->tipo_id==4){
@@ -117,7 +126,8 @@ class Operacionlivewire extends Component
            }
 
            Car::truncate();
-           return redirect()->route('venta.index');
+
+           return redirect()->route('venta.reporte');
     }
 
     public $apellido;
@@ -147,6 +157,17 @@ class Operacionlivewire extends Component
         $this->nombre='';
         $this->telefono='';
         $this->confirmingClienteAdd=false;
+    }
+    public $confirmarOpVenta=false;
+    public function PreguntaConfirmarVenta(){
+        $this->confirmarOpVenta=true;
+    }
+
+    public function cancelarOperacion()
+    {
+        Car::truncate();
+
+        return redirect()->route('venta.index');
     }
 
 }

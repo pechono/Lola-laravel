@@ -46,7 +46,7 @@ class Articulolivewire extends Component
             ->orderBy($this->sortBy, $this->sortAsc ? 'ASC' : 'DESC')
             ->select('articulos.id', 'articulos.articulo', 'categorias.categoria', 'articulos.presentacion', 'unidads.unidad',
             'articulos.descuento', 'articulos.unidadVenta', 'articulos.precioF', 'articulos.precioI', 'articulos.caducidad', 'articulos.detalles',
-            'articulos.suelto', 'articulos.activo','stocks.stock','stocks.stockMinimo')
+            'articulos.suelto', 'articulos.activo','stocks.stock','stocks.stockMinimo','articulos.activo')
             ->join('categorias', 'categorias.id', '=', 'articulos.categoria_id')
             ->join('unidads', 'unidads.id', '=', 'articulos.unidad_id')
             ->join('stocks', 'stocks.articulo_id','=','articulos.id');
@@ -252,41 +252,18 @@ class Articulolivewire extends Component
 
     }
 
-    /* ----------------------Fin Agregar Cliente--------------------------- */
-
-    public function cargar(){
-        /* Proveedor::create([
-        'nombre'=>'Sin Definir',
-        'telefono'=>'Sin Definir',
-        'rubro'=>'Sin Definir',
-        'direccion'=>'Sin Definir',
-        'localidad'=>'Sin Definir',
-        'mail'=>'Sin Definir',
-        'activo'=>1
-        ]); */
-        Categoria::create([
-            'categoria'=>'Alimento Balanceado',
-        ]);
-        Categoria::create([
-            'categoria'=>'Pañales',
-        ]);
-        Categoria::create([
-            'categoria'=>'Gaseosa',
-        ]);
-
-        Unidad::create([
-            'unidad'=>'Kilo',
-        ]);
-        Unidad::create([
-            'unidad'=>'Gramo',
-        ]);
-        Unidad::create([
-            'unidad'=>'Litro',
-        ]);
-        Unidad::create([
-            'unidad'=>'Unides',
-        ]);
-
+    public $activarArt=false;
+    public $articuloId;
+    public function ActivarArticuloEdit($id ){
+        $this->activarArt=true;
+        $this->articuloId=$id;
+    }
+    public function ConfirmarActivar(){
+        $art=Articulo::find($this->articuloId);
+        $art->update([
+            'activo'=>1,
+         ]);
+         $this->activarArt=false;
     }
 }
 

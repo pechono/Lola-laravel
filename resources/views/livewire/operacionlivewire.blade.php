@@ -48,17 +48,36 @@
 
          </div>
         <div name="footer">
-            <x-danger-button wire:click="$toggle('confirmingArticuloOperacion', false)" wire:loading.attr="disabled">
+            
+            <x-danger-button wire:click="cancelarOperacion()" wire:loading.attr="disabled">
                 {{ __('Cancelar') }}
-            </x-danger-button>
-
-            <x-secondary-button class="ms-3" wire:click="ConfirmarVenta()" wire:loading.attr="disabled">
-                {{ __('Eliminar') }}
+            </x-danguer-button>
+            <x-secondary-button class="ms-3" wire:click="PreguntaConfirmarVenta()" wire:loading.attr="disabled">
+                {{ __('Confirmar') }}
             </x-secondary-button>
         </div>
 
+        {{-- ----modal confirmar venta---- --}}
+        <x-dialog-modal wire:model.live="confirmarOpVenta">
+            <x-slot name="title">
+                {{ __('Eliminar articulo') }}
+            </x-slot>
 
+            <x-slot name="content">
+                {{ __('¿Esta seguro de Desea Realizar esta Operacion de Venta') }}
+            </x-slot>
 
+            <x-slot name="footer">
+                <x-danger-button wire:click="$toggle('confirmarOpVenta', false)" wire:loading.attr="disabled">
+                    {{ __('Cancelar') }}
+                </x-danguer-button>
+
+                <x-secondary-button class="ms-3" wire:click="ConfirmarVenta()" wire:loading.attr="disabled">
+                    {{ __('Realizar Venta') }}
+                </x-secondary-button>
+            </x-slot>
+        </x-dialog-modal>
+         {{-- ---- Fin modal confirmar venta---- --}}
 
 <!-- aDD User Confirmation Modal -->
 <x-dialog-modal wire:model.live="confirmingClienteAdd">
