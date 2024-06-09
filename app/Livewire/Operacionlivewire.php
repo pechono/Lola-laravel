@@ -123,11 +123,11 @@ class Operacionlivewire extends Component
                 'operacion_id'=>$operacion->id,
                 'entrega'=>$this->cuentaCorriente
                ]);
-           }
+        }
 
-           Car::truncate();
+        Car::truncate();
 
-           return redirect()->route('venta.reporte');
+        return redirect()->route('venta.reporte',['operacion'=>$operacion]);
     }
 
     public $apellido;

@@ -94,7 +94,10 @@
             <div class='w-full'>
             <table class=" table auto w-full border rounded-sm">
                 <thead>
-                    <tr ><td class=' text-lg bg-blue-100 mt-4 border' colspan="6"> Venta Operacion: {{ $operacion }}</td></tr>
+                    <tr >
+                        <td class=' text-xl bg-blue-100 mt-4 border' colspan="6"> Venta Operacion: {{ $operacion }}</td>
+
+
                     <tr ><td class=' text-lg bg-blue-100 mt-4 border' colspan="1"> Cleinte: </td><td colspan="5" class=' text-lg mt-4 '>{{ $cliente }}</td></tr>
                     <tr ><td class=' text-lg bg-blue-100 mt-4 border' colspan="1"> Tipo De Venta: </td><td colspan="5" class=' text-lg mt-4 '>{{ $tipo }}</td></tr>
                     <tr><td colspan="6 h-12"></td></tr>
@@ -127,9 +130,16 @@
         </x-slot>
 
         <x-slot name="footer">
+            @if ($operacion)
+                <a href="{{ route('comprobante',['operacion'=>$operacion]) }}" target="_blank" class=" px-4 py-2 bg-blue-500 text-white rounded">
+                    Imprimir Comprobante
+                </a>
+            @endif</td>
             <x-secondary-button wire:click="$toggle('verOperacion', false)" wire:loading.attr="disabled">
                 'Cancelar'
             </x-secondary-button>
+
+
 
         </x-slot>
     </x-dialog-modal>

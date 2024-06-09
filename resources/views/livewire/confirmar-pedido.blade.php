@@ -96,6 +96,13 @@
 
         <x-slot name="footer">
             <button wire:click='cerrar()' class="bg-green-600 hover:bg-green-300 py-2 px-4 rounded mr-2 text-white"> Cerrar</button>
+            @if ($operacion)
+            <a href="{{ route('pedidoImprimir', ['id'=>$operacion]) }}" target="_blank" rel="noopener noreferrer">
+                            imprimir {{ $operacion }}</a>
+
+
+                            
+            @endif
 
     </x-slot>
     </x-dialog-modal>
