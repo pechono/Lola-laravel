@@ -117,10 +117,10 @@
 
                 <div class="mt-3w-full ">
                     <div class="flex justify-between">
-                        <div>
+                         <div class="flex">
                             <input wire:model.live='q' type="search" placeholder="Buscar" class="shadow appearance-none border rounded w-full py-2 px-3
-
                             text-gray-706 leading-tight focus:outline-none focus: shadow-outline placeholder-blue-400" name="">
+
                         </div>
                         <div class="mr-2">
                             <input class="mr-2 leading-tight" type="checkbox" wire:model.live ='active'/ value="1" checked>Articulos Activos
@@ -129,7 +129,7 @@
                     </div>
                     <table class="table-auto w-full">
                         <thead>
-                            <tr>
+                            <tr wire:click=''>
                                 <td class="px-4 py-2">
                                     <div class="flex items-center" >
                                     <button wire:click="sortby('id')">Id</button>
@@ -212,26 +212,6 @@
                         <tbody>
 
                         @foreach ($articulos as $articulo)
-                            <tr>
-                                <td class="rounder border px-4 py-2">{{ $articulo->id }}</td>
-                                <td class="rounder border px-4 py-2">{{ $articulo->articulo }}</td>
-                                <td class="rounder border px-4 py-2">{{ $articulo->categoria }}</td>
-                                <td class="rounder border px-4 py-2">{{ $articulo->presentacion }}-{{ $articulo->unidad }}</td>
-                                <td class="rounder border px-4 py-2">{{ $articulo->descuento }}</td>
-                                <td class="rounder border px-4 py-2">{{ $articulo->unidadVenta }}</td>
-                                <td class="rounder border px-4 py-2">{{ $articulo->precioI }}</td>
-                                <td class="rounder border px-4 py-2">{{ $articulo->precioF }}</td>
-                                <td class="rounder border px-4 py-2">{{ $articulo->caducidad }}</td>
-                                <td class="rounder border px-4 py-2">{{ $articulo->detalles }}</td>
-                                <td class="rounder border px-4 py-2">{{ $articulo->stockMinimo }}</td>
-                                <td class="rounder border px-4 py-2">@if ($articulo->suelto==1)
-                                                                        <div class="w-8 h-8 p-2 grid justify-items-center content-center bg-green-400 rounded-full">{{ $articulo->stock }}</div>
-                                                                    @else
-                                                                        {{ $articulo->stock }}
-
-                                                                    @endif</td>
-
-                                <td class="rounder border px-4 py-2">
                                     @php
                                         $sta=false;
                                     @endphp
@@ -244,6 +224,34 @@
                                     @empty
 
                                     @endforelse
+                            @if ($sta)
+
+                                <tr wire:dblclick="deletCar({{ $articulo->id }})" wire:loading.attr="disabled" class="cursor-pointer hover:text-white hover:bg-red-600">
+                            @else
+
+                                <tr  wire:dblclick="addCar({{ $articulo->id }})" wire:loading.attr="disabled" class="cursor-pointer hover:text-white hover:bg-green-300">
+
+                            @endif
+
+                                    <td class="rounder border px-4 py-2">{{ $articulo->id }}</td>
+                                    <td class="rounder border px-4 py-2">{{ $articulo->articulo }}</td>
+                                    <td class="rounder border px-4 py-2">{{ $articulo->categoria }}</td>
+                                    <td class="rounder border px-4 py-2">{{ $articulo->presentacion }}-{{ $articulo->unidad }}</td>
+                                    <td class="rounder border px-4 py-2">{{ $articulo->descuento }}</td>
+                                    <td class="rounder border px-4 py-2">{{ $articulo->unidadVenta }}</td>
+                                    <td class="rounder border px-4 py-2">{{ $articulo->precioI }}</td>
+                                    <td class="rounder border px-4 py-2">{{ $articulo->precioF }}</td>
+                                    <td class="rounder border px-4 py-2">{{ $articulo->caducidad }}</td>
+                                    <td class="rounder border px-4 py-2">{{ $articulo->detalles }}</td>
+                                    <td class="rounder border px-4 py-2">{{ $articulo->stockMinimo }}</td>
+                                    <td class="rounder border px-4 py-2">@if ($articulo->suelto==1)
+                                                                            <div class="w-8 h-8 p-2 grid justify-items-center content-center bg-green-400 rounded-full">{{ $articulo->stock }}</div>
+                                                                        @else
+                                                                            {{ $articulo->stock }}
+
+                                                                        @endif</td>
+                                    <td class="rounder border px-4 py-2">
+
                                         @if ($sta)
                                             <x-danger-button wire:click="deletCar({{ $articulo->id }})" wire:loading.attr="disabled" >
                                                 Eliminar

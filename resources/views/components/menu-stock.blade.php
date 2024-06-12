@@ -13,8 +13,8 @@
         Pedido
      </x-nav-link>
     <x-nav-link class="mt-2 mb-2 h-8 px-2 bg-sky-400 hover:bg-sky-200 text-white hover:text-gray-400 rounded-lg"
-        href="{{ route('cliente.index') }}" :active="request()->routeIs('cliente.index')">
-       cliente
+        href="{{ route('stock.pedidoRealizado') }}" :active="request()->routeIs('cliente.index')">
+       Pedido Relaizados
     </x-nav-link>
 
     <x-nav-link class="mt-2 mb-2 h-8 px-2 bg-sky-400 hover:bg-sky-200 text-white hover:text-gray-400 rounded-lg"

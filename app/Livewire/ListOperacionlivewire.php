@@ -16,6 +16,7 @@ class ListOperacionlivewire extends Component
                                 ->join('clientes','clientes.id','=','operacions.cliente_id')
                                 ->select('operacions.id','operacions.venta','clientes.apellido','clientes.nombre',
                                 'users.name','operacions.created_at AS Fecha', 'tipo_ventas.tipoVenta')->distinct()
+                                ->orderBy('operacions.id', 'desc')
                                 ->get();
 
         return view('livewire.list-operacionlivewire',compact('ops'));

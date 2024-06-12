@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Livewire;
+namespace App\Livewire\Stock;
 
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
@@ -21,7 +21,7 @@ class ConfirmarPedido extends Component
         ->join('categorias','categorias.id','articulos.categoria_id')
         ->join('unidads','unidads.id','articulos.unidad_id')->get();
         $proveedores=Proveedor::all();
-        return view('livewire.confirmar-pedido',compact('inTheCar','proveedores'));
+        return view('livewire.stock.confirmar-pedido',compact('inTheCar','proveedores'));
     }
     public $proveedor_id;
     protected $rules=['proveedor_id'=>'required'];

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire;
+namespace App\Livewire\Stock;
 
 use App\Models\Articulo;
 use App\Models\Categoria;
@@ -54,7 +54,7 @@ class StockLivewire extends Component
         $categorias=Categoria::All();
         $unidades=Unidad::all();
         $proveedores=Proveedor::all();
-        return view('livewire.stock-livewire',compact('articulos','categorias','unidades', 'proveedores'));
+        return view('livewire.stock.stock-livewire',compact('articulos','categorias','unidades', 'proveedores'));
     }
     public function sortby($field)
     {

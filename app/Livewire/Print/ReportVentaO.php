@@ -43,7 +43,7 @@ class ReportVentaO extends Component
         $emp=Empresa::first();
 
 
-        $pdf=Pdf::loadView('livewire.Print.report-venta-o', compact('ventaOp','emp','datos'));
+        $pdf=Pdf::loadView('livewire.print.report-venta-o', compact('ventaOp','emp','datos'));
         return $pdf->stream();
 
     }

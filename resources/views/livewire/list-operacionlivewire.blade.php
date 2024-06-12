@@ -85,9 +85,9 @@
    {{-- <div class="mt-2">{{ $clientes->links() }}</div> --}}
 
    <!-- Delete User Confirmation Modal -->
-    <x-dialog-modal wire:model.live="verOperacion" class="w-80">
+    <x-dialog-modal wire:model.live="verOperacion" class="w-3/4">
         <x-slot name="title">
-            {{ __('Eliminar Cliente') }}
+            <h1>Ver Operacion</h1>
         </x-slot>
 
         <x-slot name="content" class="w-full">
@@ -98,8 +98,8 @@
                         <td class=' text-xl bg-blue-100 mt-4 border' colspan="6"> Venta Operacion: {{ $operacion }}</td>
 
 
-                    <tr ><td class=' text-lg bg-blue-100 mt-4 border' colspan="1"> Cleinte: </td><td colspan="5" class=' text-lg mt-4 '>{{ $cliente }}</td></tr>
-                    <tr ><td class=' text-lg bg-blue-100 mt-4 border' colspan="1"> Tipo De Venta: </td><td colspan="5" class=' text-lg mt-4 '>{{ $tipo }}</td></tr>
+                    <tr ><td class=' text-lg  mt-4 border' colspan="1"> Cleinte: </td><td colspan="5" class=' text-lg mt-4 '>{{ $cliente }}</td></tr>
+                    <tr ><td class=' text-lg  mt-4 border' colspan="1"> Tipo De Venta: </td><td colspan="5" class=' text-lg mt-4 '>{{ $tipo }}</td></tr>
                     <tr><td colspan="6 h-12"></td></tr>
                     <tr  >
                         <td class=' text-lg bg-blue-100 mt-6 border '>Articulo</td>
@@ -123,10 +123,8 @@
                     </tr>
                 @endforeach
                 </tbody>
-
             </table>
             </div>
-
         </x-slot>
 
         <x-slot name="footer">
@@ -134,16 +132,11 @@
                 <a href="{{ route('comprobante',['operacion'=>$operacion]) }}" target="_blank" class=" px-4 py-2 bg-blue-500 text-white rounded">
                     Imprimir Comprobante
                 </a>
-            @endif</td>
+            @endif
             <x-secondary-button wire:click="$toggle('verOperacion', false)" wire:loading.attr="disabled">
                 'Cancelar'
             </x-secondary-button>
-
-
-
         </x-slot>
     </x-dialog-modal>
     <!--Fin Delete  Confirmation Modal -->
-
-
 </div>

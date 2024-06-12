@@ -31,8 +31,6 @@ class Ventalivewire extends Component
     ];
 
 
-
-
     public function render()
     {
         $articulos=Articulo::where('activo',$this->active)
@@ -168,7 +166,7 @@ class Ventalivewire extends Component
 
             $this->cDescuento=true;
     }
-    
+
     public function saveDescuento($idart){
         $this->validate();
         Car::where('articulo_id',$idart)->update([

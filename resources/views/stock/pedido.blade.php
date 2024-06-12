@@ -10,7 +10,7 @@
      <div class="mt-2">
          <div class="w-full mx-auto sm:px-6 lg:px-8">
              <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-xl sm:rounded-lg ">
-               <livewire:pedidolivewire/>
+               <livewire:stock.pedidolivewire/>
              </div>
          </div>
      </div>

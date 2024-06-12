@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire;
+namespace App\Livewire\Stock;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 
@@ -59,7 +59,7 @@ class PedidoLivewire extends Component
             ->get();
 
             $inTheCar=PedidoCar::all();
-        return view('livewire.pedidolivewire',compact('articulos','inTheCar'));
+        return view('livewire.stock.pedidolivewire',compact('articulos','inTheCar'));
     }
     public function sortby($field)
     {

@@ -72,7 +72,8 @@ class ListVenta extends Component
                                                     $query->whereRaw('YEAR(operacions.created_at) = ?', [$this->anio]);
                                                 });
                                         })
-                               ->get();
+                                ->orderBy('operacions.id', 'desc')
+                                ->get();
         $aniosUnicos = Operacion::selectRaw('YEAR(created_at) AS anio')->distinct()->pluck('anio');
 
         return view('livewire.list-venta', compact( 'operacions', 'aniosUnicos'));
