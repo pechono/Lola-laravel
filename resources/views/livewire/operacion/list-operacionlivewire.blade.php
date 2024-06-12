@@ -81,7 +81,12 @@
 
         </tbody>
     </table>
+
    </div>
+   <div class="mt-2">
+        {{ $ops->links() }}
+
+    </div>
    {{-- <div class="mt-2">{{ $clientes->links() }}</div> --}}
 
    <!-- Delete User Confirmation Modal -->

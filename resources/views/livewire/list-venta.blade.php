@@ -69,18 +69,8 @@
                         }
                     </script>
 
-                    {{-- <div class="mr-1"><button wire:click='' class=" rounded-md bg-gray-400 hover:bg-gray-200 py-2 px-2"> Diarias</button></div>
-                    <div class="mr-1"><button wire:click='vEntreDias()' class=" rounded-md bg-gray-400 hover:bg-gray-200 py-2 px-2">informe de Ventas entre Dias</button></div>
-                    <div class="mr-1"><button class=" rounded-md bg-gray-400 hover:bg-gray-200 py-2 px-2">informe de Stock</button></div>
-                    <div class="mr-1"><button class=" rounded-md bg-gray-400 hover:bg-gray-200 py-2 px-2">informe de Articulos</button></div>
-                 --}}</div>
-                {{-- <div class="flex mt-5">
-                    <div class=" flex-initial mr-4"><label for="inicio" style="{{ $acd }}">Fecha Inicial</label><br><input wire:model='fechaD' type="date" style="{{ $acd }}"></div>
-                    <div class=" flex-initial mr-4"><label for="inicio" style="{{ $ac }}">Fecha Final</label><br><input wire:model='fechaI' type="date" style="{{ $ac }}"></div>
-                    <div class=" flex-initial mr-4"><label for="inicio" style="{{ $ac }}">Fecha Inicial</label><br><input wire:model='fechaF'type="date" style="{{ $ac }}"></div>
-                    <div class=" flex-initial mr-4 "><label for="inicio" style="{{ $ac }}">Buscar entre fechas</label><br><button   wire:click='EntreDias()' style="{{ $ac }}" class=" rounded-md bg-blue-600 hover:bg-blue-500  hover:text-white bg- h-10 px-2">Buscar</button></div>
-                    <div class=" flex-initial mr-4 "><label for="inicio" style="{{ $acd }}">Buscar entre fechas</label><br><button   wire:click='elegirDias()' style="{{ $acd }}" class=" rounded-md bg-blue-600 hover:bg-blue-500  hover:text-white bg- h-10 px-2">Buscar</button></div>
-                </div> --}}
+                  </div>
+
             <div class="mt-4 text-2xl flex justify-between shadow-inner">
                 <div>{{ $msj }}</div>
             </div>
@@ -147,6 +137,9 @@
                     </tfoot>
                 </table>
             </div>
+            <div class="mt-2">
+               
+                </div>
         </div>
     </div>
 <script>

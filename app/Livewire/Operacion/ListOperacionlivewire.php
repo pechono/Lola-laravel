@@ -1,25 +1,33 @@
 <?php
 
-namespace App\Livewire;
+namespace App\Livewire\Operacion;
 
 use App\Models\Operacion;
 use App\Models\Venta;
 use Livewire\Component;
+use Livewire\WithPagination;
+
 
 class ListOperacionlivewire extends Component
 {
+    use WithPagination;
     public function render()
     {
+
+
         $ops=Operacion::join('ventas','ventas.operacion','=','operacions.id')
                                 ->join('tipo_ventas','tipo_ventas.id','=','operacions.tipoVenta_id')
                                 ->join('users','users.id','=','operacions.usuario_id')
                                 ->join('clientes','clientes.id','=','operacions.cliente_id')
                                 ->select('operacions.id','operacions.venta','clientes.apellido','clientes.nombre',
                                 'users.name','operacions.created_at AS Fecha', 'tipo_ventas.tipoVenta')->distinct()
-                                ->orderBy('operacions.id', 'desc')
-                                ->get();
+                                ->orderBy('operacions.id', 'desc')->paginate();
 
-        return view('livewire.list-operacionlivewire',compact('ops'));
+
+
+
+
+        return view('livewire.operacion.list-operacionlivewire',compact('ops'));
     }
     public $verOperacion=false;
     public $ventaOp=[];

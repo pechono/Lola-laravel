@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire;
+namespace App\Livewire\Operacion;
 
 use App\Models\Car;
 use App\Models\Cliente;
@@ -56,7 +56,7 @@ class Operacionlivewire extends Component
 
         $tipoVentas=TipoVenta::all();
         $clientes=Cliente::all();
-        return view('livewire.operacionlivewire',compact('total','tipoVentas','clientes'));
+        return view('livewire.operacion.operacionlivewire',compact('total','tipoVentas','clientes'));
     }
     public function tipoVenta(){
        if($this->tipo_id==4){
