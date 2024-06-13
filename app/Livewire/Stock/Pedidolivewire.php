@@ -40,6 +40,8 @@ class PedidoLivewire extends Component
     ];
     public function render()
     {
+        $this->hasRecords = PedidoCar::count();
+
         $articulos=Articulo::where('articulos.activo',$this->active)
             ->when($this->q, function ($query){
                                return $query->where( function($query){
@@ -82,7 +84,6 @@ class PedidoLivewire extends Component
     }
 
     public $agregarCar=false;
-
     public $id;
     public $art;
     public $categoria;
@@ -94,6 +95,7 @@ class PedidoLivewire extends Component
     public $proveedor;
     public $var=0;
     public $msj='';
+    public $hasRecords;
 
     public function addCar($id) {
         $this->var=1;

@@ -18,8 +18,10 @@
             </div>
             <div class="mr-2">
                 <input class="mr-2 leading-tight" type="checkbox" wire:model.live ='active'/ value="1" checked>Articulos Activos
-                <button wire:click='borrarCar()' class=" rounded bg-sky-600 hover:bg-sky-400 text-white hover:text h-8 p-2 ml-4"> Borrar Pedido</button>
-                <a href="{{ route('stock.confirmarPedido') }}"  class=" rounded bg-sky-600 hover:bg-sky-400 text-white h-8 p-2 ml-4">Realizar Pedido</a>
+                @if ($hasRecords>0)
+                    <button wire:click='borrarCar()' class=" rounded bg-sky-600 hover:bg-sky-400 text-white hover:text h-8 p-2 ml-4"> Borrar Pedido</button>
+                    <a href="{{ route('stock.confirmarPedido') }}"  class=" rounded bg-sky-600 hover:bg-sky-400 text-white h-8 p-2 ml-4">Realizar Pedido</a>
+                @endif
 
             </div>
 

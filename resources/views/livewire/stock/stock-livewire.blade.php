@@ -9,16 +9,17 @@
         </div>
     </div>
 
-    <div class="mt-3w-full ">
+    <div class="mt-3 w-full ">
         <div class="flex justify-between">
-            <div>
-                <input wire:model.live='q' type="search" placeholder="Buscar" class="shadow appearance-none border rounded w-full py-2 px-3
-
-                text-gray-706 leading-tight focus:outline-none focus: shadow-outline placeholder-blue-400" name="">
+            <div class="flex w-auto">
+                <input wire:model.live='q' type="search" placeholder="Buscar" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-706 leading-tight focus:outline-none focus:shadow-outline placeholder-blue-400" name="">
             </div>
+
             <div class="mr-2">
                 <input class="mr-2 leading-tight" type="checkbox" wire:model.live ='active'/ value="1" checked>Articulos Activos
+                <a href="{{ route('stockImprimir') }}" target="_blank" class="bg-green-600 hover:bg-green-300 text-white rounded-md px-3 py-2 ml-2 text-center w-48 ">Imprimir Stock Actual</a>
             </div>
+
         </div>
         <table class="table-auto w-full">
             <thead>
@@ -138,7 +139,7 @@
                         </x-secondary-button>
                     </td>
 
-                    @else   
+                    @else
                     <td class="rounder border px-4 py-2">
                         <x-secondary-button wire:click="confirmarArticuloEdit({{ $articulo->id }})" wire:loading.attr="disabled" class="bg-green-700 hover:bg-green-500">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">

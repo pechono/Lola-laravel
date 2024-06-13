@@ -95,13 +95,11 @@
         </x-slot>
 
         <x-slot name="footer">
-            <button wire:click='cerrar()' class="bg-green-600 hover:bg-green-300 py-2 px-4 rounded mr-2 text-white"> Cerrar</button>
+            <button wire:click='cerrar()' class=" h-10 bg-green-600 hover:bg-green-300 py-2 px-4 rounded mr-2 text-white" > Cerrar</button>
             @if ($operacion)
-            <a href="{{ route('pedidoImprimir', ['id'=>$operacion]) }}" target="_blank" rel="noopener noreferrer">
-                            imprimir {{ $operacion }}</a>
-
-
-                            
+            <a href="{{ route('pedidoImprimir', ['id'=>$operacion]) }}" target="_blank" rel="noopener noreferrer" class="mb-4 h-10 px-4 py-2 bg-blue-500 text-white rounded">
+                imprimir
+            </a>
             @endif
 
     </x-slot>

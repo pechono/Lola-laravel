@@ -7,10 +7,8 @@ use App\Livewire\Report\PedidoProveedor;
 use Illuminate\Support\Facades\Route;
 use App\Livewire\Print\ReportVentaO;
 use App\Livewire\Print\PrintPedido;
-
-
-
-
+use App\Livewire\Print\StockImprimir as PrintStockImprimir;
+use App\Livewire\Print\StockImprimir;
 
 Route::get('/', function () {
     return view('welcome');
@@ -44,7 +42,7 @@ Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified',])
     Route::get('/stock/pedido/confirmar', function () {return view('stock.confirmarPedido'); })->name('stock.confirmarPedido');
     Route::get('/stock/pedido/pedido/{id}', [PrintPedido::class,'generateReport'])->name('pedidoImprimir');
     Route::get('/stock/pedidorealizados', function () {return view('stock.pedidoRealizado'); })->name('stock.pedidoRealizado');
-
+    Route::get('/stock/stock', [StockImprimir::class,'generateReport'])->name('stockImprimir');
 
 });
 Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified',])->group(function () {
