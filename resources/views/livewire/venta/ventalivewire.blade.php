@@ -1,13 +1,10 @@
 <div>
     <div class="flex justify-between">
-        <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-xl sm:rounded-lg ">
-            <div class="   p-2 sm:px-20 bg-white dark:bg-gray-800 dark:bg-gradient-to-bl dark:from-gray-700/50 dark:via-transparent border-b border-gray-200 dark:border-gray-700">
+        <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-xl sm:rounded-lg w-auto">
+            <div class="   p-2 sm:px-5 bg-white dark:bg-gray-800 dark:bg-gradient-to-bl dark:from-gray-700/50 dark:via-transparent border-b border-gray-200 dark:border-gray-700">
                 <div class="mt-4 text-2xl flex justify-between shadow-inner">
                     <div>Articulo </div>
                 </div>
-
-                <div class=" ">
-
                     <table class="table-auto ">
                         <thead>
                             <tr>
@@ -64,7 +61,7 @@
 
                         </tbody>
                     </table>
-                </div>
+
             </div>
         </div>
        {{-- --------------------------------- --}}
@@ -103,13 +100,13 @@
                 </div>
         </div>
 
-    </div>
+      </div>
     {{-- articulos lista -------------------------------------------------------------------- --}}
     {{-- articulos lista -------------------------------------------------------------------- --}}
     <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-xl sm:rounded-lg mt-10">
 
         <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-xl sm:rounded-lg ">
-            <div class="w-full p-2 sm:px-20 bg-white dark:bg-gray-800 dark:bg-gradient-to-bl dark:from-gray-700/50 dark:via-transparent border-b border-gray-200 dark:border-gray-700">
+            <div class="w-full p-2 sm:px-5 bg-white dark:bg-gray-800 dark:bg-gradient-to-bl dark:from-gray-700/50 dark:via-transparent border-b border-gray-200 dark:border-gray-700">
                 <div class="mt-4 text-2xl flex justify-between shadow-inner">
                     <div>Articulo</div>
 

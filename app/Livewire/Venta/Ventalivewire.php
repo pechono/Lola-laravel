@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire;
+namespace App\Livewire\Venta;
 
 use App\Models\Articulo;
 use App\Models\Car;
@@ -60,7 +60,7 @@ class Ventalivewire extends Component
 
        $countCar=Car::count();
 
-        return view('livewire.ventalivewire', compact('articulos','inTheCar','countCar'));
+        return view('livewire.venta.ventalivewire', compact('articulos','inTheCar','countCar'));
     }
     public $id;
     public $art;

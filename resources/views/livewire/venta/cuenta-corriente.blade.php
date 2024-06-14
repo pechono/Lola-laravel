@@ -42,7 +42,7 @@
             </tr>
         </thead>
         <tbody>
-            @forelse ($pedidos as $op)
+            {{-- @forelse ($pedidos as $op)
             <tr>
                 <td class="rounder border px-4 py-2">{{ $op->pedido }}</td>
                 <td class="rounder border px-4 py-2">{{ $op->nombre }}{{ $op->localidad }}</td>
@@ -55,7 +55,7 @@
             </tr>
             @empty
             <h2>No hay registro</h2>
-            @endforelse
+            @endforelse --}}
 
 
         </tbody>
@@ -73,7 +73,7 @@
             <div class='w-full'>
             <table class=" table auto w-full border rounded-sm">
                 <thead>
-                 @if ($verPedido)
+                {{--  @if ($verPedido)
                     <tr >
                         <td class=' text-xl bg-blue-100 mt-4 border' colspan="2"> Pedido a Proveedor N: {{ $pedido }}</td>
                     </tr>
@@ -100,7 +100,7 @@
                         <td class=' text-lg border mt-4  '>{{ $op->articulo}}  {{ $op->presentacion }} {{ $op->unidad }}</td>
                         <td class=' text-lg border mt-4  '>{{ $op->cantidad }} </td>
                     </tr>
-                    @endforeach
+                    @endforeach --}}
                 </tbody>
             </table>
             </div>
@@ -108,11 +108,11 @@
 
 
         <x-slot name="footer">
-            @if ($pedido)
+           {{--  @if ($pedido)
                 <a href="{{ route('pedidoImprimir',['id'=>$pedido]) }}" target="_blank" class=" px-4 py-2 bg-blue-500 text-white rounded">
                     Imprimir Comprobante
                 </a>
-            @endif
+            @endif --}}
             <x-secondary-button wire:click="$toggle('verPedido', false)" wire:loading.attr="disabled">
                 Cancelar
             </x-secondary-button>

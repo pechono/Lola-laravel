@@ -1,4 +1,4 @@
-<div class="p-2 sm:px-20 bg-white dark:bg-gray-800 dark:bg-gradient-to-bl dark:from-gray-700/50 dark:via-transparent border-b border-gray-200 dark:border-gray-700">
+<div class="p-2 sm:px-5 bg-white dark:bg-gray-800 dark:bg-gradient-to-bl dark:from-gray-700/50 dark:via-transparent border-b border-gray-200 dark:border-gray-700">
     <div class="mt-4 text-2xl flex justify-between shadow-inner">
     <div>Operaciones  Realizadas</div>
 
@@ -54,7 +54,7 @@
                         <x-sort-icon sortFiel='telefono': sort-by='$sortBy' : sort-asc='$sortAsc/'>
                     </div>
                 </td>
-                <td class="px-4 py-2">
+                <td class=" w-32">
                     <div class="flex items-center">Accion</div>
                 </td>
             </tr>
@@ -90,7 +90,7 @@
    {{-- <div class="mt-2">{{ $clientes->links() }}</div> --}}
 
    <!-- Delete User Confirmation Modal -->
-    <x-dialog-modal wire:model.live="verOperacion" class="w-3/4">
+    <x-dialog-modal wire:model.live="verOperacion" class="">
         <x-slot name="title">
             <h1>Ver Operacion</h1>
         </x-slot>

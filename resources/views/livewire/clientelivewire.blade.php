@@ -1,4 +1,4 @@
-<div class="p-2 sm:px-20 bg-white dark:bg-gray-800 dark:bg-gradient-to-bl dark:from-gray-700/50 dark:via-transparent border-b border-gray-200 dark:border-gray-700">
+<div class="p-2  w-full sm:px-5 bg-white dark:bg-gray-800 dark:bg-gradient-to-bl dark:from-gray-700/50 dark:via-transparent border-b border-gray-200 dark:border-gray-700">
         <div class="mt-4 text-2xl flex justify-between shadow-inner">
         <div>Cliente
             <h6>{{ $msj }}</h6>
@@ -51,8 +51,8 @@
                             <x-sort-icon sortFiel='telefono': sort-by='$sortBy' : sort-asc='$sortAsc/'>
                         </div>
                     </td>
-                    <td class="px-4 py-2">
-                        <div class="flex items-center">Accion</div>
+                    <td class=" w-36">
+                       Accion
                     </td>
                 </tr>
             </thead>
@@ -63,7 +63,7 @@
                     <td class="rounder border px-4 py-2">{{ $cliente->apellido }}</td>
                     <td class="rounder border px-4 py-2">{{ $cliente->nombre }}</td>
                     <td class="rounder border px-4 py-2">{{ $cliente->telefono }}</td>
-                    <td class="rounder border px-4 py-2">
+                    <td class="rounder border px-2 py-2">
                         <form action="">
                         <x-secondary-button wire:click="confirmarClienteEdit({{ $cliente->id }})" id="c{{ $cliente->id }}" wire:loading.attr="disabled" class="bg-green-700 hover:bg-green-500">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">

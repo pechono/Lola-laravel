@@ -1,4 +1,4 @@
-<div class="w-full p-2 sm:px-20 bg-white dark:bg-gray-800 dark:bg-gradient-to-bl dark:from-gray-700/50 dark:via-transparent border-b border-gray-200 dark:border-gray-700">
+<div class="w-full p-2 sm:px-5 bg-white dark:bg-gray-800 dark:bg-gradient-to-bl dark:from-gray-700/50 dark:via-transparent border-b border-gray-200 dark:border-gray-700">
     <div class="mt-4 text-2xl flex justify-between shadow-inner">
         <div>Articulo</div>
         <div class="mr-2">
@@ -136,7 +136,7 @@
                         </x-secondary-button>
                     </td>
 
-                    @else   
+                    @else
                     <td class="rounder border px-4 py-2">
                         <x-secondary-button wire:click="confirmarArticuloEdit({{ $articulo->id }})" wire:loading.attr="disabled" class="bg-green-700 hover:bg-green-500">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">

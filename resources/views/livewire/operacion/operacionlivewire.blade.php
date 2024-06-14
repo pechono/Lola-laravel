@@ -1,4 +1,4 @@
-<div class="w-full p-2 sm:px-20 bg-white dark:bg-gray-800 dark:bg-gradient-to-bl dark:from-gray-700/50 dark:via-transparent border-b border-gray-200 dark:border-gray-700">
+<div class="w-full p-2 sm:px-5 bg-white dark:bg-gray-800 dark:bg-gradient-to-bl dark:from-gray-700/50 dark:via-transparent border-b border-gray-200 dark:border-gray-700">
     <div class="mt-4 text-4xl flex justify-between shadow-inner">
         <div>Operacion</div>
 
@@ -48,7 +48,7 @@
 
          </div>
         <div name="footer">
-            
+
             <x-danger-button wire:click="cancelarOperacion()" wire:loading.attr="disabled">
                 {{ __('Cancelar') }}
             </x-danguer-button>

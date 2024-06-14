@@ -1,7 +1,7 @@
 
-<div class="bg-white dark:bg-gray-800 overflow-hidden shadow-xl sm:rounded-lg mt-10">
+<div class="bg-white dark:bg-gray-800 overflow-hidden shadow-xl sm:rounded-lg ">
     <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-xl sm:rounded-lg ">
-        <div class="w-full p-2 sm:px-20 bg-white dark:bg-gray-800 dark:bg-gradient-to-bl dark:from-gray-700/50 dark:via-transparent border-b border-gray-200 dark:border-gray-700">
+        <div class="w-full p-2 sm:px-5 bg-white dark:bg-gray-800 dark:bg-gradient-to-bl dark:from-gray-700/50 dark:via-transparent border-b border-gray-200 dark:border-gray-700">
                  <div class="flex">Informe de Venta</div>
                  <div class="flex mt-5">
 
@@ -138,7 +138,7 @@
                 </table>
             </div>
             <div class="mt-2">
-               
+
                 </div>
         </div>
     </div>

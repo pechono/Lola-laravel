@@ -1,5 +1,5 @@
 <x-app-layout>
-    <div class="mt-8">
+    <div class="pt-20">
         <div class="w-full mx-auto sm:px-6 lg:px-8">
             {{-- --------MENU--------- --}}
             @include('components.menu-stock')

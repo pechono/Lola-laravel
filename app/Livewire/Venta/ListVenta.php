@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire;
+namespace App\Livewire\Venta;
 
 use App\Models\Operacion;
 use Livewire\Component;
@@ -75,8 +75,8 @@ class ListVenta extends Component
                                 ->orderBy('operacions.id', 'desc')
                                 ->get();
         $aniosUnicos = Operacion::selectRaw('YEAR(created_at) AS anio')->distinct()->pluck('anio');
-    
-        return view('livewire.list-venta', compact( 'operacions', 'aniosUnicos'));
+
+        return view('livewire.venta.list-venta', compact( 'operacions', 'aniosUnicos'));
     }
 
     public function cancelarDE() {
