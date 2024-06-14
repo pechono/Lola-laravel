@@ -19,43 +19,54 @@
             <tr>
                 <td class="px-4 py-2">
                     <div class="flex items-center" >
-                       <button wire:click="sortby('id')">Pedido</button>
+                       <button wire:click="sortby('id')">id</button>
                      <x-sort-icon sortFiel='id': sortBy=$sortBy, sortAsc=$sortAsc/>
                     </div>
                 </td>
                 <td class="px-4 py-2">
                     <div class="flex items-center">
-                        <Button wire:click="sortby('apellido')">Proveedor</Button>
+                        <Button wire:click="sortby('apellido')">Apellido</Button>
                         <x-sort-icon sortFiel='apellido': sort-by='$sortBy' : sort-asc='$sortAsc'>
 
                     </div>
                 </td>
                 <td class="px-4 py-2">
                     <div class="flex items-center">
-                        <Button wire:click="sortby('nombre')">Fecha</Button>
+                        <Button wire:click="sortby('nombre')">Nombre</Button>
                         <x-sort-icon sortFiel='nombre': sort-by='$sortBy' : sort-asc='$sortAsc'/>
                     </div>
                 </td>
-                    <td class="px-4 py-2">
+                <td class="px-4 py-2">
+                    <div class="flex items-center">
+                        <Button wire:click="sortby('telefono')">telefono</Button>
+                        <x-sort-icon sortFiel='telefono': sort-by='$sortBy' : sort-asc='$sortAsc'/>
+                    </div>
+                </td>
+                <td class="px-4 py-2">
+                    <div class="flex items-center">Deuda</div>
+                </td>
+                <td class="px-4 py-2">
                     <div class="flex items-center">Accion</div>
                 </td>
             </tr>
         </thead>
         <tbody>
-            {{-- @forelse ($pedidos as $op)
+            @forelse ($clientes as $cliente)
             <tr>
-                <td class="rounder border px-4 py-2">{{ $op->pedido }}</td>
-                <td class="rounder border px-4 py-2">{{ $op->nombre }}{{ $op->localidad }}</td>
-                <td class="rounder border px-4 py-2">{{ $op->Fecha }}</td>
+                <td class="rounder border px-4 py-2">{{ $cliente->id }}</td>
+                <td class="rounder border px-4 py-2">{{ $cliente->apellido }}</td>
+                <td class="rounder border px-4 py-2">{{ $cliente->nombre }}</td>
+                <td class="rounder border px-4 py-2">{{ $cliente->telefono }}</td>
+                <td class="rounder border px-4 py-2">{{ $cliente->total_entregas }}</td>
                 <td class="rounder border px-4 py-2">
-                    <x-secondary-button wire:click='verPed({{ $op->pedido }})'>
+                    <x-secondary-button wire:click='modalCuenta({{ $cliente->id }})'>
                         Ver
                     </x-secondary-button>
                 </td>
             </tr>
             @empty
             <h2>No hay registro</h2>
-            @endforelse --}}
+            @endforelse
 
 
         </tbody>
@@ -64,7 +75,7 @@
    {{-- <div class="mt-2">{{ $clientes->links() }}</div> --}}
 
    <!-- Delete User Confirmation Modal -->
-    <x-dialog-modal wire:model.live="verPedido" class="w-3/5">
+    <x-dialog-modal wire:model.live="verCuentaCorriente" class="w-3/5">
         <x-slot name="title">
             <h1>Ver Pedido</h1>
         </x-slot>
@@ -73,34 +84,52 @@
             <div class='w-full'>
             <table class=" table auto w-full border rounded-sm">
                 <thead>
-                {{--  @if ($verPedido)
+                 @if ($verCuentaCorriente)
                     <tr >
-                        <td class=' text-xl bg-blue-100 mt-4 border' colspan="2"> Pedido a Proveedor N: {{ $pedido }}</td>
+                        <td class=' text-xl bg-blue-100 mt-4 border' colspan="2">Cuenta Corriente</td>
                     </tr>
                     <tr >
-                        <td class=' text-lg  mt-4 border'> Empresa: </td>
-                        <td class=' text-lg mt-4 '>{{ $proveedor }}</td>
+                        <td class=' text-lg  mt-4 border'> Cliente: </td>
+                        <td class=' text-lg mt-4 border'>{{ $clienteDeuda->apellido }}, {{ $clienteDeuda->nombre }}</td>
                     </tr>
                     <tr >
-                        <td class=' text-lg mt-4 border'> Localidad: </td>
-                        <td class=' text-lg mt-4 '>{{ $localidad }}</td>
+                        <td class=' text-lg mt-4 border'> Deuda:  </td>
+                        <td class=' text-lg mt-4 border''>{{ $clienteDeuda->total_entregas }}</td>
                     </tr>
                     <tr>
-                        <td colspan="6" class="h-12"></td>
+                        <td colspan="2" class="h-12"></td>
+                    </tr>
+                    <tr>
+                        <td  class=' text-lg  mt-4 border'>
+                            </div><div class="col-span-6 sm:col-span-4 mt-2">
+                                <x-label for="entrega" value="Entrega" />
+                                <x-input id="entrega" type="text" class="mt-1 block w-full" wire:model="entrega"  />
+                                <x-input-error for="entrega" class="mt-2" />
+                            </div>
+                        </td>
+                        <td  class=' text-lg  mt-4 border'>
+                            <x-label for="entrega" value="" />
+                            <x-secondary-button wire:click="entregarD({{ $clienteDeuda->id }})" wire:loading.attr="disabled" class=" text-white bg-green-700 hover:bg-green-500">
+                                Entregar
+                            </x-secondary-button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" class="h-12"></td>
                     </tr>
                     <tr  >
-                        <td class=' text-lg bg-blue-100 mt-6 border'>Articulo</td>
-                        <td class=' text-lg bg-blue-100 mt-6 border'>Cantidad</td>
+                        <td class=' text-lg bg-blue-100 mt-6 border'>Entrega</td>
+                        <td class=' text-lg bg-blue-100 mt-6 border'>Fecha</td>
                     </tr>
                     @endif
                 </thead>
                 <tbody>
-                    @foreach ( $artPedido as $op )
+                    @foreach ( $cuentaCorriente as $cuenta )
                     <tr>
-                        <td class=' text-lg border mt-4  '>{{ $op->articulo}}  {{ $op->presentacion }} {{ $op->unidad }}</td>
-                        <td class=' text-lg border mt-4  '>{{ $op->cantidad }} </td>
+                        <td class=' text-lg border mt-4  '>{{ $cuenta->entrega}}  </td>
+                        <td class=' text-lg border mt-4  '>{{ $cuenta->created_at }} </td>
                     </tr>
-                    @endforeach --}}
+                    @endforeach
                 </tbody>
             </table>
             </div>
@@ -108,12 +137,8 @@
 
 
         <x-slot name="footer">
-           {{--  @if ($pedido)
-                <a href="{{ route('pedidoImprimir',['id'=>$pedido]) }}" target="_blank" class=" px-4 py-2 bg-blue-500 text-white rounded">
-                    Imprimir Comprobante
-                </a>
-            @endif --}}
-            <x-secondary-button wire:click="$toggle('verPedido', false)" wire:loading.attr="disabled">
+
+            <x-secondary-button wire:click="$toggle('verCuentaCorriente', false)" wire:loading.attr="disabled">
                 Cancelar
             </x-secondary-button>
         </x-slot>
