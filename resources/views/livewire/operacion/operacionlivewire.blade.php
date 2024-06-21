@@ -11,7 +11,7 @@
                     <option value="">Seleccionar...</option>
                     @foreach ($clientes as $cliente)
                     <option value="{{ $cliente->id}}"  >
-                        {{ $cliente->nombre}} , {{ $cliente->nombre}}
+                        {{ $cliente->apellido}} , {{ $cliente->nombre}}
                     </option>
                 @endforeach
             </select>
@@ -58,7 +58,7 @@
         </div>
 
         {{-- ----modal confirmar venta---- --}}
-        <x-dialog-modal wire:model.live="confirmarOpVenta">
+        <x-dialog-modal wire:model.live="confirmarOpVenta" maxWidth="2xl">
             <x-slot name="title">
                 {{ __('Eliminar articulo') }}
             </x-slot>
@@ -80,7 +80,7 @@
          {{-- ---- Fin modal confirmar venta---- --}}
 
 <!-- aDD User Confirmation Modal -->
-<x-dialog-modal wire:model.live="confirmingClienteAdd">
+<x-dialog-modal wire:model.live="confirmingClienteAdd" maxWidth="2xl">
     <x-slot name="title">
         {{ __('Cargar Cliente') }}
     </x-slot>

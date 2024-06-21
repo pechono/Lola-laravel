@@ -279,9 +279,9 @@
 
     {{-- modal------------------------------------------------------------------------------- --}}
     {{-- modal------------------------------------------------------------------------------- --}}
-    <x-dialog-modal wire:model.live="confirmingVenta">
+    <x-dialog-modal wire:model.live="confirmingVenta" maxWidth="2xl">
         <x-slot name="title">
-            {{ __('Seleecionar Articulo') }}
+            {{ __('Selecionar Articulo') }}
         </x-slot>
         <x-slot name="content">
             <div class="rounded-t-lg" >
@@ -356,7 +356,7 @@
 
     {{-- modal------------------------------------------------------------------------------- --}}
     {{-- modal------------------------------------------------------------------------------- --}}
-    <x-dialog-modal wire:model.live="cDescuento">
+    <x-dialog-modal wire:model.live="cDescuento" maxWidth="2xl">
         <x-slot name="title">
             {{ __('Seleecionar Articulo') }}
         </x-slot>

@@ -102,10 +102,17 @@
                     <tr >
                         <td class=' text-xl bg-blue-100 mt-4 border' colspan="6"> Venta Operacion: {{ $operacion }}</td>
 
-
-                    <tr ><td class=' text-lg  mt-4 border' colspan="1"> Cleinte: </td><td colspan="5" class=' text-lg mt-4 '>{{ $cliente }}</td></tr>
-                    <tr ><td class=' text-lg  mt-4 border' colspan="1"> Tipo De Venta: </td><td colspan="5" class=' text-lg mt-4 '>{{ $tipo }}</td></tr>
-                    <tr><td colspan="6 h-12"></td></tr>
+                    <tr >
+                        <td class=' text-lg  mt-4 border' colspan="1"> Cleinte: </td>
+                        <td colspan="4" class=' text-lg mt-4 border'>{{ $cliente }}</td>
+                        <td  rowspan="2" class=' text-lg mt-4 border '>
+                            <div class="flex space-x-2">
+                                
+                            </div>
+                        </td>
+                    </tr>
+                    <tr ><td class=' text-lg  mt-4 border' colspan="1"> Tipo De Venta: </td><td colspan="4" class=' text-lg mt-4 '>{{ $tipo }}</td></tr>
+                    <tr><td colspan="6"></td></tr>
                     <tr  >
                         <td class=' text-lg bg-blue-100 mt-6 border '>Articulo</td>
                         <td class=' text-lg bg-blue-100 mt-6 border'>Descripcion</td>
@@ -127,20 +134,61 @@
                         <td class=' text-lg border mt-4  '>{{ ($vOp->precioF*$vOp->cantidad)-($vOp->precioF*$vOp->cantidad*$vOp->descuento/100) }}</td>
                     </tr>
                 @endforeach
+
+                @if ($detalles)
+                <tr><td colspan="6"class="h-12"></td></tr>
+                <tr >
+                    <td class=' text-xl bg-blue-100 mt-4 border-white' colspan="6"> Actualizacion de Precio</td>
+                </tr>
+
+                    <tr  >
+                        <td class=' text-lg bg-blue-100 mt-6 border '>Articulo</td>
+                        <td class=' text-lg bg-blue-100 mt-6 border'>Descripcion</td>
+                        <td class=' text-lg bg-blue-100 mt-6 border'>Actual Precio</td>
+                        <td class=' text-lg bg-blue-100 mt-6 border'>Cantidad</td>
+                        <td class=' text-lg bg-blue-100 mt-6 border'>Descuento</td>
+                        <td class=' text-lg bg-blue-100 mt-6 border'>Sub Total</td>
+                    </tr>
+                    @foreach ($listArt as $vOp)
+                    <tr >
+                        <td class=' text-lg border mt-4  '>{{ $vOp->articulo }}</td>
+                        <td class=' text-lg border mt-4  '>{{ $vOp->presentacion }}-{{ $vOp->unidad }}</td>
+                        <td class=' text-lg border mt-4  '>{{ $vOp->precioF }}</td>
+                        <td class=' text-lg border mt-4  '>{{ $vOp->cantidad }}</td>
+                        <td class=' text-lg border mt-4  '>{{ $vOp->descuento }}</td>
+                        <td class=' text-lg border mt-4  '>{{ ($vOp->precioF*$vOp->cantidad) }}</td>
+                    </tr>
+                    @endforeach
+                    <tr >
+                        <td class=' text-xl bg-blue-100 mt-4 border-white text-right' colspan="5">Total a Pagar: {{ $sumTotal }}</td>
+                        <td class=' text-xl bg-blue-100 mt-4 border-white text-right' >
+                           <button wire:click='cancelarCuenta({{ $vOp->operacion }})'>
+                                Cancelar Cuenta
+                            </button>
+                        </td>
+
+                    </tr>
+                @endif
                 </tbody>
             </table>
             </div>
         </x-slot>
 
         <x-slot name="footer">
-            @if ($operacion)
-                <a href="{{ route('comprobante',['operacion'=>$operacion]) }}" target="_blank" class=" px-4 py-2 bg-blue-500 text-white rounded">
-                    Imprimir Comprobante
-                </a>
-            @endif
-            <x-secondary-button wire:click="$toggle('verOperacion', false)" wire:loading.attr="disabled">
-                'Cancelar'
-            </x-secondary-button>
+            <div class="flex justify-between mt-2">
+
+                <div class="flex space-x-2">
+                    @if ($operacion)
+                        <a href="{{ route('comprobante', ['operacion' => $operacion]) }}" target="_blank" class="h-9 px-4 py-2 hover:bg-blue-300 bg-blue-500 text-white rounded flex items-center justify-center">
+                            Imprimir Comprobante
+                        </a>
+                    @endif
+                    <button class="h-9 px-4 py-2 bg-green-600 hover:bg-green-300 text-white rounded flex items-center justify-center" wire:click="$toggle('verOperacion', false)" wire:loading.attr="disabled">
+                        Cancelar
+                    </button>
+                </div>
+            </div>
+
         </x-slot>
     </x-dialog-modal>
     <!--Fin Delete  Confirmation Modal -->

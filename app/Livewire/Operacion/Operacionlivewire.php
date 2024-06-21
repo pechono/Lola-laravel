@@ -87,43 +87,74 @@ class Operacionlivewire extends Component
             $this->detalles='--';
         }
 
-        Operacion::create([
-            'usuario_id'=>auth()->user()->id,
-            'tipoVenta_id'=>$this->tipo_id,
-            'cliente_id'=>$this->cliente_id,
-            'detalles'=>$this->detalles,
-            'venta'=>$total,
-
-        ]);
-        $operacion=Operacion::latest()->first();
-        $id=$operacion->id;
-        foreach($inTheCar as $car){
-            Venta::create([
-                'articulo_id'=>$car->articulo_id,
-                'cantidad'=>$car->cantidad,
-                'precioI'=>$car->precioI,
-                'precioF'=>$car->precioF,
-                'descuento'=>$car->descuento,
-                'operacion'=>$operacion->id,
+        if($this->tipo_id==4)
+        {
+            Operacion::create([
+                'usuario_id'=>auth()->user()->id,
+                'tipoVenta_id'=>$this->tipo_id,
+                'cliente_id'=>$this->cliente_id,
+                'detalles'=>$this->detalles,
+                'venta'=>0,
 
             ]);
+            $operacion=Operacion::latest()->first();
+            $id=$operacion->id;
+            foreach($inTheCar as $car){
+                Venta::create([
+                    'articulo_id'=>$car->articulo_id,
+                    'cantidad'=>$car->cantidad,
+                    'precioI'=>0,
+                    'precioF'=>0,
+                    'descuento'=>$car->descuento,
+                    'operacion'=>$operacion->id,
+
+                ]);
             $changeStock=Stock::where('articulo_id',$car->articulo_id)->first();
             $changeStock->update([
                 'stock'=>$changeStock->stock - $car->cantidad,
             ]);
-            /* Stock::where('articulo_id',$car->articulo_id)->update([
-                'stock'=>$changeStock->stock - $car->cantidad,
-            ]); */
-        }
 
-        if($this->tipo_id==4){
-               CuentaCorriente::create([
-                'cliente_id'=>$this->cliente_id,
+
+            }
+            
+        }else{
+            Operacion::create([
                 'usuario_id'=>auth()->user()->id,
-                'operacion_id'=>$operacion->id,
-                'entrega'=>$this->cuentaCorriente
-               ]);
+                'tipoVenta_id'=>$this->tipo_id,
+                'cliente_id'=>$this->cliente_id,
+                'detalles'=>$this->detalles,
+                'venta'=>$total,
+
+            ]);
+            $operacion=Operacion::latest()->first();
+            $id=$operacion->id;
+            foreach($inTheCar as $car){
+                Venta::create([
+                    'articulo_id'=>$car->articulo_id,
+                    'cantidad'=>$car->cantidad,
+                    'precioI'=>$car->precioI,
+                    'precioF'=>$car->precioF,
+                    'descuento'=>$car->descuento,
+                    'operacion'=>$operacion->id,
+
+                ]);
+                $changeStock=Stock::where('articulo_id',$car->articulo_id)->first();
+                $changeStock->update([
+                    'stock'=>$changeStock->stock - $car->cantidad,
+                ]);
+                /* Stock::where('articulo_id',$car->articulo_id)->update([
+                    'stock'=>$changeStock->stock - $car->cantidad,
+                ]); */
+            }
         }
+        // if($this->tipo_id==4){
+        //        CuentaCorriente::create([
+        //         'cliente_id'=>$this->cliente_id,
+        //         'usuario_id'=>auth()->user()->id,
+        //         'operacion_id'=>$operacion->id,
+        //         'entrega'=>$this->cuentaCorriente
+        //        ]);
+        // }
 
         Car::truncate();
 
