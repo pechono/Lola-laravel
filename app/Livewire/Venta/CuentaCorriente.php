@@ -138,9 +138,25 @@ class CuentaCorriente extends Component
                 'deuda'=>$this->total,
                 'cerrado'=>1
                 ]);
+
+                $arts=Operacion::join('ventas','ventas.operacion','=','operacions.id')
+                ->join('tipo_ventas','tipo_ventas.id','=','operacions.tipoVenta_id')
+                ->join('users','users.id','=','operacions.usuario_id')
+                ->join('clientes','clientes.id','=','operacions.cliente_id')
+                ->join('articulos','articulos.id','=', 'ventas.articulo_id')
+                ->join('unidads','unidads.id','=','articulos.unidad_id')
+                ->join('categorias','categorias.id','=','articulos.categoria_id')
+                ->select('ventas.id','ventas.articulo_id','operacions.venta','articulos.precioI', 'articulos.precioF','ventas.cantidad')
+                ->where('operacions.id',$op->operacion_id)
+                ->get();
+
+                $subTotalOP=0;
+                foreach ($arts as $art) {
+                    $subTotalOP+=$art->precioF*$art->cantidad;
+                }
             $pagoOp=Operacion::where('operacions.id',$op->operacion_id);
             $pagoOp->update([
-                'venta'=>$this->total,
+                'venta'=>$subTotalOP,
             ]);
         }
         $artC=ArtCuentaCorriente::All();

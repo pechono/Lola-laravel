@@ -1,8 +1,9 @@
 <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-xl sm:rounded-lg ">
     <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-xl sm:rounded-lg ">
         <div class="w-full p-2 sm:px-5 bg-white dark:bg-gray-800 dark:bg-gradient-to-bl dark:from-gray-700/50 dark:via-transparent border-b border-gray-200 dark:border-gray-700">
-            <div class="flex">
-                Informe de Venta
+            <div class="mt-4 text-2xl flex justify-between shadow-inner">
+                <div>Operaciones Por Cliente- Cuenta Corriente</div>
+
             </div>
             <table class="table-auto w-full">
                 <thead>
@@ -62,7 +63,11 @@
     </div>
     <x-dialog-modal wire:model.live="verOperacion" >
         <x-slot name="title">
-            <h1>Cuenta Corriente</h1>
+            <div class="mt-4 text-2xl flex justify-between shadow-inner">
+                <div>Cuenta Corriente</div>
+
+            </div>
+
         </x-slot>
         <x-slot name="content" class="w-full">
             <div class='w-full'>

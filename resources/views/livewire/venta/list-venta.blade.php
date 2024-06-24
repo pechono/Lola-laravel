@@ -92,8 +92,10 @@
                                             <div>Fecha: {{ $operacion->created_at }} </div>
                                         </div>
                                     </td>
-                                    <td class="rounder border-l  border-r border-b border-white px-4 py-2 bg-slate-300" colspan="2">Usuario: {{ $operacion->name }} </td>
-                                    <td class="rounder border-l  border-r border-b  border-white px-4 py-2 bg-slate-300" colspan="3">Cliente: {{ $operacion->apellido }}, {{ $operacion->nombre }}</td>
+                                    <td class="rounder border-l  border-r border-b border-white px-4 py-2 bg-slate-300" colspan="2">Usuario: {{ $operacion->name }}  </td>
+                                    <td class="rounder border-l  border-r border-b border-white px-4 py-2 bg-slate-300" colspan="2">Usuario: Cliente: {{ $operacion->apellido }}, {{ $operacion->nombre }}</td>
+
+                                    <td class="rounder border-l  border-r border-b  border-white px-4 py-2 bg-slate-300" colspan="1">{{ $operacion->tipoVenta }}</td>
 
                                     <td class="rounder border-l  border-r border-b  border-white px-4 py-2 bg-slate-300" colspan="3"><div>Total {{ $operacion->venta }}</div></td>
                                 </tr>

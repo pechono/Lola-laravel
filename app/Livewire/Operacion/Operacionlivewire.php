@@ -116,7 +116,7 @@ class Operacionlivewire extends Component
 
 
             }
-            
+
         }else{
             Operacion::create([
                 'usuario_id'=>auth()->user()->id,
@@ -142,19 +142,9 @@ class Operacionlivewire extends Component
                 $changeStock->update([
                     'stock'=>$changeStock->stock - $car->cantidad,
                 ]);
-                /* Stock::where('articulo_id',$car->articulo_id)->update([
-                    'stock'=>$changeStock->stock - $car->cantidad,
-                ]); */
+
             }
         }
-        // if($this->tipo_id==4){
-        //        CuentaCorriente::create([
-        //         'cliente_id'=>$this->cliente_id,
-        //         'usuario_id'=>auth()->user()->id,
-        //         'operacion_id'=>$operacion->id,
-        //         'entrega'=>$this->cuentaCorriente
-        //        ]);
-        // }
 
         Car::truncate();
 

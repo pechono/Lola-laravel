@@ -184,7 +184,7 @@
     <!--Fin Delete  Confirmation Modal +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
 
     <!-- aDD User Confirmation Modal ***************************************************************-->
-    <x-dialog-modal wire:model.live="confirmingArticuloAdd">
+    <x-dialog-modal wire:model.live="confirmingArticuloAdd" maxWidth="2xl">
         <x-slot name="title">
             {{ __('Cargar Articulo') }}
         </x-slot>
@@ -326,7 +326,7 @@
 
 
           <!-- aDD User Confirmation Modal ***************************************************************-->
-    <x-dialog-modal wire:model.live="confirmingArticuloEdit">
+    <x-dialog-modal wire:model.live="confirmingArticuloEdit" maxWidth="2xl">
         <x-slot name="title">
             {{ __('Editar Articulo') }}
         </x-slot>
@@ -467,7 +467,7 @@
       <!--Fin Add  Confirmation Modal **************************************************************-->
 
        {{-- ----modal confirmar venta---- --}}
-       <x-dialog-modal wire:model.live="activarArt">
+       <x-dialog-modal wire:model.live="activarArt" maxWidth="2xl">
         <x-slot name="title">
             {{ __('Cambio de estado del Articulo') }}
         </x-slot>

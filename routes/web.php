@@ -28,6 +28,8 @@ Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified',])
     Route::get('/venta', function () {return view('venta.index'); })->name('venta.index');
     Route::get('/venta/list', function () {return view('venta.list'); })->name('venta.list');
     Route::get('/venta/cuentacorriente', function () {return view('venta.cuentaCorriente'); })->name('venta.cuentaCorriente');
+    Route::get('/venta/listcuentacorriente', function () {return view('venta.ListCuentaCorriente'); })->name('venta.ListCuentaCorriente');
+
 });
 
 
