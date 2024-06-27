@@ -12,7 +12,10 @@
         <div x-show="isOpen" class="absolute mt-2 w-48 bg-white rounded-md shadow-lg z-20">
             <ul>
                 <li class="px-4 py-2 hover:bg-gray-200"> <x-nav-link href="{{ route('venta.index') }}" :active="request()->routeIs('venta.index')">
-                    Vender
+                    Venta
+                  </x-nav-link></li>
+                <li class="px-4 py-2 hover:bg-gray-200"> <x-nav-link href="{{ route('venta.ventaExpress') }}" :active="request()->routeIs('venta.ventaExpress')">
+                    Venta Express
                   </x-nav-link></li>
                 <li class="px-4 py-2 hover:bg-gray-200"><x-nav-link href="{{ route('venta.list') }}" :active="request()->routeIs('venta.list')">
                     Ventas

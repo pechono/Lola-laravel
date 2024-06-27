@@ -7,8 +7,8 @@ use Illuminate\Http\Request;
 
 class ReportVentaController extends Controller
 {
-    public function pasar($operacion)
+    public function pasar($operacion, $volver)
     {
-    return view('venta.reporte',compact('operacion'));
+    return view('venta.reporte',compact('operacion','volver'));
 }
 }

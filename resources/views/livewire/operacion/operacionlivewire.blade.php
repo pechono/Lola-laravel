@@ -4,7 +4,7 @@
 
     </div>
 
-    <div class="mt-3w-full ">
+    <div class="mt-3 w-full ">
         <div class="col-span-6 sm:col-span-4 mt-4 rounded">
             <div class=' text-4xl bg-blue-100 mt-4 ' >Selecionar Cliente</div>
             <select  id="inidad"  class="block  w-full mt-4 text-1xl content-end " name="unidad" wire:model='cliente_id' class="rounded"/>
@@ -31,7 +31,6 @@
                 @endforeach
             </select>
             <x-input-error for="tipo" class="mt-2" />
-
         </div>
         <div class="col-span-6 sm:col-span-4 ">
             <div class=' text-4xl bg-blue-100 mt-4'> Detalles:</div>
@@ -84,7 +83,6 @@
     <x-slot name="title">
         {{ __('Cargar Cliente') }}
     </x-slot>
-
     <x-slot name="content">
         <div class="col-span-6 sm:col-span-4">
             <x-label for="apellido" value="{{ __('Apellido') }}" />
@@ -102,7 +100,6 @@
             <x-input-error for="telefono" class="mt-2" />
         </div>
     </x-slot>
-
     <x-slot name="footer">
         <x-danger-button wire:click="$toggle('confirmingClienteAdd', false)" wire:loading.attr="disabled">
             {{ __('Cancelar') }}

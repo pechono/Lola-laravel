@@ -29,6 +29,7 @@ Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified',])
     Route::get('/venta/list', function () {return view('venta.list'); })->name('venta.list');
     Route::get('/venta/cuentacorriente', function () {return view('venta.cuentaCorriente'); })->name('venta.cuentaCorriente');
     Route::get('/venta/listcuentacorriente', function () {return view('venta.ListCuentaCorriente'); })->name('venta.ListCuentaCorriente');
+    Route::get('/venta/express', function () {return view('venta.ventaExpress'); })->name('venta.ventaExpress');
 
 });
 
@@ -48,7 +49,7 @@ Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified',])
 
 });
 Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified',])->group(function () {
-    Route::get('report/comprobante/reporteVenta/{operacion}',[ReportVentaController::class,'pasar'])->name('venta.reporte');
+    Route::get('report/comprobante/reporteVenta/{operacion}/{volver}',[ReportVentaController::class,'pasar'])->name('venta.reporte');
     Route::get('/report/comprobante/{operacion}', [ReportVentaO::class,'generateReport'])->name('comprobante');
 
 

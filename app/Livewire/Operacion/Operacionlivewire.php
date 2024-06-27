@@ -47,7 +47,7 @@ class Operacionlivewire extends Component
         ->select( 'articulos.id', 'articulos.articulo', 'categorias.categoria', 'articulos.presentacion', 'unidads.unidad',
         'articulos.descuento', 'articulos.unidadVenta', 'articulos.precioF', 'articulos.precioI', 'articulos.caducidad', 'articulos.detalles',
         'articulos.suelto', 'articulos.activo','stocks.stock','stocks.stockMinimo', 'cars.cantidad','cars.articulo_id','cars.descuento')->get();
-            $total=0;
+        $total=0;
         foreach($inTheCar as $car){
             $subtotal=($car->cantidad*$car->precioF)-($car->cantidad*$car->precioF)*$car->descuento/100;
             $total+=$subtotal;
@@ -147,8 +147,7 @@ class Operacionlivewire extends Component
         }
 
         Car::truncate();
-
-        return redirect()->route('venta.reporte',['operacion'=>$operacion]);
+        return redirect()->route('venta.reporte',['operacion'=>$operacion,'volver'=>'venta.ventaExpress']);
     }
 
     public $apellido;

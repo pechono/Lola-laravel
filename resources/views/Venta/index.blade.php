@@ -5,7 +5,7 @@
          </h2>
      </x-slot> --}}
 
-     <div class="pt-20 bg-black">
+     <div class="pt-20">
          <div class="w-full mx-auto sm:px-6 lg:px-8">
                <livewire:venta.ventalivewire/>
          </div>
