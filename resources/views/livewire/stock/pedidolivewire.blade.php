@@ -9,7 +9,7 @@
         </div>
     </div>
 
-    <div class="mt-3w-full ">
+    <div class="mt-3 w-full ">
         <div class="flex justify-between">
             <div>
                 <input wire:model.live='q' type="search" placeholder="Buscar" class="shadow appearance-none border rounded w-full py-2 px-3
@@ -191,7 +191,7 @@
 
 
        {{-- ----modal confirmar venta---- --}}
-    <x-dialog-modal wire:model.live="eliminar">
+    <x-dialog-modal wire:model.live="eliminar" maxWidth="2xl">
             <x-slot name="title">
                 {{ __('Eliminar articulo') }}
             </x-slot>
@@ -259,7 +259,7 @@
 
 
      {{-- modal------------------------------------------------------------------------------- --}}
-     <x-dialog-modal wire:model.live="agregarCar">
+     <x-dialog-modal wire:model.live="agregarCar" maxWidth="2xl">
         <x-slot name="title">
             {{ __('Solicitar a Proveedores') }}
         </x-slot>

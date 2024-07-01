@@ -6,6 +6,7 @@ use App\Models\Empresa;
 use Livewire\Component;
 use App\Models\Operacion;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Carbon\Carbon;
 
 class ReportVentaO extends Component
 {

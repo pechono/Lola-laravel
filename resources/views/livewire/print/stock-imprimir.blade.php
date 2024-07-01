@@ -136,28 +136,26 @@ footer {
                             <tbody>
 
                                 @foreach ($articulos as $articulo)
-                                <tr>
-                                    <td class="rounder border px-4 py-2">{{ $articulo->id }}</td>
-                                    <td class="rounder border px-4 py-2">{{ $articulo->articulo }} {{ $articulo->presentacion }}-{{ $articulo->unidad }} {{ $articulo->categoria }}{{ $articulo->unidadVenta }}</td>
+                                    <tr>
+                                        <td class="rounder border px-4 py-2">{{ $articulo->id }}</td>
+                                        <td class="rounder border px-4 py-2">{{ $articulo->articulo }} {{ $articulo->presentacion }}-{{ $articulo->unidad }} {{ $articulo->categoria }} {{ $articulo->unidadVenta }}</td>
 
 
 
-                                    <td class="rounder border px-4 py-2">{{ $articulo->stockMinimo }}</td>
-                                    <td class="rounder border px-4 py-2">
-                                        @if ($articulo->suelto==1)
-                                        S-{{ $articulo->stock }}</div>
-
-                                        @else
-                                            {{ $articulo->stock }}
-
-                                        @endif
-                                    </td>
-                                    <td class="rounder border px-4 py-2"></td>
-                                    <td class="rounder border px-4 py-2"></td>
-                                    <td class="rounder border px-4 py-2"></td>
+                                        <td class="rounder border px-4 py-2">{{ $articulo->stockMinimo }}</td>
+                                        <td class="rounder border px-4 py-2">
+                                            @if ($articulo->suelto==1)
+                                                {{ 'S-' . $articulo->stock }}
+                                            @else
+                                                {{ $articulo->stock }}
+                                            @endif
+                                        </td>
+                                        <td class="rounder border px-4 py-2"></td>
+                                        <td class="rounder border px-4 py-2"></td>
+                                        <td class="rounder border px-4 py-2"></td>
 
 
-                                </tr>
+                                    </tr>
                                 @endforeach
                             </tbody>
 

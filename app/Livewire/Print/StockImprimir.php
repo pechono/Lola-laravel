@@ -11,7 +11,6 @@ use Carbon\Carbon;
 class StockImprimir extends Component
 {
     public $fecha;
-
     public function generateReport()
     {
 
@@ -26,10 +25,12 @@ class StockImprimir extends Component
         $fecha = Carbon::now()->format('Y-m-d: h:m:s');
 
 
-// Definir el nombre del archivo incluyendo la fecha
-        $nombreArchivo = "stock-{$fecha}.pdf";
+        // Definir el nombre del archivo incluyendo la fecha
+        // $nombreArchivo = "stock-{$this->fecha}.pdf";
         $pdf=Pdf::loadView('livewire.print.stock-imprimir', compact('emp','articulos'));
-        return $pdf->stream($nombreArchivo);
+        // return $pdf->stream($nombreArchivo);
+        // $pdf=Pdf::loadView('livewire.print.report-venta-o', compact('ventaOp','emp','datos'));
+        return $pdf->stream();
 
     }
 }

@@ -58,7 +58,7 @@ class VentaExpress extends Component
             $this->BloquearBoton=false;
         }
     }
-
+    public $estaEnCarrito;
     public function render()
     {
         $articulos = collect(); // Colección vacía por defecto
@@ -80,17 +80,19 @@ class VentaExpress extends Component
                 ->paginate(10);
         }
 
-        $inTheCar=Car::join('articulos','cars.articulo_id','=','articulos.id')
+       $inTheCar=Car::join('articulos','cars.articulo_id','=','articulos.id')
         ->join('categorias', 'categorias.id', '=', 'articulos.categoria_id')
         ->join('unidads', 'unidads.id', '=', 'articulos.unidad_id')
         ->join('stocks', 'stocks.articulo_id','=','articulos.id')
         ->select( 'articulos.id', 'articulos.articulo', 'categorias.categoria', 'articulos.presentacion', 'unidads.unidad',
         'articulos.descuento', 'articulos.unidadVenta', 'articulos.precioF', 'articulos.precioI', 'articulos.caducidad', 'articulos.detalles',
         'articulos.suelto', 'articulos.activo','stocks.stock','stocks.stockMinimo', 'cars.cantidad','cars.articulo_id','cars.descuento')->get();
+        foreach ($articulos as $articulo){
+             $this->estaEnCarrito = $inTheCar->contains('articulo_id', $articulo->id);
+        }
         $countCar = Car::count();
         $tipoVentas=TipoVenta::all();
         $clientes=Cliente::all();
-        $this->Total();
         $this->cancelarBoton();
 
         return view('livewire.venta.express.venta-express',compact('inTheCar','articulos','countCar','tipoVentas','clientes'));
@@ -100,10 +102,9 @@ class VentaExpress extends Component
         ->join('stocks', 'stocks.articulo_id','=','articulos.id')
         ->select( 'articulos.id',
         'articulos.precioF', 'articulos.precioI', 'articulos.caducidad', 'cars.cantidad','cars.articulo_id','cars.descuento')->get();
-
+        $this->total=0;
         foreach($inTheCar as $car){
-            $subtotal=($car->cantidad*$car->precioF)-($car->cantidad*$car->precioF)*$car->descuento/100;
-            $this->total+=$subtotal;
+            $this->total+= ($car->cantidad*$car->precioF)-($car->cantidad*$car->precioF)*$car->descuento/100;
         }
     }
     public $id;
@@ -132,14 +133,14 @@ class VentaExpress extends Component
     public $articulosMuestra=[];
     public function addCar($id)
     {
-        $this->articulosMuestra=Articulo::where('activo',$this->active)
-        ->orderBy($this->sortBy, $this->sortAsc ? 'ASC' : 'DESC')
-        ->select('articulos.id', 'articulos.articulo', 'categorias.categoria', 'articulos.presentacion', 'unidads.unidad',
-        'articulos.descuento', 'articulos.unidadVenta', 'articulos.precioF', 'articulos.precioI', 'articulos.caducidad', 'articulos.detalles',
-        'articulos.suelto', 'articulos.activo','stocks.stock','stocks.stockMinimo')
+        $this->articulosMuestra = Articulo::select('articulos.id','articulos.articulo','categorias.categoria','articulos.presentacion','unidads.unidad','articulos.descuento','articulos.unidadVenta',
+            'articulos.precioF','articulos.precioI','articulos.caducidad','articulos.detalles','articulos.suelto','articulos.activo','stocks.stock','stocks.stockMinimo')
         ->join('categorias', 'categorias.id', '=', 'articulos.categoria_id')
         ->join('unidads', 'unidads.id', '=', 'articulos.unidad_id')
-        ->join('stocks', 'stocks.articulo_id','=','articulos.id')->first($id);
+        ->join('stocks', 'stocks.articulo_id', '=', 'articulos.id')
+        ->where('articulos.activo', $this->active)
+        ->find($id);
+
 
         $this->agregarCant=true;
     }
@@ -166,16 +167,15 @@ class VentaExpress extends Component
     }
 
     public $cDescuento=false;
-    public function descuentoArt($i){
+    public function descuentoArt($id){
 
-        $articulos=Articulo::where('activo',$this->active)
-        ->orderBy($this->sortBy, $this->sortAsc ? 'ASC' : 'DESC')
-        ->select('articulos.id', 'articulos.articulo', 'categorias.categoria', 'articulos.presentacion', 'unidads.unidad',
-        'articulos.descuento', 'articulos.unidadVenta', 'articulos.precioF', 'articulos.precioI', 'articulos.caducidad', 'articulos.detalles',
-        'articulos.suelto', 'articulos.activo','stocks.stock','stocks.stockMinimo')
-        ->join('categorias', 'categorias.id', '=', 'articulos.categoria_id')
-        ->join('unidads', 'unidads.id', '=', 'articulos.unidad_id')
-        ->join('stocks', 'stocks.articulo_id','=','articulos.id')->find($i);
+        $articulos=Articulo::select('articulos.id','articulos.articulo','categorias.categoria','articulos.presentacion','unidads.unidad','articulos.descuento','articulos.unidadVenta',
+                                    'articulos.precioF','articulos.precioI','articulos.caducidad','articulos.detalles','articulos.suelto','articulos.activo','stocks.stock','stocks.stockMinimo')
+            ->join('categorias', 'categorias.id', '=', 'articulos.categoria_id')
+            ->join('unidads', 'unidads.id', '=', 'articulos.unidad_id')
+            ->join('stocks', 'stocks.articulo_id', '=', 'articulos.id')
+            ->where('articulos.activo', $this->active)
+            ->find($id);
 
             $this->id=$articulos->id;
             $this->art=$articulos->articulo;
@@ -194,7 +194,7 @@ class VentaExpress extends Component
             $this->proveedor_id=$articulos->proveedor_id;
 
             $this->cDescuento=true;
-            $this->Total();
+            // $this->Total();
     }
 
     public function saveDescuento($idart){
@@ -234,7 +234,7 @@ class VentaExpress extends Component
          'articulos.descuento', 'articulos.unidadVenta', 'articulos.precioF', 'articulos.precioI', 'articulos.caducidad', 'articulos.detalles',
          'articulos.suelto', 'articulos.activo','stocks.stock','stocks.stockMinimo', 'cars.cantidad','cars.articulo_id','cars.descuento')->get();
 
-        $this->Total();
+        // $this->Total();
         $this->validate(['tipo_id'=>'required|numeric','cliente_id'=>'required|numeric']);
 
          if($this->tipo_id==4)

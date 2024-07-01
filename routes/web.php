@@ -7,7 +7,7 @@ use App\Livewire\Report\PedidoProveedor;
 use Illuminate\Support\Facades\Route;
 use App\Livewire\Print\ReportVentaO;
 use App\Livewire\Print\PrintPedido;
-use App\Livewire\Print\StockImprimir as PrintStockImprimir;
+// use App\Livewire\Print\StockImprimir as PrintStockImprimir;
 use App\Livewire\Print\StockImprimir;
 
 Route::get('/', function () {
@@ -33,12 +33,14 @@ Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified',])
 
 });
 
-
+Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified',])->group(function () {
+    Route::get('/cierre', function () {return view('cierre.cierreCaja'); })->name('cierre.cierreCaja');
+});
 Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified',])->group(function () {
     Route::get('/operacion', function () {return view('operacion.index'); })->name('operacion.index');
     Route::get('/operacion/list', function () {return view('operacion.list'); })->name('operacion.list');
-
 });
+
 Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified',])->group(function () {
     Route::get('/stock', function () {return view('stock.index'); })->name('stock.index');
     Route::get('/stock/pedido', function () {return view('stock.pedido'); })->name('stock.pedido');
