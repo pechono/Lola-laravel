@@ -77,6 +77,20 @@
             </ul>
         </div>
     </div>
+    <div class="relative mt-3" x-data="{ isOpen: @entangle('isOpen') }">
+        <button @click="isOpen = !isOpen" class="px-4 py-2 bg-blue-500 text-white rounded">
+            Informes
+        </button>
+
+        <div x-show="isOpen" class="absolute mt-2 w-48 bg-white rounded-md shadow-lg z-20">
+            <ul>
+                <li class="px-4 py-2 hover:bg-gray-200"><x-nav-link href="{{ route('informes.masVendido') }}" :active="request()->routeIs('informes.masVendido')">
+                    Mas Vendido
+                  </x-nav-link></li>
+
+            </ul>
+        </div>
+    </div>
 
 
 

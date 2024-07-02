@@ -53,7 +53,10 @@ Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified',])
 Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified',])->group(function () {
     Route::get('report/comprobante/reporteVenta/{operacion}/{volver}',[ReportVentaController::class,'pasar'])->name('venta.reporte');
     Route::get('/report/comprobante/{operacion}', [ReportVentaO::class,'generateReport'])->name('comprobante');
-
-
 });
+
+Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified',])->group(function () {
+    Route::get('/informes/masvendidos', function () {return view('informes.masVendidos'); })->name('informes.masVendidos');
+});
+
 
