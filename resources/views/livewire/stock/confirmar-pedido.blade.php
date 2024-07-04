@@ -80,12 +80,7 @@
         </table>
    </div>
 
-    <div class="mt-2">
-    {{--   {{ $articulos->links() }} --}}
-    </div>
-
-
-    <x-dialog-modal wire:model.live="modal">
+     <x-dialog-modal wire:model.live="modal" maxWidth="2xl">
         <x-slot name="title">
             {{ __('Eliminar articulo') }}
         </x-slot>

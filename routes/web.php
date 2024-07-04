@@ -59,4 +59,14 @@ Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified',])
     Route::get('/informes/masvendidos', function () {return view('informes.masVendidos'); })->name('informes.masVendidos');
 });
 
+Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified',])->group(function () {
+    Route::get('/proveedor', function () {return view('proveedor.proveedor'); })->name('proveedor.proveedor');
+});
+Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified',])->group(function () {
+    Route::get('/proveedor/creargrupo', function () {return view('proveedor.crearGrupo'); })->name('proveedor.crearGrupo');
+    Route::get('/proveedor/grupoarticulo', function () {return view('proveedor.articuloGrupo'); })->name('proveedor.articuloGrupo');
+
+});
+
+
 

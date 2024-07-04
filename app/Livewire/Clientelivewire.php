@@ -142,6 +142,5 @@ class Clientelivewire extends Component
 
          return $this->msj='se edito correctamente'. $this->idC;
      }
-
-     /* ----------------------Fin editar Cliente--------------------------- */
+     
 }

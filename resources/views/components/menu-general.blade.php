@@ -84,13 +84,28 @@
 
         <div x-show="isOpen" class="absolute mt-2 w-48 bg-white rounded-md shadow-lg z-20">
             <ul>
-                <li class="px-4 py-2 hover:bg-gray-200"><x-nav-link href="{{ route('informes.masVendido') }}" :active="request()->routeIs('informes.masVendido')">
+                <li class="px-4 py-2 hover:bg-gray-200"><x-nav-link href="{{ route('informes.masVendidos') }}" :active="request()->routeIs('informes.masVendidos')">
                     Mas Vendido
                   </x-nav-link></li>
 
             </ul>
         </div>
     </div>
+    <div class="relative mt-3" x-data="{ isOpen: @entangle('isOpen') }">
+        <button @click="isOpen = !isOpen" class="px-4 py-2 bg-blue-500 text-white rounded">
+            Proveedor
+        </button>
+
+        <div x-show="isOpen" class="absolute mt-2 w-48 bg-white rounded-md shadow-lg z-20">
+            <ul>
+                <li class="px-4 py-2 hover:bg-gray-200"><x-nav-link href="{{ route('proveedor.proveedor') }}" :active="request()->routeIs('proveedor.proveedor')">
+                   Proveedor
+                  </x-nav-link></li>
+
+            </ul>
+        </div>
+    </div>
+
 
 
 
