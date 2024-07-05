@@ -1,5 +1,5 @@
 <div class="p-2  w-full sm:px-5 bg-white dark:bg-gray-800 dark:bg-gradient-to-bl dark:from-gray-700/50 dark:via-transparent border-b border-gray-200 dark:border-gray-700">
-        <div>Proveedor</div>
+        <div class=" text-xl">Proveedor</div>
 
         <div class="mt-3">
             <div class="flex justify-between">

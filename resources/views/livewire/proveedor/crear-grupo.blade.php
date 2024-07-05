@@ -1,16 +1,13 @@
 <div class="p-2  w-full sm:px-5 bg-white dark:bg-gray-800 dark:bg-gradient-to-bl dark:from-gray-700/50 dark:via-transparent border-b border-gray-200 dark:border-gray-700">
-    <div>Proveedor</div>
+    <div class=" text-xl">Crear Grupo </div>
 
     <div class="mt-3">
         <div class="flex justify-between">
             <div>
-
+                Selecionar el Proveedor para crear Grupo
             </div>
             <div class="mr-2">
-
-             <a href="{{ route('proveedor.proveedor') }}" class="bg-blue-800 hover:bg-blue-500 p-2 text-white rounded-md">Crear Nuevo Proveedor</a>
-
-
+                <a href="{{ route('proveedor.proveedor') }}" class="bg-blue-800 hover:bg-blue-500 p-2 text-white rounded-md">Crear Nuevo Proveedor</a>
             </div>
         </div>
         <table class="table-auto w-full">
@@ -37,7 +34,7 @@
                     <td class="rounder border px-4 py-2">{{ $proveedor->localidad }}</td>
                     <td class="rounder border px-4 py-2">{{ $proveedor->mail }}</td>
                     <td class="rounder border px-4 py-2">
-                       <button wire:click='modalGrupo({{ $proveedor->id }})' class="bg-green-600 hover:bg-green-300 text-white rounded-md p-2">Crear Grupo</button>
+                       <button wire:click='modalGrupo({{ $proveedor->id }})' class="bg-green-600 hover:bg-green-300 text-white rounded-md p-2">Crear</button>
                     </td>
                 </tr>
                 @empty
@@ -50,7 +47,7 @@
  @if ($crearGrupoModal)
     <x-dialog-modal wire:model.live="crearGrupoModal" maxWidth="2xl" >
         <x-slot name="title">
-            {{ __('Cargar Proveedor') }}
+            {{ __('Grupos - Crear') }}
         </x-slot>
         <x-slot name="content">
             <div class="col-span-6 sm:col-span-4 text-xl my-10">
@@ -87,6 +84,7 @@
             </div>
 
             <div class="col-span-6 sm:col-span-4 text-xl my-10">
+                <div>Grupos Asociados al Proveedor</div>
                 <table class="table-auto w-full rounded-md">
                     <tr>
                         <td class="px-4 py-2 border border-slate-300 bg-sky-400/50 text-lg ">Id</td>

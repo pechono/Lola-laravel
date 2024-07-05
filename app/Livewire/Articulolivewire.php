@@ -141,7 +141,7 @@ class Articulolivewire extends Component
         'categoria_id'=>'required',
         'presentacion'=>'required|string|min:1',
         'unidad_id'=>'required',
-        'descuento'=>'required|numeric|min:1',
+        'descuento'=>'required|numeric',
         'unidadVenta'=>'required|string|min:1',
         'precioI'=>'required|numeric|min:1',
         'precioF'=>'required|numeric|min:1',
@@ -265,6 +265,7 @@ class Articulolivewire extends Component
          ]);
          $this->activarArt=false;
     }
+    
 }
 
 

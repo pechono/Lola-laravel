@@ -1,14 +1,14 @@
 <div class="p-2  w-full sm:px-5 bg-white dark:bg-gray-800 dark:bg-gradient-to-bl dark:from-gray-700/50 dark:via-transparent border-b border-gray-200 dark:border-gray-700">
 
-
     <div class="mt-3">
         <div class="flex justify-between">
-            <div class="text-xl">Grupos - Rubros - Proveedor</div>
+            <div class="text-xl">Grupos - Proveedor</div>
 
             <div class="mr-2">
                 <a href="{{ route('proveedor.proveedor') }}" class="bg-blue-800 hover:bg-blue-500 p-2 text-white rounded-md">Crear Nuevo Proveedor</a>
             </div>
         </div>
+        <div>Selecionar Proveedor Para Ver Grupo</div>
         <table class="table-auto w-full">
             <thead>
                 <tr>
@@ -33,7 +33,9 @@
                     <td class="rounder border px-4 py-2">{{ $proveedor->localidad }}</td>
                     <td class="rounder border px-4 py-2">{{ $proveedor->mail }}</td>
                     <td class="rounder border px-4 py-2">
-                       <button wire:click='modalArticulosGrupo({{ $proveedor->id }})' class="bg-green-600 hover:bg-green-300 text-white rounded-md p-2">Ver Grupo</button>
+                       <button wire:click='modalArticulosGrupo({{ $proveedor->id }})' class="bg-green-600 hover:bg-green-300 text-white rounded-md p-2">
+                        Ver
+                    </button>
                     </td>
                 </tr>
                 @empty
@@ -43,74 +45,15 @@
         </table>
     </div>
 
-    {{-- @if ($VerArticulosGrupo)
-        <x-dialog-modal wire:model.live="VerArticulosGrupo"  maxWidth="2xl">
-            <x-slot name="title">
-                {{ __('Grupos') }}
-            </x-slot>
-            <x-slot name="content">
-                <div class="col-span-6 sm:col-span-4 text-xl my-5">
-                    <table class="table-auto w-auto rounded-md">
-                        <tr>
-                            <td class="px-4 py-2 border border-slate-300 bg-sky-400/50 text-lg ">Empresa</td><td class="rounder border px-4 py-2">{{  $datosPro->nombre }}</td>
-                        </tr>
-                        <tr>
-                            <td class="px-4 py-2 border border-slate-300 bg-sky-400/50 text-lg ">Rubro</td><td class="rounder border px-4 py-2">{{  $datosPro->rubro }}</td>
-                        </tr>
-                        <tr>
-                            <td class="px-4 py-2 border border-slate-300 bg-sky-400/50 text-lg ">Localidad</td><td class="rounder border px-4 py-2">{{  $datosPro->localidad }}</td>
-                        </tr>
-                        <tr>
-                            <td class="px-4 py-2 border border-slate-300 bg-sky-400/50 text-lg ">Telefono</td><td class="rounder border px-4 py-2">{{  $datosPro->telefono }}</td>
-                        </tr>
-                    </table>
-                </div>
 
 
-                <div class="col-span-6 sm:col-span-4 text-xl my-5 w-auto">
-                    <table class=" w-auto rounded-md">
-                        <tr>
-                            <td class="px-4 py-2 border border-slate-300 bg-sky-400/50 text-lg ">Id</td>
-                            <td class="px-4 py-2 border border-slate-300 bg-sky-400/50 text-lg ">Grupo</td>
-                            <td class="px-4 py-2 border border-slate-300 bg-sky-400/50 text-lg ">Porcentaje</td>
-                            <td class="px-4 py-2 border border-slate-300 bg-sky-400/50 text-lg ">Accion</td>
-                        </tr>
 
-                        @forelse ($gruposProv as $item)
-                            <tr>
-                                <td class="px-4 py-2 border border-sky-400/50 text-lg ">{{ $item->id }}</td>
-                                <td class="px-4 py-2 border border-sky-400/50 text-lg ">{{ $item->NombreGrupo }}</td>
-                                <td class="px-4 py-2 border border-sky-400/50 text-lg ">{{ $item->porsentaje }}</td>
-                                <td class="px-4 py-2 border border-sky-400/50 text-lg ">
-                                    <button wire:click='ArticulosGrupo({{ $item->id }})' class="bg-green-600 hover:bg-green-300 text-white rounded-md p-2">Ver Grupo</button>
-
-                                </td>
-                            </tr>
-                        @empty
-                            <tr>
-                                <td class="px-4 py-2 border border-sky-400/50 text-lg " colspan="4">No hay Grupos para este Proveedor</td>
-
-                            </tr>
-                        @endforelse
-                    </table>
-                </div>
-            </x-slot>
-
-            <x-slot name="footer">
-                <x-secondary-button class="ms-3" wire:click="$toggle('VerArticulosGrupo', false)" wire:loading.attr="disabled">
-                    {{ __('Cerrar') }}
-                </x-secondary-button>
-            </x-slot>
-        </x-dialog-modal>
-    @endif --}}
-    @if ($VerArticulosGrupo)
-    <x-dialog-modal wire:model.live="VerArticulosGrupo" maxWidth="2xl">
+@if ($VerArticulosGrupo) {{-- ---1--- proveedor->grupo --}}
+     <x-dialog-modal wire:model.live="VerArticulosGrupo" maxWidth="2xl">
         <x-slot name="title">
             <div class="flex justify-between m-5">
-                <div class="text-xl">Proveedor - Grupo </div>
-
+                <div class="text-xl">Proveedor</div>
                 <div class="mr-2">
-                   
                     <button wire:click='modalGrupo({{ $datosPro->id }})' class="bg-blue-800 hover:bg-blue-500 p-2 text-white rounded-md">Crear Grupo</button>
                 </div>
             </div>
@@ -139,6 +82,7 @@
             </div>
 
             <div class="col-span-6 sm:col-span-4 text-xl my-5 w-full">
+                <div class="text-xl">Grupos Del Proveedor</div>
                 <table class="table-auto w-full rounded-md">
                     <thead>
                         <tr>
@@ -176,61 +120,85 @@
     </x-dialog-modal>
 @endif
 
-@if ($articulosGrupoModal)
-        <x-dialog-modal wire:model.live="articulosGrupoModal"  >
+@if ($articulosGrupoModal){{-- ---2---- Articulos->Grupo --}}
+        <x-dialog-modal wire:model.live="articulosGrupoModal" maxWidth="2.5xl">
         <x-slot name="title">
-            {{ __(' Articulos Asociados a un Grupos') }}
+            <div class="flex justify-between m-5">
+                <div class="text-xl">Articulos Asociados a un Grupo</div>
+
+                <div class="mr-2">
+                    <button wire:click='modalArticulos({{ $datos->idGrupo }})' class="bg-blue-800 hover:bg-blue-500 p-2 text-white rounded-md">
+                        Asociar Articulo
+                    </button>
+                </div>
+            </div>
+
         </x-slot>
         <x-slot name="content">
             <div class="col-span-6 sm:col-span-4 text-xl my-10">
+                <div class="text-xl">Proveedor</div>
+
                 <table class="table-auto w-full rounded-md">
                     <tr>
-                        <td class="px-4 py-2 border border-slate-300 bg-sky-400/50 text-lg ">Empresa</td>
+                        <td class="px-4 py-2 border border-white bg-sky-400/50 text-lg ">Empresa</td>
                         <td class="rounder border px-4 py-2">{{  $datos->nombre }}</td>
                     </tr>
                     <tr>
-                        <td class="px-4 py-2 border border-slate-300 bg-sky-400/50 text-lg ">Rubro</td>
+                        <td class="px-4 py-2 border border-white bg-sky-400/50 text-lg ">Rubro</td>
                         <td class="rounder border px-4 py-2">{{  $datos->rubro }}</td>
                     </tr>
                     <tr>
-                        <td class="px-4 py-2 border border-slate-300 bg-sky-400/50 text-lg ">Localidad</td>
+                        <td class="px-4 py-2 border border-white bg-sky-400/50 text-lg ">Localidad</td>
                         <td class="rounder border px-4 py-2">{{  $datos->localidad }}</td>
                     </tr>
                     <tr>
-                        <td class="px-4 py-2 border border-slate-300 bg-sky-400/50 text-lg ">Telefono</td>
+                        <td class="px-4 py-2 border border-white bg-sky-400/50 text-lg ">Telefono</td>
                         <td class="rounder border px-4 py-2">{{  $datos->telefono }}</td>
                     </tr>
                     <tr>
-                        <td class="px-4 py-2 border border-slate-300 bg-sky-400/50 text-lg ">Telefono</td>
-                        <td class="rounder border px-4 py-2">{{  $datos->NombreGrupo }}</td>
+                        <td class="px-4 py-2 border border-white bg-sky-400/50 text-xl ">Grupo</td>
+                        <td class="px-4 py-2 border border-white bg-sky-400/50 text-xl ">{{  $datos->idGrupo }}-{{  $datos->NombreGrupo }}</td>
                     </tr>
                 </table>
             </div>
 
 
-            <div class="col-span-6 sm:col-span-4 text-xl my-10">
+            <div class="col-span-6 sm:col-span-4 text-xl my-5">
+                <div class="text-xl">Articulos En Grupo</div>
+
                 <table class="table-auto w-full rounded-md">
                     <tr>
                         <td class="px-4 py-2 border border-slate-300 bg-sky-400/50 text-lg ">Id</td>
                         <td class="px-4 py-2 border border-slate-300 bg-sky-400/50 text-lg ">Articulo</td>
-                        <td class="px-4 py-2 border border-slate-300 bg-sky-400/50 text-lg ">precio</td>
+                        <td class="px-4 py-2 border border-slate-300 bg-sky-400/50 text-lg ">Presentacion</td>
+                        <td class="px-4 py-2 border border-slate-300 bg-sky-400/50 text-lg ">Categoria</td>
+                        <td class="px-4 py-2 border border-slate-300 bg-sky-400/50 text-lg ">Proveedor</td>
+                        <td class="px-4 py-2 border border-slate-300 bg-sky-400/50 text-lg ">Stock</td>
+
                         <td class="px-4 py-2 border border-slate-300 bg-sky-400/50 text-lg ">Accion</td>
+
+
                     </tr>
 
                     @forelse ($ArtGrupo as $item)
                         <tr>
-                            <td class="px-4 py-2 border border-sky-400/50 text-lg ">{{ $item->id }}</td>
-                            <td class="px-4 py-2 border border-sky-400/50 text-lg ">{{ $item->articulo }}</td>
-                            <td class="px-4 py-2 border border-sky-400/50 text-lg ">{{ $item->presentcion }}</td>
-                            <td class="px-4 py-2 border border-sky-400/50 text-lg ">
-                                <button wire:click='ArticulosGrupo({{ $item->id }})' class="bg-green-600 hover:bg-green-300 text-white rounded-md p-2">
-                                    Ver Grupo
+                            <td class="px-4 py-2 border border-sky-400/50 text-lg">{{ $item->id }}</td>
+                            <td class="px-4 py-2 border border-sky-400/50 text-lg">{{ $item->articulo }}</td>
+                            <td class="px-4 py-2 border border-sky-400/50 text-lg">{{ $item->presentacion }}-{{ $item->unidad }}</td>
+                            <td class="px-4 py-2 border border-sky-400/50 text-lg">{{ $item->categoria }}</td>
+                            <td class="px-4 py-2 border border-sky-400/50 text-lg">{{ $item->nombre }}</td>
+                            <td class="px-4 py-2 border border-sky-400/50 text-lg">{{ $item->stock }}</td>
+
+
+                            <td class="px-4 py-2 border border-sky-400/50 text-lg">
+                                <button wire:click='QuitarArticulosGrupo({{ $item->id }})' class="bg-red-600 hover:bg-red-300 text-white rounded-md p-2">
+                                    Quitar
                                 </button>
                             </td>
                         </tr>
                     @empty
                         <tr>
-                            <td class="px-4 py-2 border border-sky-400/50 text-lg " colspan="3">No hay Grupos para este Proveedor</td>
+                            <td class="px-4 py-2 border border-sky-400/50 text-lg " colspan="3">No hay Articulos Asociados</td>
                         </tr>
                     @endforelse
                 </table>
@@ -238,14 +206,94 @@
         </x-slot>
 
         <x-slot name="footer">
-            <x-secondary-button class="ms-3" wire:click="$toggle('articulosGrupoModal', false)" wire:loading.attr="disabled">
+            <x-secondary-button class="ms-3" wire:click="cerrar2()" wire:loading.attr="disabled">
                 {{ __('Cerrar') }}
             </x-secondary-button>
         </x-slot>
         </x-dialog-modal>
 @endif
 
-@if ($crearGrupoModal)
+ @if ($modalArticulosVar){{-- --3--- Articulos a Grupo --}}
+    <x-dialog-modal wire:model.live="modalArticulosVar"  maxWidth="2.5xl">
+    <x-slot name="title">
+        <div class="flex justify-between m-5">
+            <div class="text-xl">Asociar Articulosa un Grupos</div>
+        </div>
+
+    </x-slot>
+    <x-slot name="content">
+        <div class="col-span-6 sm:col-span-4 text-xl my-10">
+            <div class="text-xl">Proveedor</div>
+
+            <table class="table-auto w-full rounded-md">
+                <tr>
+                    <td class="px-4 py-2 border border-slate-300 bg-sky-400/50 text-lg ">Empresa</td>
+                    <td class="rounder border px-4 py-2">{{  $datos->nombre }}</td>
+                </tr>
+                <tr>
+                    <td class="px-4 py-2 border border-slate-300 bg-sky-400/50 text-lg ">Rubro</td>
+                    <td class="rounder border px-4 py-2">{{  $datos->rubro }}</td>
+                </tr>
+                <tr>
+                    <td class="px-4 py-2 border border-slate-300 bg-sky-400/50 text-lg ">Localidad</td>
+                    <td class="rounder border px-4 py-2">{{  $datos->localidad }}</td>
+                </tr>
+                <tr>
+                    <td class="px-4 py-2 border border-slate-300 bg-sky-400/50 text-lg ">Telefono</td>
+                    <td class="rounder border px-4 py-2">{{  $datos->telefono }}</td>
+                </tr>
+                <tr>
+                    <td class="px-4 py-2 border border-white bg-sky-400/50 text-xl ">Grupo</td>
+                    <td class="px-4 py-2 border border-white bg-sky-400/50 text-xl ">{{ $datos->idGrupo }}-{{  $datos->NombreGrupo }}</td>
+                </tr>
+            </table>
+        </div>
+
+
+        <div class="col-span-6 sm:col-span-4 text-xl my-10">
+            <div class="text-xl">Articulos Sin Agrupar</div>
+
+            <table class="table-auto w-full rounded-md">
+                <tr>
+                    <td class="px-4 py-2 border border-slate-300 bg-sky-400/50 text-lg ">Id</td>
+                    <td class="px-4 py-2 border border-slate-300 bg-sky-400/50 text-lg ">Articulo</td>
+                    <td class="px-4 py-2 border border-slate-300 bg-sky-400/50 text-lg ">Categoria</td>
+                    <td class="px-4 py-2 border border-slate-300 bg-sky-400/50 text-lg ">Proveedor</td>
+
+                    <td class="px-4 py-2 border border-slate-300 bg-sky-400/50 text-lg ">Accion</td>
+                </tr>
+
+                @forelse ($articulosSinGrupo as $item)
+                    <tr>
+                        <td class="px-4 py-2 border border-sky-400/50 text-lg ">{{ $item->id }}</td>
+                        <td class="px-4 py-2 border border-sky-400/50 text-lg ">{{ $item->articulo }} {{ $item->presentacion }}-{{ $item->unidad }}</td>
+                        <td class="px-4 py-2 border border-sky-400/50 text-lg ">{{ $item->categoria }}</td>
+                        <td class="px-4 py-2 border border-sky-400/50 text-lg ">{{ $item->nombre }}</td>
+
+                        <td class="px-4 py-2 border border-sky-400/50 text-lg ">
+                            <button wire:click='articuloEnGrupo({{ $datos->idGrupo }},{{ $item->id }})' class="bg-green-600 hover:bg-green-300 text-white rounded-md p-2">
+                                Agrupar
+                            </button>
+                        </td>
+                    </tr>
+                @empty
+                    <tr>
+                        <td class="px-4 py-2 border border-sky-400/50 text-lg " colspan="5">No hay Articulos sin Asociar</td>
+                    </tr>
+                @endforelse
+            </table>
+        </div>
+    </x-slot>
+
+    <x-slot name="footer">
+        <x-secondary-button class="ms-3" wire:click='cerrar3()' wire:loading.attr="disabled">
+            {{ __('Cerrar') }}
+        </x-secondary-button>
+    </x-slot>
+    </x-dialog-modal>
+@endif
+
+@if ($crearGrupoModal){{-- Cargar Proveedor --}}
     <x-dialog-modal wire:model.live="crearGrupoModal" maxWidth="2xl" >
         <x-slot name="title">
             {{ __('Cargar Proveedor') }}
@@ -285,6 +333,7 @@
             </div>
 
             <div class="col-span-6 sm:col-span-4 text-xl my-10">
+                <div>Grupos Asociados al Proveedor</div>
                 <table class="table-auto w-full rounded-md">
                     <tr>
                         <td class="px-4 py-2 border border-slate-300 bg-sky-400/50 text-lg ">Id</td>
