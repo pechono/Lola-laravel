@@ -1,4 +1,4 @@
-<div class="w-full p-2 sm:px-5 bg-white dark:bg-gray-800 dark:bg-gradient-to-bl dark:from-gray-700/50 dark:via-transparent border-b border-gray-200 dark:border-gray-700">
+<div class="w-auto p-2 sm:px-5 bg-white dark:bg-gray-800 dark:bg-gradient-to-bl dark:from-gray-700/50 dark:via-transparent border-b border-gray-200 dark:border-gray-700">
     <div class="mt-4 text-2xl flex justify-between shadow-inner">
         <div>Stock Actual</div>
         <div class="mr-2">
@@ -21,7 +21,7 @@
             </div>
 
         </div>
-        <table class="table-auto w-full">
+        <table class="table-auto w-auto">
             <thead>
                 <tr>
                     <td class="px-4 py-2">
@@ -57,7 +57,7 @@
                     </td>
                     <td class="px-4 py-2">
                         <div class="flex items-center">
-                            <Button wire:click="sortby('unidadVenta')">Unidad Cantidad</Button>
+                            <Button wire:click="sortby('unidadVenta')">Unidad Cant.</Button>
                             <x-sort-icon sortFiel='telefono': sort-by='$sortBy' : sort-asc='$sortAsc/'>
                         </div>
                     </td>
@@ -87,7 +87,7 @@
                     </td>
                     <td class="px-4 py-2">
                         <div class="flex items-center">
-                            <Button wire:click="sortby('stockMinimo')">Stock Minimo</Button>
+                            <Button wire:click="sortby('stockMinimo')">Stock Min.</Button>
                             <x-sort-icon sortFiel='telefono': sort-by='$sortBy' : sort-asc='$sortAsc/'>
                         </div>
                     </td>
@@ -140,7 +140,7 @@
                     </td>
 
                     @else
-                    <td class="rounder border px-4 py-2">
+                    <td class="rounder border flex">
                         <x-secondary-button wire:click="confirmarArticuloEdit({{ $articulo->id }})" wire:loading.attr="disabled" class="bg-green-700 hover:bg-green-500">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
@@ -165,7 +165,7 @@
       {{ $articulos->links() }}
     </div>
           <!-- aDD User Confirmation Modal ***************************************************************-->
-    <x-dialog-modal wire:model.live="confirmingArticuloEdit">
+    <x-dialog-modal wire:model.live="confirmingArticuloEdit" maxWidth="2xl">
         <x-slot name="title">
             {{ __('Editar Articulo') }}
         </x-slot>
@@ -173,7 +173,7 @@
             <div class="col-span-6 sm:col-span-4"> <x-label for="articulo" value="{{ __('Articulo') }}" />
 
                 <x-label for="articulo" value="{{ __('Articulo') }}" />
-                <x-input id="articulo" type="text" class="mt-1 block w-full" wire:model='articulo' placeholder="Articulo" readonly/>
+                <x-input id="articulo" type="text" class="mt-1 block w-full text-xl" wire:model='articulo' placeholder="Articulo" readonly/>
                 <x-input-error for="articulo" class="mt-2" />
             </div>
             <div class="col-span-6 sm:col-span-4 mt-2 rounded">
@@ -189,73 +189,11 @@
                 <x-input-error for="categoria" class="mt-2" />
 
             </div>
-            <div class="col-span-6 sm:col-span-4 mt-2 rounded grid grid-flow-col justify-stretch">
-                <div>
-                    <x-label for="presentacion" value="{{ __('Presentacion ') }}" />
-                    <x-input id="presentacion" type="text" class="mt-1 block w-full" wire:model='presentacion' placeholder="Presentacion"  disabled/>
-                    <x-input-error for="presentacion" class="mt-2" />
-
-                </div>
-                <div >
-                    <x-label for="unidad" value="       (Ejemplo: 500-gm)" />
-                    <select  id="inidad"  class="block mt-1 w-full" name="unidad" wire:model='unidad_id' class="rounded" disabled/>
-                         <option value="">Seleccionar...</option>
-                         @foreach ($unidades as $unidad)
-                            <option value="{{ $unidad->id}}"  >
-                                    {{ $unidad->unidad}}
-                            </option>
-                        @endforeach
-                    </select>
-                    <x-input-error for="unidad" class="mt-2" />
-                </div>
-            </div>
-
-            <div class="col-span-6 sm:col-span-4 mt-2 grid grid-flow-col justify-stretch" >
-                <div class="">
-                    <x-label for="descuento" value="'Descuento (Ejemplo: 10%') " />
-                    <x-input id="descuento" type="text" class="mt-1 block w-full" wire:model='descuento' placeholder="Descuento" readonly/>
-                    <x-input-error for="descuento" class="mt-2" />
-                </div>
-                <div>
-                    <x-label for="'unidadVenta" value="Unidad (Ejemplo: Unidad/Pack) " />
-                    <x-input id="'unidadVenta" type="text" class="mt-1 block w-full" wire:model='unidadVenta' placeholder="Unidad" readonly/>
-                    <x-input-error for="'unidadVenta" class="mt-2" />
-                </div>
-            </div>
-            <div class="col-span-6 sm:col-span-4 mt-2 grid grid-flow-col justify-stretch" >
-                <div class="">
-                    <x-label for="precioI" value="'Precio Inicial" />
-                    <x-input id="precioI" type="text" class="mt-1 block w-full" wire:model='precioI' placeholder="0" readonly/>
-                    <x-input-error for="precioI" class="mt-2" />
-                </div>
-                <div>
-                    <x-label for="precioF" value="Precio Final" />
-                    <x-input id="precioF" type="text" class="mt-1 block w-full" wire:model='precioF' placeholder="0" readonly/>
-                    <x-input-error for="precioF" class="mt-2" />
-                </div>
-            </div>
-
-            <div class="col-span-6 sm:col-span-4 mt-2 grid grid-flow-col justify-stretch " >
-                <div>
-                    <x-label for="detalles" value="Detalles" />
-                    <x-input id="detalles" type="text" class="mt-1 block w-full" wire:model='detalles'   readonly/>
-                    <x-input-error for="detalles" class="mt-2" />
-                </div>
-                <div class="px-5">
-                    <div >
-                        <x-label for="Caducidad" value="Selecionar" />
-                        <input readonly disabled wire:model='cad' id="caducidad" type="checkbox" @if($caducidad=='Si') checked @endif  class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                        <label for="caducidad" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Caducidad</label>
-                        <input readonly disabled wire:model='suelto' id="suelto" type="checkbox" value="1" @if($suelto==true) checked @endif class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                        <label for="suelto" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Suelto{{ $suelto }}</label>
-                    </div>
-                </div>
-            </div>
 
         {{-- -----------------------------------stock--------------------------------- --}}
             <div class="col-span-6 sm:col-span-4 mt-2 rounded">
                 <x-label for="proveedor" value="{{ __('Proveedor') }}" />
-                <select id="proveedor"  class="block mt-1 w-full"  wire:model='proveedor_id' class="rounded"/ disabled>
+                <select id="proveedor"  class="block mt-1 w-full"  wire:model='proveedor_id' class="rounded" >
                 <option value="">Seleccionar...</option>
                 @foreach ($proveedores as $proveedor)
                         <option value="{{ $proveedor->id}}"  >
@@ -294,7 +232,7 @@
       <!--Fin Add  Confirmation Modal **************************************************************-->
 
        {{-- ----modal confirmar venta---- --}}
-    <x-dialog-modal wire:model.live="ConfirmarCambioStock">
+    <x-dialog-modal wire:model.live="ConfirmarCambioStock" maxWidth="2xl">
             <x-slot name="title">
                 {{ __('Eliminar articulo') }}
             </x-slot>

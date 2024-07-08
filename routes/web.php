@@ -65,8 +65,9 @@ Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified',])
 Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified',])->group(function () {
     Route::get('/proveedor/creargrupo', function () {return view('proveedor.crearGrupo'); })->name('proveedor.crearGrupo');
     Route::get('/proveedor/grupoarticulo', function () {return view('proveedor.articuloGrupo'); })->name('proveedor.articuloGrupo');
-
 });
-
+Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified',])->group(function () {
+    Route::get('/gestion/precio/preciogrupo', function () {return view('gestion.precio.precioGrupo'); })->name('gestion.precio.precioGrupo');
+});
 
 

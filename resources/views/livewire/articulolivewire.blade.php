@@ -325,7 +325,7 @@
       <!--Fin Add  Confirmation Modal **************************************************************-->
 
 
-          <!-- aDD User Confirmation Modal ***************************************************************-->
+          <!-- aDD User Confirmation Modal **********************************************************-->
     <x-dialog-modal wire:model.live="confirmingArticuloEdit" maxWidth="2xl">
         <x-slot name="title">
             {{ __('Editar Articulo') }}
@@ -347,8 +347,8 @@
                     @endforeach
                 </select>
                 <x-input-error for="categoria" class="mt-2" />
-
             </div>
+
             <div class="col-span-6 sm:col-span-4 mt-2 rounded grid grid-flow-col justify-stretch">
                 <div>
                     <x-label for="presentacion" value="{{ __('Presentacion ') }}" />
@@ -382,27 +382,7 @@
                     <x-input-error for="'unidadVenta" class="mt-2" />
                 </div>
             </div>
-            <div class="col-span-6 sm:col-span-4 mt-2 grid grid-flow-col justify-stretch" >
-                <div class="">
-                    <x-label for="precioI" value="'Precio Inicial" />
-                    <x-input id="precioI" type="text" class="mt-1 block w-full" wire:model='precioI' placeholder="0"/>
-                    <x-input-error for="precioI" class="mt-2" />
-                </div>
-                <div>
-                    <x-label for="precioF" value="Precio Final" />
-                    <x-input id="precioF" type="text" class="mt-1 block w-full" wire:model='precioF' placeholder="0"/>
-                    <x-input-error for="precioF" class="mt-2" />
-                </div>
-                <div>
-                    <x-label for="porecentaje" value="Porecentaje" />
-                    <x-input id="porecentaje" type="text" class="mt-1 block w-full" wire:model='porcentaje' placeholder="0"/>
-                    <x-input-error for="porcentaje" class="mt-2" />
-                </div>
-                <div class="mt-2 justify-stretch">
-                    <x-label for="porecentaje" value="calcular Porcentaje" />
-                    <button wire:click='calcular()' class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded " >Calcular Precio</button>
-                </div>
-            </div>
+
 
             <div class="col-span-6 sm:col-span-4 mt-2 grid grid-flow-col justify-stretch " >
                 <div>
@@ -410,50 +390,10 @@
                     <x-input id="detalles" type="text" class="mt-1 block w-full" wire:model='detalles'   />
                     <x-input-error for="detalles" class="mt-2" />
                 </div>
-                <div class="px-5">
-                    <div >
-                        <x-label for="Caducidad" value="Selecionar" />
-                        <input disabled wire:model='cad' id="caducidad" type="checkbox" @if($caducidad=='Si') checked @endif  class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                        <label for="caducidad" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Caducidad</label>
-
-
-
-
-                        <input disabled wire:model='suelto' id="suelto" type="checkbox" value="1" @if($suelto==true) checked @endif class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                        <label for="suelto" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Suelto{{ $suelto }}</label>
-                    </div>
-                </div>
-            </div>
-
-        {{-- -----------------------------------stock--------------------------------- --}}
-            <div class="col-span-6 sm:col-span-4 mt-2 rounded">
-                <x-label for="proveedor" value="{{ __('Proveedor') }}" />
-                <select id="proveedor"  class="block mt-1 w-full"  wire:model='proveedor_id' class="rounded"/ disabled>
-                <option value="">Seleccionar...</option>
-                @foreach ($proveedores as $proveedor)
-                        <option value="{{ $proveedor->id}}"  >
-                            {{ $proveedor->id}}-{{ $proveedor->nombre}}-{{ $proveedor->rubro}}-{{ $proveedor->localidad}}
-                        </option>
-                    @endforeach
-                </select>
-                <x-input-error for="categoria" class="mt-2" />
 
             </div>
 
-            <div class="col-span-6 sm:col-span-4 mt-2 grid grid-flow-col justify-stretch" >
-                <div class="">
-                    <x-label for="stockMinimo" value="Stock Minimo Deseable "/>
-                    <x-input id="stockMinimo" type="text" class="mt-1 block w-full" wire:model='stockMinimo' placeholder="Stock Minimo" readonly/>
-                    <x-input-error for="stockMinimo" class="mt-2" />
-                </div>
-                <div>
-                    <x-label for="Stock" value="Stock " />
-                    <x-input id="Stock" type="text" class="mt-1 block w-full" wire:model='stock' placeholder="Stock" readonly/>
-                    <x-input-error for="Stock" class="mt-2" />
-                </div>
-            </div>
         </x-slot>
-        {{-------------------------------------fin stock---------------------------------}}
          <x-slot name="footer">
             <x-secondary-button wire:click="$toggle('confirmingArticuloEdit', false)" wire:loading.attr="disabled">
                 {{ __('Cancelar') }}
@@ -467,7 +407,7 @@
       <!--Fin Add  Confirmation Modal **************************************************************-->
 
        {{-- ----modal confirmar venta---- --}}
-       <x-dialog-modal wire:model.live="activarArt" maxWidth="2xl">
+    <x-dialog-modal wire:model.live="activarArt" maxWidth="2xl">
         <x-slot name="title">
             {{ __('Cambio de estado del Articulo') }}
         </x-slot>

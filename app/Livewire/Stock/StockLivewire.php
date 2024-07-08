@@ -99,22 +99,15 @@ class StockLivewire extends Component
     {
         $edit=Articulo::where('activo',$this->active)
         ->select('articulos.id', 'articulos.articulo',  'articulos.presentacion',
-        'articulos.descuento', 'articulos.unidadVenta', 'articulos.precioF', 'articulos.precioI', 'articulos.caducidad', 'articulos.detalles',
-        'articulos.suelto', 'articulos.activo','stocks.stock','stocks.stockMinimo','articulos.unidad_id','articulos.categoria_id','proveedor_id')
+        'articulos.descuento', 'articulos.unidadVenta', 'articulos.suelto', 'articulos.activo','stocks.proveedor_id',
+        'stocks.stock','stocks.stockMinimo','unidads.unidad','articulos.categoria_id',)
         ->join('stocks', 'stocks.articulo_id','=','articulos.id')
+        ->join('unidads', 'unidads.id','articulos.unidad_id')
         ->find($artEdit);
-            $this->idArt=$edit->id;
-            $this->articulo=$edit->articulo;
+            $this->idArt=$edit->id ;
+            $this->articulo=$edit->articulo.'   '.$edit->presentacion .'- '.$edit->unidad;
             $this->categoria_id=$edit->categoria_id;
-            $this->presentacion=$edit->presentacion;
-            $this->unidad_id=$edit->unidad_id;
-            $this->descuento=$edit->descuento;
             $this->unidadVenta=$edit->unidadVenta;
-            $this->precioF=$edit->precioF;
-            $this->precioI=$edit->precioI;
-            $this->caducidad=$edit->caducidad;
-            $this->detalles=$edit->detalles;
-            $this->suelto=$edit->suelto;
             $this->stockMinimo=$edit->stockMinimo;
             $this->stock=$edit->stock;
             $this->proveedor_id=$edit->proveedor_id;
@@ -124,7 +117,8 @@ class StockLivewire extends Component
     }
     protected $rules=[
         'stock'=>'required|numeric',
-        'stockMinimo'=>'required|numeric'
+        'stockMinimo'=>'required|numeric',
+        'proveedor_id'=>'required|numeric'
     ];
 
     public function CambiarStock($id)
@@ -133,7 +127,9 @@ class StockLivewire extends Component
         $cambio=Stock::where('id',$id)->first();
         $cambio->update([
             'stock'=>$this->stock,
-            'stockMinimo'=>$this->stockMinimo
+            'stockMinimo'=>$this->stockMinimo,
+            'proveedor_id'=> $this->proveedor_id
+
         ]);
         $this->ConfirmarCambioStock=false;
         $this->confirmingArticuloEdit=false;

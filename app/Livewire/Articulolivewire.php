@@ -90,7 +90,12 @@ class Articulolivewire extends Component
         $art->update([
             'activo'=>0,
          ]);
-         $this->articulo='';
+         $this->borrarCampos();
+
+         $this->confirmingArticuloDeletion=false;
+     }
+     public function borrarCampos(){
+        $this->articulo='';
          $this->categoria_id='';
          $this->presentacion='';
          $this->unidad_id='';
@@ -104,29 +109,12 @@ class Articulolivewire extends Component
          $this->stockMinimo='';
          $this->stock='';
          $this->proveedor_id='';
-
-         $this->confirmingArticuloDeletion=false;
      }
-     /* ----------------------Fin Eliminar Articulo----------------------- */
-    //  /* ----------------------Agregar Articulo--------------------------- */
 
-
-    public $articulo;
-    public $categoria_id;
-    public $presentacion;
-    public $unidad_id;
-    public $descuento;
-    public $unidadVenta;
-    public $precioF;
-    public $precioI;
-    public $caducidad;
-    public $detalles;
-    public $suelto;
-    public $porcentaje;
-
-    public $proveedor_id;
-    public $stock;
-    public $stockMinimo;
+    public $articulo, $categoria_id, $presentacion, $unidad_id;
+    public $descuento, $unidadVenta, $precioF, $precioI, $caducidad;
+    public $detalles, $suelto, $porcentaje, $idArtitulo;
+    public $proveedor_id, $stock, $stockMinimo;
 
     public function calcular()
     {
@@ -206,20 +194,7 @@ class Articulolivewire extends Component
             'precioFinal'=>$this->precioF,
             'precioIcial'=>$this->precioI
         ]);
-        $this->articulo='';
-        $this->categoria_id='';
-        $this->presentacion='';
-        $this->unidad_id='';
-        $this->descuento='';
-        $this->unidadVenta='';
-        $this->precioF='';
-        $this->precioI='';
-        $this->caducidad='';
-        $this->detalles='';
-        $this->suelto='';
-        $this->stockMinimo='';
-        $this->stock='';
-        $this->proveedor_id='';
+        $this->borrarCampos();
         $this->confirmingArticuloAdd=false;
     }
     /* ----------------------Fin Agregar Cliente--------------------------- */
@@ -239,16 +214,22 @@ class Articulolivewire extends Component
             $this->unidad_id=$edit->unidad_id;
             $this->descuento=$edit->descuento;
             $this->unidadVenta=$edit->unidadVenta;
-            $this->precioF=$edit->precioF;
-            $this->precioI=$edit->precioI;
-            $this->caducidad=$edit->caducidad;
             $this->detalles=$edit->detalles;
-            $this->suelto=$edit->suelto;
-            $this->stockMinimo=$edit->stockMinimo;
-            $this->stock=$edit->stock;
-            $this->proveedor_id=$edit->proveedor_id;
-
+            $this->idArtitulo=$edit->id;
             $this->confirmingArticuloEdit=true;
+    }
+    public function updateArticulo(){
+        Articulo::where('articulos.id',$this->idArtitulo)->update([
+            'articulo'=>$this->articulo,
+            'presentacion'=> $this->presentacion,
+            'descuento'=>$this->categoria_id,
+            'unidadVenta'=> $this->unidadVenta,
+            'categoria_id'=>$this->categoria_id,
+            'detalles'=>$this->detalles,
+            'unidad_id'=>$this->unidad_id
+        ]);
+        $this->confirmingArticuloEdit=false;
+        $this->borrarCampos();
 
     }
 
@@ -265,7 +246,7 @@ class Articulolivewire extends Component
          ]);
          $this->activarArt=false;
     }
-    
+
 }
 
 

@@ -17,14 +17,11 @@
                 <li class="px-4 py-2 hover:bg-gray-200"> <x-nav-link href="{{ route('venta.ventaExpress') }}" :active="request()->routeIs('venta.ventaExpress')">
                     Venta Express
                   </x-nav-link></li>
-                <li class="px-4 py-2 hover:bg-gray-200"><x-nav-link href="{{ route('venta.list') }}" :active="request()->routeIs('venta.list')">
-                    Ventas
-
-                  </x-nav-link></li>
+                
                 <li class="px-4 py-2 hover:bg-gray-200"><x-nav-link href="{{ route('venta.cuentaCorriente') }}" :active="request()->routeIs('venta.cuentaCorriente')">
                     Cuenta Corriente
-
-                  </x-nav-link></li>
+                  </x-nav-link>
+                </li>
                   <li class="px-4 py-2 hover:bg-gray-200"><x-nav-link href="{{ route('venta.ListCuentaCorriente') }}" :active="request()->routeIs('venta.ListCuentaCorriente')">
                     Pago En Cuenta Corriente
 
@@ -73,7 +70,9 @@
                 <li class="px-4 py-2 hover:bg-gray-200"><x-nav-link href="{{ route('operacion.list') }}" :active="request()->routeIs('operacion.list')">
                     Operacion
                   </x-nav-link></li>
-
+                  <li class="px-4 py-2 hover:bg-gray-200"><x-nav-link href="{{ route('venta.list') }}" :active="request()->routeIs('venta.list')">
+                    Ventas
+                  </x-nav-link></li>
             </ul>
         </div>
     </div>
