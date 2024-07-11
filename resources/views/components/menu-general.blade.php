@@ -92,6 +92,24 @@
     </div>
     <div class="relative mt-3" x-data="{ isOpen: @entangle('isOpen') }">
         <button @click="isOpen = !isOpen" class="px-4 py-2 bg-blue-500 text-white rounded">
+            Gestion
+        </button>
+
+        <div x-show="isOpen" class="absolute mt-2 w-48 bg-white rounded-md shadow-lg z-20">
+            <ul>    
+                <li class="px-4 py-2 hover:bg-gray-200"><x-nav-link href="{{ route('gestion.precio.precioCambiar') }}" :active="request()->routeIs('gestion.precio.precioCambiar')">
+                    Cambio de Precio - Articulos</x-nav-link>
+                </li>
+                <li class="px-4 py-2 hover:bg-gray-200"><x-nav-link href="{{ route('gestion.precio.precioGrupo') }}" :active="request()->routeIs('gestion.precio.precioGrupo')">
+                    Cambio de Precio - Grupo</x-nav-link>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+
+    <div class="relative mt-3" x-data="{ isOpen: @entangle('isOpen') }">
+        <button @click="isOpen = !isOpen" class="px-4 py-2 bg-blue-500 text-white rounded">
             Proveedor
         </button>
 

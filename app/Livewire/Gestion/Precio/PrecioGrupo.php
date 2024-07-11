@@ -64,8 +64,8 @@ class PrecioGrupo extends Component
             ->join('proveedors','proveedors.id','stocks.proveedor_id')
             ->select('articulos.id','articulos.articulo','articulos.presentacion','unidads.unidad','articulos.precioF','articulos.precioI','grupos.porsentaje',
             'categorias.categoria','proveedors.nombre','stocks.stock', 'articulos.updated_at',
-            \DB::raw('articulos.precioF * (1 + grupos.porsentaje / 100) as precioF_calculado'),
-            \DB::raw('articulos.precioI * (1 + grupos.porsentaje / 100) as precioI_calculado'),)
+            DB::raw('articulos.precioF * (1 + grupos.porsentaje / 100) as precioF_calculado'),
+            DB::raw('articulos.precioI * (1 + grupos.porsentaje / 100) as precioI_calculado'),)
             ->where('grupos.id', $this->idGrupo)
             ->get();
     }
@@ -97,6 +97,7 @@ class PrecioGrupo extends Component
     }
     public function cambiar($id){
         $cambio=Grupos::find($id);
+        $this->validate(['porsentaje'=>'required|numeric']);
         $cambio->update(['porsentaje'=>$this->porsentaje]);
         $this->modalPorcentaje=false;
         $this->datosGrupo();
@@ -131,7 +132,7 @@ class PrecioGrupo extends Component
         ->join('stocks','stocks.articulo_id','articulos.id')->join('proveedors','proveedors.id','stocks.proveedor_id')
         ->select('articulos.id','articulos.articulo','articulos.presentacion','unidads.unidad','articulos.precioF',
         'articulos.precioI','grupos.porsentaje','categorias.categoria','proveedors.nombre','stocks.stock', 'articulos.updated_at',
-        \DB::raw('articulos.precioF * (1 + grupos.porsentaje / 100) as precioF_calculado'),\DB::raw('articulos.precioI * (1 + grupos.porsentaje / 100) as precioI_calculado'))
+        DB::raw('articulos.precioF * (1 + grupos.porsentaje / 100) as precioF_calculado'),DB::raw('articulos.precioI * (1 + grupos.porsentaje / 100) as precioI_calculado'))
         
         ->where('grupos.id', $this->idGrupo)
         ->get();;

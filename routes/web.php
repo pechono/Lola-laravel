@@ -68,6 +68,7 @@ Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified',])
 });
 Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified',])->group(function () {
     Route::get('/gestion/precio/preciogrupo', function () {return view('gestion.precio.precioGrupo'); })->name('gestion.precio.precioGrupo');
+    Route::get('/gestion/precio/preciocambiar', function () {return view('gestion.precio.precioCambiar'); })->name('gestion.precio.precioCambiar');
 });
 
 
