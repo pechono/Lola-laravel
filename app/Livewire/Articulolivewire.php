@@ -33,6 +33,7 @@ class Articulolivewire extends Component
         'sortBy'=>['except'=>'id'],
         'sortAsc'=>['except'=>true],
     ];
+    public $categorias=[];
     public function render()
     {
         $articulos=Articulo::where('activo',$this->active)
@@ -52,10 +53,10 @@ class Articulolivewire extends Component
             ->join('stocks', 'stocks.articulo_id','=','articulos.id');
 
         $articulos=$articulos->paginate(10);
-        $categorias=Categoria::All();
+        $this->categorias=Categoria::All();
         $unidades=Unidad::all();
         $proveedores=Proveedor::all();
-        return view('livewire.articulolivewire', compact('articulos','categorias','unidades', 'proveedores'));
+        return view('livewire.articulolivewire', compact('articulos','unidades', 'proveedores'));
     }
     public function sortby($field)
     {
@@ -247,6 +248,20 @@ class Articulolivewire extends Component
          $this->activarArt=false;
     }
 
+    public $categoriaAdd=false;
+    public $categoria;
+    public function addCategoria(){
+        $this->categoriaAdd=true;
+
+    }
+    public function saveCategoria()  {
+        $this->validate(['categoria'=>'required|min:3']);
+        Categoria::create([
+            'categoria'=>$this->categoria
+        ]);
+        $this->categorias=Categoria::All();
+        $this->categoriaAdd=false;
+    }
 }
 
 

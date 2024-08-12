@@ -1,4 +1,4 @@
-<div class="w-full p-2 sm:px-5 bg-white dark:bg-gray-800 dark:bg-gradient-to-bl dark:from-gray-700/50 dark:via-transparent border-b border-gray-200 dark:border-gray-700">
+<div class="w-auto p-2 sm:px-5 bg-white dark:bg-gray-800 dark:bg-gradient-to-bl dark:from-gray-700/50 dark:via-transparent border-b border-gray-200 dark:border-gray-700">
     <div class="mt-4 text-2xl flex justify-between shadow-inner">
         <div>Articulo</div>
         <div class="mr-2">
@@ -57,7 +57,7 @@
                     </td>
                     <td class="px-4 py-2">
                         <div class="flex items-center">
-                            <Button wire:click="sortby('unidadVenta')">Unidad Cantidad</Button>
+                            <Button wire:click="sortby('unidadVenta')">Unidad Cant.</Button>
                             <x-sort-icon sortFiel='telefono': sort-by='$sortBy' : sort-asc='$sortAsc/'>
                         </div>
                     </td>
@@ -87,7 +87,7 @@
                     </td>
                     <td class="px-4 py-2">
                         <div class="flex items-center">
-                            <Button wire:click="sortby('stockMinimo')">Stock Minimo</Button>
+                            <Button wire:click="sortby('stockMinimo')">Stock Min.</Button>
                             <x-sort-icon sortFiel='telefono': sort-by='$sortBy' : sort-asc='$sortAsc/'>
                         </div>
                     </td>
@@ -205,6 +205,7 @@
                     @endforeach
                 </select>
                 <x-input-error for="categoria" class="mt-2" />
+                <button wire:click='addCategoria'>Crear Categoria</button>
 
             </div>
             <div class="col-span-6 sm:col-span-4 mt-2 rounded grid grid-flow-col justify-stretch">
@@ -426,8 +427,30 @@
             </x-secondary-button>
         </x-slot>
     </x-dialog-modal>
-     {{-- ---- Fin modal confirmar venta---- --}}
 
+     {{-- ---- Fin modal confirmar venta---- --}}
+    <x-dialog-modal wire:model.live="categoriaAdd" maxWidth="2xl">
+        <x-slot name="title">
+            {{ __('Cargar Categoria') }}
+        </x-slot>
+        <x-slot name="content">
+            <div class="col-span-6 sm:col-span-4">
+                <x-label for="categoria" value="{{ __('Categoria') }}" />
+                <x-input id="categoria" type="text" class="mt-1 block w-full" wire:model="categoria" name='categoria' />
+                <x-input-error for="categoria" class="mt-2" />
+            </div>
+
+        </x-slot>
+        <x-slot name="footer">
+            <x-danger-button wire:click="$toggle('categoriaAdd', false)" wire:loading.attr="disabled">
+                {{ __('Cancelar') }}
+            </x-danger-button>
+
+            <x-secondary-button class="ms-3" wire:click="saveCategoria()" wire:loading.attr="disabled">
+                {{ __('Guardar') }}
+            </x-secondary-button>
+        </x-slot>
+    </x-dialog-modal>
 
 
 

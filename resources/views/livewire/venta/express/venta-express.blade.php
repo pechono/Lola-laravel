@@ -20,67 +20,7 @@
                         </div>
                         <div class="mt-3 w-full rounded-lg border shadow-lg p-4">
                         @if ($q)
-                            {{-- <table class="table-auto w-full">
-                                <thead>
-                                    <!-- Encabezados de la tabla -->
-                                    <tr>
-                                        <td class="px-4 py-2">Id</td>
-                                        <td class="px-4 py-2">Artículo</td>
-                                        <td class="px-4 py-2">Unidad Cantidad</td>
-                                        <td class="px-4 py-2">Precio Final</td>
-                                        <td class="px-4 py-2">Stock</td>
-                                        <td class="px-4 py-2">Acción</td>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($articulos as $articulo)
-                                        @php
-                                            $sta=false;
-                                        @endphp
-                                        @forelse ($inTheCar as $car)
-                                            @if ($car->articulo_id==$articulo->id)
-                                                @php
-                                                    $sta=true;
-                                                @endphp
-                                            @endif
-                                        @empty
 
-                                        @endforelse
-                                        @if ($sta)
-
-                                        <tr wire:dblclick="deletCar({{ $articulo->id }})" wire:loading.attr="disabled" class="cursor-pointer hover:text-white hover:bg-red-600">
-                                        @else
-
-                                        <tr  wire:dblclick="addCar({{ $articulo->id }})" wire:loading.attr="disabled" class="cursor-pointer hover:text-white hover:bg-green-300">
-
-                                        @endif
-
-                                            <td class="rounder border px-4 py-2">{{ $articulo->id }}</td>
-                                            <td class="rounder border px-4 py-2">{{ $articulo->articulo }}-{{ $articulo->presentacion }}-{{ $articulo->unidad }}</td>
-                                            <td class="rounder border px-4 py-2">{{ $articulo->unidadVenta }}</td>
-                                            <td class="rounder border px-4 py-2">{{ $articulo->precioF }}</td>
-                                            <td class="rounder border px-4 py-2">@if ($articulo->suelto==1)
-                                                <div class="w-8 h-8 p-2 grid justify-items-center content-center bg-green-400 rounded-full">{{ $articulo->stock }}</div>
-                                            @else
-                                                {{ $articulo->stock }}
-
-                                            @endif</td>
-                                            <td class="rounder border px-4 py-2">
-                                                @if ($sta)
-                                                    <x-danger-button wire:click="deletCar({{ $articulo->id }})" wire:loading.attr="disabled" >
-                                                        Eliminar
-                                                    </x-danger-button>
-                                                @else
-                                                    <x-secondary-button wire:click="addCar({{ $articulo->id }})" wire:loading.attr="disabled" class="bg-green-700 hover:bg-green-500">
-                                                        Agregar
-                                                    </x-secondary-button>
-                                                @endif
-                                            </td>
-
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table> --}}
                             <table class="table-auto w-full">
                                 <thead>
                                     <tr>
@@ -94,9 +34,7 @@
                                 </thead>
                                 <tbody>
                                     @foreach ($articulos as $articulo)
-                                        {{-- @php
-                                            $estaEnCarrito = $inTheCar->contains('articulo_id', $articulo->id);
-                                        @endphp --}}
+                                       
                                         <tr wire:key="{{ $articulo->id }}"
                                             class="cursor-pointer {{ $estaEnCarrito ? 'hover:text-white hover:bg-red-600' : 'hover:text-white hover:bg-green-300' }}"
                                             wire:dblclick="{{ $estaEnCarrito ? 'deletCar('.$articulo->id.')' : 'addCar('.$articulo->id.')' }}"

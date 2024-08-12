@@ -17,7 +17,7 @@
                 <li class="px-4 py-2 hover:bg-gray-200"> <x-nav-link href="{{ route('venta.ventaExpress') }}" :active="request()->routeIs('venta.ventaExpress')">
                     Venta Express
                   </x-nav-link></li>
-                
+
                 <li class="px-4 py-2 hover:bg-gray-200"><x-nav-link href="{{ route('venta.cuentaCorriente') }}" :active="request()->routeIs('venta.cuentaCorriente')">
                     Cuenta Corriente
                   </x-nav-link>
@@ -96,7 +96,7 @@
         </button>
 
         <div x-show="isOpen" class="absolute mt-2 w-48 bg-white rounded-md shadow-lg z-20">
-            <ul>    
+            <ul>
                 <li class="px-4 py-2 hover:bg-gray-200"><x-nav-link href="{{ route('gestion.precio.precioCambiar') }}" :active="request()->routeIs('gestion.precio.precioCambiar')">
                     Cambio de Precio - Articulos</x-nav-link>
                 </li>

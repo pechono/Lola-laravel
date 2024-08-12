@@ -1,4 +1,4 @@
-<div class="p-2 sm:px-5 bg-white dark:bg-gray-800 dark:bg-gradient-to-bl dark:from-gray-700/50 dark:via-transparent border-b border-gray-200 dark:border-gray-700">
+<div class=" p-2 sm:px-5 bg-white dark:bg-gray-800 dark:bg-gradient-to-bl dark:from-gray-700/50 dark:via-transparent border-b border-gray-200 dark:border-gray-700">
     <div class="mt-4 text-2xl flex justify-between shadow-inner">
     <div>Operaciones  Realizadas</div>
 
@@ -107,7 +107,7 @@
                         <td colspan="4" class=' text-lg mt-4 border'>{{ $cliente }}</td>
                         <td  rowspan="2" class=' text-lg mt-4 border '>
                             <div class="flex space-x-2">
-                                
+
                             </div>
                         </td>
                     </tr>
