@@ -71,4 +71,9 @@ Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified',])
     Route::get('/gestion/precio/preciocambiar', function () {return view('gestion.precio.precioCambiar'); })->name('gestion.precio.precioCambiar');
 });
 
+Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified',])->group(function () {
+    Route::get('/oferta/crear', function () {return view('oferta.ofertaCreate'); })->name('oferta.ofertaCreate');
+    // Route::get('/gestion/precio/preciocambiar', function () {return view('gestion.precio.precioCambiar'); })->name('gestion.precio.precioCambiar');
+});
+
 

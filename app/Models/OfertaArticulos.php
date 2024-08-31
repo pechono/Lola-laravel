@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class OfertaArt extends Model
+class OfertaArticulos extends Model
 {
     use HasFactory;
     protected $guarded=[];

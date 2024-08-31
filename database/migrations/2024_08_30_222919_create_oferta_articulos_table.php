@@ -11,15 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('oferta_art', function (Blueprint $table) {
+        Schema::create('oferta_articulos', function (Blueprint $table) {
             $table->id();
+            $table->bigInteger('oferta_id')->default(0);
             $table->integer('articulo');
-            $table->float('cantidad');
-            $table->float('precioOfertado');
-            
-
+            $table->float('cantidad')->default(0);
+            $table->float('precioI')->default(0);
+            $table->float('precioF')->default(0);
+            $table->float('precioO')->default(0);
             $table->timestamps();
         });
+
     }
 
     /**
@@ -27,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('oferta_art');
+        Schema::dropIfExists('oferta_articulos');
     }
 };

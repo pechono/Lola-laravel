@@ -218,7 +218,7 @@
     @endif
 
     @if ($modalPorcentaje){{-- ---2.1---- Articulos->Grupo --}}
-            <x-dialog-modal wire:model.live="modalPorcentaje" maxWidth="lg">
+        <x-dialog-modal wire:model.live="modalPorcentaje" maxWidth="lg">
             <x-slot name="title">
                 <div class="flex justify-between m-5">
                     <div class="text-xl">Cambiar Porcentaje de Grupo</div>
@@ -248,11 +248,11 @@
                     {{ __('Cerrar') }}
                 </x-secondary-button>
             </x-slot>
-            </x-dialog-modal>
+        </x-dialog-modal>
     @endif
 
     @if ($CambiarPrecioModal){{-- ---2.2---- Articulos->Grupo --}}
-            <x-dialog-modal wire:model.live="CambiarPrecioModal" maxWidth="3xl">
+        <x-dialog-modal wire:model.live="CambiarPrecioModal" maxWidth="3xl">
             <x-slot name="title">
                 <div class="flex justify-between m-5">
                     <div class="text-xl">Articulos Asociados a un Grupo</div>
@@ -260,7 +260,7 @@
 
             </x-slot>
             <x-slot name="content">
-                
+
                 <div class="col-span-6 sm:col-span-4 text-xl my-5">
                     <div class="text-xl">Articulos En Grupo</div>
                     <div class="col-span-6 sm:col-span-4 text-xl my-10">
@@ -363,9 +363,9 @@
                     {{ __('Cerrar') }}
                 </x-secondary-button>
             </x-slot>
-            </x-dialog-modal>
+        </x-dialog-modal>
     @endif
-    
+
     <x-dialog-modal wire:model.live="msjModal" maxWidth="2xl">
         <x-slot name="title">
             Operacion Realizada con Exito
@@ -379,8 +379,8 @@
             <x-secondary-button wire:click="$toggle('msjModal', false)" wire:loading.attr="disabled">
                 {{ __('Cerrar') }}
             </x-secondary-button>
-          
-            
+
+
         </x-slot>
     </x-dialog-modal>
 </div>
