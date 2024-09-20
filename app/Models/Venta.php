@@ -9,4 +9,9 @@ class Venta extends Model
 {
     use HasFactory;
     protected $guarded=[];
+    public function operacion()
+{
+    return $this->belongsTo(Operacion::class);
+}
+
 }

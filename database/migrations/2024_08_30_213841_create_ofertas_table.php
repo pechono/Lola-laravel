@@ -17,6 +17,8 @@ return new class extends Migration
             $table->string('detalles')->nullable();
             $table->float('precio');
             $table->time('tiempo')->nullable();
+            $table->date('tiempo')->nullable();
+            $table->integer('articulo_id')->default(0);
             $table->timestamps();
         });
     }

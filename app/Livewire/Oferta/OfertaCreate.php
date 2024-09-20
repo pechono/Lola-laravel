@@ -181,7 +181,7 @@ class OfertaCreate extends Component
         ]);
         Ofertas::create([
             'precio'=>$this->precio,
-            'detalles'=>$this->detalles,
+            'detalles'=>'Oferta'.$this->detalles,
             'oferta'=>$this->oferta,
             'tiempo'=>$this->tiempo
         ]);

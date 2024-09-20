@@ -34,7 +34,7 @@
                                 </thead>
                                 <tbody>
                                     @foreach ($articulos as $articulo)
-                                       
+
                                         <tr wire:key="{{ $articulo->id }}"
                                             class="cursor-pointer {{ $estaEnCarrito ? 'hover:text-white hover:bg-red-600' : 'hover:text-white hover:bg-green-300' }}"
                                             wire:dblclick="{{ $estaEnCarrito ? 'deletCar('.$articulo->id.')' : 'addCar('.$articulo->id.')' }}"
@@ -232,7 +232,7 @@
                                 </td>
 
                                 <td colspan="1"  class="px-4 py-2 border border-slate-300 bg-sky-400/50  font-semibold text-right">
-                                    <input id='cantidadArt' wire:model='cantidadArt' type="text" placeholder="0" class="text-center text-4xl shadow appearance-none border rounded w-40 h-20 py-2 px-3">
+                                    <input id='cantidadArt' wire:model='cantidadArt' wire:keydown.enter="save({{ $articulosMuestra->id }})" type="text" placeholder="0" class="text-center text-4xl shadow appearance-none border rounded w-40 h-20 py-2 px-3">
                                     <x-input-error for="cantidadArt" class="mt-2" />
 
                                 </td>

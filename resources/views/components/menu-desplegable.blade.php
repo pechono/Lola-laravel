@@ -100,14 +100,7 @@
                     <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 16.875h3.375m0 0h3.375m-3.375 0V13.5m0 3.375v3.375M6 10.5h2.25a2.25 2.25 0 0 0 2.25-2.25V6a2.25 2.25 0 0 0-2.25-2.25H6A2.25 2.25 0 0 0 3.75 6v2.25A2.25 2.25 0 0 0 6 10.5Zm0 9.75h2.25A2.25 2.25 0 0 0 10.5 18v-2.25a2.25 2.25 0 0 0-2.25-2.25H6a2.25 2.25 0 0 0-2.25 2.25V18A2.25 2.25 0 0 0 6 20.25Zm9.75-9.75H18a2.25 2.25 0 0 0 2.25-2.25V6A2.25 2.25 0 0 0 18 3.75h-2.25A2.25 2.25 0 0 0 13.5 6v2.25a2.25 2.25 0 0 0 2.25 2.25Z" />
                     </svg>
                     <span class=" ml-5 movableDiv text-xl rounded-lg transition-transform duration-300 ease-in-out text-white">Articulo</span>
-
                 </a>
-
-
-
-
-
-
                 <a href="{{ route('gestion.precio.precioCambiar') }}" class=" hover:text-xl  py-1 px-4 hover:bg-gray-600 flex justify-end">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-8 w-8">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M9.568 3H5.25A2.25 2.25 0 0 0 3 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581c.699.699 1.78.872 2.607.33a18.095 18.095 0 0 0 5.223-5.223c.542-.827.369-1.908-.33-2.607L11.16 3.66A2.25 2.25 0 0 0 9.568 3Z" />
@@ -128,7 +121,18 @@
                         <path stroke-linecap="round" stroke-linejoin="round" d="M18 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0ZM3 19.235v-.11a6.375 6.375 0 0 1 12.75 0v.109A12.318 12.318 0 0 1 9.374 21c-2.331 0-4.512-.645-6.374-1.766Z" />
                     </svg>
                     <span class=" ml-5 movableDiv text-xl rounded-lg transition-transform duration-300 ease-in-out text-white">Proveedor</span>
-
+                </a>
+                <a href="{{ route('oferta.ofertaCreate') }}" class="hover:text-xl  py-1 px-4 hover:bg-gray-600 flex">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-8 w-8">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M18 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0ZM3 19.235v-.11a6.375 6.375 0 0 1 12.75 0v.109A12.318 12.318 0 0 1 9.374 21c-2.331 0-4.512-.645-6.374-1.766Z" />
+                    </svg>
+                    <span class=" ml-5 movableDiv text-xl rounded-lg transition-transform duration-300 ease-in-out text-white">Oferta Crear</span>
+                </a>
+                <a href="{{ route('oferta.ofertaList') }}" class="hover:text-xl  py-1 px-4 hover:bg-gray-600 flex">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-8 w-8">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M18 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0ZM3 19.235v-.11a6.375 6.375 0 0 1 12.75 0v.109A12.318 12.318 0 0 1 9.374 21c-2.331 0-4.512-.645-6.374-1.766Z" />
+                    </svg>
+                    <span class=" ml-5 movableDiv text-xl rounded-lg transition-transform duration-300 ease-in-out text-white">Oferta Lista</span>
                 </a>
 
             </div>
@@ -145,9 +149,8 @@
                 </div>
             </a>
             <div id="cierreSubMenu" class="pl-2 hidden text-lg  text-white ">
-                <a href="{{ route('informes.masVendidos') }}" class="hover:text-xl block py-1 px-4 hover:bg-gray-600 rounded-lg ">
-
-                    El Más Vendido
+                <a href="{{ route('cierre.cierreCaja') }}" class="hover:text-xl block py-1 px-4 hover:bg-gray-600 rounded-lg ">
+                    Cierre Caja
                 </a>
             </div>
         </div>
