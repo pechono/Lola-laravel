@@ -6,6 +6,7 @@ use App\Models\Articulo;
 use App\Models\OfertaArt;
 use App\Models\OfertaArticulos;
 use App\Models\Ofertas;
+use App\Models\Stock;
 use Illuminate\Support\Facades\DB;
 
 use App\Models\Venta;
@@ -173,7 +174,7 @@ class OfertaCreate extends Component
         }
         return $precioTotal;
     }
-
+    public $confirmacion=false;
     public function CrearOferta(){
         $this->validate([
             'precio'=>'required|numeric',
@@ -186,12 +187,33 @@ class OfertaCreate extends Component
             'tiempo'=>$this->tiempo
         ]);
          $ultima = Ofertas::latest()->first();
-         $ofs=OfertaArt::join('articulos', 'oferta_art.articulo', '=', 'articulos.id')
-            ->select('articulos.id','articulos.precioI','articulos.precioF','oferta_art.precioO')
-            ->get();
+
+        $this->crearOfertaArticulos($ultima->id);
+        $this->crearArticulo($ultima->id);
+        $this->crearStock($ultima->id);
+
+        OfertaArt::truncate();
+
+        $this->confirmacion=true;
+
+    }
+    public function ConfirmarOferta(){
+        $this->confirmacion=false;
+        $this->mostrarLabel=false;
+        $this->oferta=null;
+        $this->detalles=null;
+        $this->precio=null;
+         $this->tiempo=null;
+
+    }
+    /* FUNCIONES */
+    public function crearOfertaArticulos($ofertaid){
+        $ofs=OfertaArt::join('articulos', 'oferta_art.articulo', '=', 'articulos.id')
+        ->select('articulos.id','articulos.precioI','articulos.precioF','oferta_art.precioO')
+        ->get();
         foreach( $ofs as $of){
             OfertaArticulos::create([
-                'oferta_id'=>$ultima->id,
+                'oferta_id'=>$ofertaid,
                 'articulo'=>$of->id,
                 'cantidad'=>$this->numeroDeOferta(),
                 'precioI'=>$of->precioI,
@@ -199,12 +221,58 @@ class OfertaCreate extends Component
                 'precioO'=>$of->precioO
             ]);
         }
-        OfertaArt::truncate();
-        $this->mostrarLabel=false;
+    }
+    public function crearArticulo($ofertaid){
+        $oferta=Ofertas::find($ofertaid);
+        $Articulos=Ofertas::join('oferta_articulos', 'ofertas.id', '=', 'oferta_articulos.oferta_id')
+        ->join('articulos', 'oferta_articulos.articulo', '=', 'articulos.id')
+        ->select('ofertas.oferta', 'ofertas.id', 'articulos.articulo', 'articulos.id as articulo_id',
+            'oferta_articulos.cantidad', 'articulos.presentacion','oferta_articulos.precioI', 'oferta_articulos.precioF', 'oferta_articulos.precioO',
+            'ofertas.created_at as fechInicio', 'ofertas.detalles', 'ofertas.precio')
+            ->where('oferta_articulos.oferta_id', $ofertaid)->get();
 
+        $articulosOF=null;
+        foreach ($Articulos as $a) {
+            $articulosOF .= $a->articulo . ' - ';
+        }
+            Articulo::create([
+                'articulo'=>  $oferta->oferta,
+                'categoria_id'=> 1,
+                'presentacion'=>$articulosOF,
+                'unidad_id'=>5,
+                'descuento'=> 0,
+                'unidadVenta'=>'Sin Definir',
+                'precioF'=>$oferta->precio,
+                'precioI'=>  $oferta->precio,
+                'caducidad'=>'No',
+                'detalles'=>'Ofertas - '.$oferta->detalles,
+                'suelto'=> 0,
+                'activo'=>0
+            ]);
 
     }
 
+    public function crearStock($ofertaid){
+    $stockOferta=OfertaArticulos::where('oferta_articulos.oferta_id', $ofertaid)->first();
 
+        $Artultimo=Articulo::latest()->first();
+        Stock::create([
+            'articulo_id'=>$Artultimo->id,
+            'stockMinimo'=>0,
+            'stock'=>$stockOferta->cantidad,
+            'proveedor_id'=>1
+        ]);
+        $ofertaarticulo_id = Ofertas::where('id', $ofertaid)->first();
+        $ofertaarticulo_id->update(['articulo_id' => $Artultimo->id]);
+
+        $articulosOferta = OfertaArticulos::where('oferta_id', $ofertaid)->get();
+        foreach ($articulosOferta as $articuloOferta) {
+            $stockAtualizar = Stock::where('articulo_id', $articuloOferta->articulo)->first();
+            if ($stockAtualizar) {
+                $nuevoStock = $stockAtualizar->stock - $articuloOferta->cantidad;
+                $stockAtualizar->update(['stock' => $nuevoStock]);
+            }
+        }
+    }
 }
 

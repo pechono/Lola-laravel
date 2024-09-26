@@ -75,23 +75,9 @@ class StockLivewire extends Component
         $this->resetPage();
 
     }
-    public $idArt;
-    public $articulo;
-    public $categoria_id;
-    public $presentacion;
-    public $unidad_id;
-    public $descuento;
-    public $unidadVenta;
-    public $precioF;
-    public $precioI;
-    public $caducidad;
-    public $detalles;
-    public $suelto;
-    public $porcentaje;
+    public $idArt, $articulo, $categoria_id, $presentacion, $unidad_id, $descuento, $unidadVenta, 
+            $precioF, $precioI, $caducidad, $detalles, $suelto, $porcentaje, $proveedor_id, $stock, $stockMinimo;
 
-    public $proveedor_id;
-    public $stock;
-    public $stockMinimo;
     public $confirmingArticuloEdit=false;
     public $ConfirmarCambioStock=false;
 
@@ -111,7 +97,6 @@ class StockLivewire extends Component
             $this->stockMinimo=$edit->stockMinimo;
             $this->stock=$edit->stock;
             $this->proveedor_id=$edit->proveedor_id;
-
             $this->confirmingArticuloEdit=true;
 
     }
@@ -121,52 +106,40 @@ class StockLivewire extends Component
         'proveedor_id'=>'required|numeric'
     ];
 
-    public function CambiarStock($id)
-    {
-        $this->validate();
-        $cambio=Stock::where('id',$id)->first();
-        $cambio->update([
-            'stock'=>$this->stock,
-            'stockMinimo'=>$this->stockMinimo,
-            'proveedor_id'=> $this->proveedor_id
 
-        ]);
-        $this->ConfirmarCambioStock=false;
-        $this->confirmingArticuloEdit=false;
-    }
-    public function preguntaCambiarStock()
+    public function preguntaCambiarStock($id)
     {
-        $this->ConfirmarCambioStock=true;
-
+        $this->ConfirmarCambioStock=$id;
     }
     public $confirmingArticuloDeletion=false;
-     public $idArtM;
-     public function confirmarArticuloDeletion($id)
+    public $idArtM;
+    public function confirmarArticuloDeletion($id)
+    {
+        $this->confirmingArticuloDeletion=true;
+        $this->idArtM=$id;
+    }
+     public function CambiarStock($id)
      {
-         $this->confirmingArticuloDeletion=true;
-         $this->idArtM=$id;
-     }
+         $this->validate();
+         $stock = Stock::where('articulo_id',$id);
+            $stock->update([
+                'stock' => $this->stock,
+                'stockMinimo' => $this->stockMinimo,
+                'proveedor_id' => $this->proveedor_id
+            ]);
 
+         $this->ConfirmarCambioStock=false;
+         $this->confirmingArticuloEdit=false;
+     }
      public function deleteArticulo()
      {
         $art=Articulo::find($this->idArtM);
         $art->update([
             'activo'=>0,
          ]);
-         $this->articulo='';
-         $this->categoria_id='';
-         $this->presentacion='';
-         $this->unidad_id='';
-         $this->descuento='';
-         $this->unidadVenta='';
-         $this->precioF='';
-         $this->precioI='';
-         $this->caducidad='';
-         $this->detalles='';
-         $this->suelto='';
-         $this->stockMinimo='';
-         $this->stock='';
-         $this->proveedor_id='';
+         $this->articulo = $this->categoria_id = $this->presentacion = $this->unidad_id = $this->descuento = null;
+         $this->unidadVenta = $this->precioF = $this->precioI = $this->caducidad = $this->detalles = $this->suelto = $this->stockMinimo = $this->stock = $this->proveedor_id = null;
+
 
          $this->confirmingArticuloDeletion=false;
      }

@@ -268,7 +268,21 @@
             </x-slot>
         </x-dialog-modal>
     @endif
+    <x-dialog-modal wire:model.live="confirmacion" maxWidth="2xl">
+        <x-slot name="title">
+            {{ __('Oferta Creada') }}
+        </x-slot>
 
+        <x-slot name="content">
+            {{ __('Se Creo la Oferta de Forma Correcta') }}
+        </x-slot>
+
+        <x-slot name="footer">
+            <x-secondary-button class="ms-3" wire:click="ConfirmarOferta" wire:loading.attr="disabled">
+                {{ __('Cerrar') }}
+            </x-secondary-button>
+        </x-slot>
+    </x-dialog-modal>
 
 </div>
 
