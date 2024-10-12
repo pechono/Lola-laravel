@@ -14,12 +14,12 @@ use Livewire\Component;
 
 class OfertaCreate extends Component
 {   public $modalArt=false;
-    public $articulos=[];
+    /* public $articulos=[]; */
     public $oferta;
     public $detalles;
     public $precio;
     public $tiempo;
-
+    public $q;
     public function mostrarArt()
     {
         $this->modalArt=true;
@@ -30,9 +30,26 @@ class OfertaCreate extends Component
 */
 
     }
+    protected $queryString = [
+        'q'=>['except'=>'']
+    ];
     public function render()
     {
-        return view('livewire.oferta.oferta-create');
+        $articulos=Articulo::where('activo',1)
+            ->when($this->q, function ($query){
+                               return $query->where( function($query){
+                                            $query->where('articulo','like','%'.$this->q.'%')
+                                                    ->orwhere('detalles','like','%'. $this->q .'%')
+                                                    ->orwhere('categoria','like','%'.$this->q.'%');
+                                        });
+                                    })
+            ->select('articulos.id', 'articulos.articulo', 'categorias.categoria', 'articulos.presentacion', 'unidads.unidad',
+            'articulos.descuento', 'articulos.unidadVenta', 'articulos.precioF', 'articulos.precioI', 'articulos.caducidad', 'articulos.detalles',
+            'articulos.suelto', 'articulos.activo','stocks.stock','stocks.stockMinimo','articulos.activo')
+            ->join('categorias', 'categorias.id', '=', 'articulos.categoria_id')
+            ->join('unidads', 'unidads.id', '=', 'articulos.unidad_id')
+            ->join('stocks', 'stocks.articulo_id','=','articulos.id')->get();
+        return view('livewire.oferta.oferta-create',compact('articulos'));
     }
     public function seVendio($id){
         $venta = Venta::where('articulo_id', $id)->select(DB::raw('SUM(cantidad) as total_vendido'))->first();
@@ -44,13 +61,21 @@ class OfertaCreate extends Component
         }
     }
     public function articulosQuery()  {
-        return $this->articulos=Articulo::where('activo',1)
-        ->select('articulos.id', 'articulos.articulo', 'categorias.categoria', 'articulos.presentacion', 'unidads.unidad',
-        'articulos.descuento', 'articulos.unidadVenta', 'articulos.precioF', 'articulos.precioI', 'articulos.caducidad', 'articulos.detalles',
-        'articulos.suelto', 'articulos.activo','stocks.stock','stocks.stockMinimo')
-        ->join('categorias', 'categorias.id', '=', 'articulos.categoria_id')
-        ->join('unidads', 'unidads.id', '=', 'articulos.unidad_id')
-        ->join('stocks', 'stocks.articulo_id','=','articulos.id')->get();
+        /*  return $this->articulos=Articulo::where('activo',1)
+         ->when($this->q, function ($query){
+                            return $query->where( function($query){
+                                         $query->where('articulo','like','%'.$this->q.'%')
+                                                 ->orwhere('detalles','like','%'. $this->q .'%')
+                                                 ->orwhere('categoria','like','%'.$this->q.'%');
+                                     });
+                                 })
+
+         ->select('articulos.id', 'articulos.articulo', 'categorias.categoria', 'articulos.presentacion', 'unidads.unidad',
+         'articulos.descuento', 'articulos.unidadVenta', 'articulos.precioF', 'articulos.precioI', 'articulos.caducidad', 'articulos.detalles',
+         'articulos.suelto', 'articulos.activo','stocks.stock','stocks.stockMinimo','articulos.activo')
+         ->join('categorias', 'categorias.id', '=', 'articulos.categoria_id')
+         ->join('unidads', 'unidads.id', '=', 'articulos.unidad_id')
+         ->join('stocks', 'stocks.articulo_id','=','articulos.id'); */
 
     }
     public $artOferta=[];
@@ -273,6 +298,11 @@ class OfertaCreate extends Component
                 $stockAtualizar->update(['stock' => $nuevoStock]);
             }
         }
+    }
+    public function Ofeta($id){
+        $stock=Stock::where('articulo_id',$id)->first();
+        $ofertaArt = Ofertas::where('articulo_id', $id)->exists();
+        return ($ofertaArt || $stock->stock <= 0) ? true : false;
     }
 }
 

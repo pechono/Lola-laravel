@@ -110,20 +110,7 @@ class OfertaActivar extends Component
     $this->desplegar=false;
 
     }
-    /* public function terminarPconVenta($ofertaId){
-       $this->terminarOf=$ofertaId;
-        $this->terminarOfQueryFun($ofertaId);
-        $this->OfertasQuery($ofertaId);
-       $this->terminarPSinVenta($ofertaId);
-
-    }
-    public function terminarPublic($ofertaId){//inicia bloque terminar
-        $this->terminarOf=$ofertaId;
-        $this->terminarOfQueryFun($ofertaId);
-        $this->OfertasQuery($ofertaId);
-    $this->terminarPSinVenta($ofertaId);
-
-    } */
+    
     public function terminarOfQueryFun($ofertaId){
         try {
             $this->terminarOfQuery = Articulo::select('articulos.id', 'articulos.articulo', 'articulos.presentacion', 'articulos.precioF',
@@ -195,10 +182,7 @@ class OfertaActivar extends Component
 
     }
     public function terminarPconVenta($ofertaId){
-         $this->terminarOf=$ofertaId;
-/*
-        ; */
-        $this->msj.='-'.$ofertaId;
+        $this->terminarOf=$ofertaId;
         $this->terminarOfQueryFun($ofertaId);
         $this->OfertasQuery($ofertaId);
         $this->terminarPSinVenta($ofertaId);
@@ -207,7 +191,6 @@ class OfertaActivar extends Component
 
     public function terminarPSinVenta($ofertaId){
         $this->terminarOf=$ofertaId;
-        $this->msj.='-'.$ofertaId;
         $this->terminarOfQueryFun($ofertaId);
         $this->OfertasQuery($ofertaId);
 

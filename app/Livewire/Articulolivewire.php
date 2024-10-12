@@ -5,6 +5,7 @@ namespace App\Livewire;
 use App\Models\Articulo;
 use App\Models\Categoria;
 use App\Models\HistoriasPrecio;
+use App\Models\Ofertas;
 use App\Models\Proveedor;
 use App\Models\Stock;
 use App\Models\Suelto;
@@ -261,6 +262,10 @@ class Articulolivewire extends Component
         ]);
         $this->categorias=Categoria::All();
         $this->categoriaAdd=false;
+    }
+    public function Ofeta($id){
+        $ofertaArt = Ofertas::where('articulo_id', $id)->exists();
+        return $ofertaArt ? true : false;
     }
 }
 

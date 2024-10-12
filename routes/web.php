@@ -79,5 +79,7 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
     Route::prefix('oferta')->group(function () {
         Route::get('/list', fn() => view('oferta.ofertaList'))->name('oferta.ofertaList');
         Route::get('/crear', fn() => view('oferta.ofertaCreate'))->name('oferta.ofertaCreate');
+        Route::get('/gestion', fn() => view('oferta.ofertaGestion'))->name('oferta.ofertaGestion');
+
     });
 });

@@ -97,17 +97,23 @@
         @endif
     </div>
 
-    <x-dialog-modal wire:model.live="modalArt" >
+    <x-dialog-modal wire:model.live="modalArt" maxWidth='3xl'>
         <x-slot name="title">
 
-            <div class="flex justify-between">
+
             <div>  {{ __('Cambio de estado del Articulo') }}</div>
-            <div>
-                <button wire:click="delete" wire:loading.attr="disabled" class=" bg-sky-600 hover:bg-sky-300 text-white rounded-md p-2">
-                Borrar Seleccion
-                <button>
-            </div>
-            </div>
+            <div class="flex justify-between ">
+                <div>
+                    <input wire:model.live='q' type="search" placeholder="Buscar" class="shadow appearance-none border rounded w-full py-2 px-3
+
+                    text-gray-706 leading-tight focus:outline-none focus: shadow-outline placeholder-blue-400" name="">
+                </div>
+                <div>
+                    <button wire:click="delete" wire:loading.attr="disabled" class=" bg-sky-600 hover:bg-sky-300 text-white rounded-md p-2">
+                  Borrar Seleccion
+                  <button>
+                  </div>
+               </div>
         </x-slot>
 
         <x-slot name="content">
@@ -124,6 +130,13 @@
                             <div class="flex items-center">
                                 <Button wire:click="sortby('articulo')">Articulo</Button>
                                 <x-sort-icon sortFiel='apellido': sort-by='$sortBy' : sort-asc='$sortAsc'>
+
+                            </div>
+                        </td>
+                        <td class="px-4 py-2">
+                            <div class="flex items-center">
+                                <Button wire:click="sortby('categoria')">Categoria</Button>
+                                <x-sort-icon sortFiel='categoria': sort-by='$sortBy' : sort-asc='$sortAsc'>
 
                             </div>
                         </td>
@@ -177,9 +190,11 @@
                 <tbody>
 
                     @foreach ($articulos as $articulo)
-                    <tr>
+                    @if (!$this->Ofeta($articulo->id))
+                       <tr>
                         <td class="rounder border px-4 py-2 text-lg">{{ $articulo->id }}</td>
                         <td class="rounder border px-4 py-2 text-lg">{{ $articulo->articulo }}{{ $articulo->presentacion }}-{{ $articulo->unidad }}</td>
+                        <td class="rounder border px-4 py-2 text-lg">{{ $articulo->categoria }}</td>
                         <td class="rounder border px-4 py-2 text-lg">{{ $articulo->descuento }}</td>
                         <td class="rounder border px-4 py-2 text-lg">{{ $articulo->precioI }}</td>
                         <td class="rounder border px-4 py-2 text-lg">{{ $articulo->precioF }}</td>
@@ -209,7 +224,9 @@
                         </td>
 
                         {{-- @endif --}}
-                    </tr>
+                    </tr> 
+                    @endif
+                    
                     @endforeach
                 </tbody>
             </table>
