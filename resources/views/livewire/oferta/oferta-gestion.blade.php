@@ -7,8 +7,12 @@
                     Articulo N°: {{ $item->artId }} - Oferta N°: {{ $item->ofId }}
                 </h5>
                 <div class="items-baseline text-gray-900 dark:text-white">
-                    <div class="w-full rounded-md border bg-blue-700 text-white flex justify-center p-2">
-                        <span class="text-xl">Oferta</span><br>
+
+                    <div class="flex">
+                        <div class="w-full rounded-md border bg-blue-700 text-white flex justify-center p-2">
+                            <span class="text-xl">Oferta</span>
+                        </div>
+                        <div class="mx-4 p-4 rounded-full bg-red-500 text-white h-10 w-10" >F</div>
                     </div>
                     <span class="text-2xl font-extrabold tracking-tight">{{ $item->articulo }}</span>
                 </div>
@@ -59,7 +63,7 @@
                             </svg>
                             <span class="text-base font-normal leading-tight text-gray-500 dark:text-gray-400 ms-3">Stock Restante:  {{ $item->stock }}</span>
                         </div>
-                        
+
                     </li>
                 </ul>
             </div>
