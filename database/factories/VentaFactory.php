@@ -1,7 +1,5 @@
 <?php
 
-<?php
-
 namespace Database\Factories;
 
 use App\Models\Venta;
@@ -26,4 +24,3 @@ class VentaFactory extends Factory
         ];
     }
 }
-

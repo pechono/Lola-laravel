@@ -18,7 +18,8 @@ $maxWidth = [
     'xl' => 'sm:max-w-xl',
     '2xl' => 'sm:max-w-2xl',
     '2.5xl' => 'sm:max-w-5xl', // Tamaño intermedio entre 2xl y 3xl
-   '3xl' => 'sm:max-w-7xl', // Agregamos la clase correspondiente al tamaño 3xl
+   '3xl' => 'sm:max-w-7xl',
+   '4xl' => 'sm:max-w-8xl', // Agregamos la clase 4xl con un valor adecuado // Agregamos la clase correspondiente al tamaño 3xl
    'auto' => '',
 ][$maxWidth ?? '3xl'];
 

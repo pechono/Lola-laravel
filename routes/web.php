@@ -1,74 +1,85 @@
 <?php
 
 use App\Http\Controllers\ImprimirPedidoController;
-use App\Http\Controllers\ReportVenta;
 use App\Http\Controllers\ReportVentaController;
-use App\Livewire\Report\PedidoProveedor;
-use Illuminate\Support\Facades\Route;
-use App\Livewire\Print\ReportVentaO;
 use App\Livewire\Print\PrintPedido;
-// use App\Livewire\Print\StockImprimir as PrintStockImprimir;
+use App\Livewire\Print\ReportVentaO;
 use App\Livewire\Print\StockImprimir;
+use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
 });
 
-Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified',])->group(function () {
-    Route::get('/dashboard', function () {return view('dashboard'); })->name('dashboard');
-});
+// Agrupa todas las rutas que requieren autenticación y verificación
+Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified'])->group(function () {
 
-Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified',])->group(function () {
-    Route::get('/cliente', function () {return view('cliente.index'); })->name('cliente.index');
-});
-Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified',])->group(function () {
-    Route::get('/articulo', function () {return view('articulo.index'); })->name('articulo.index');
-});
-Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified',])->group(function () {
-    Route::get('/venta', function () {return view('venta.index'); })->name('venta.index');
-    Route::get('/venta/list', function () {return view('venta.list'); })->name('venta.list');
-    Route::get('/venta/cuentacorriente', function () {return view('venta.cuentaCorriente'); })->name('venta.cuentaCorriente');
-    Route::get('/venta/listcuentacorriente', function () {return view('venta.ListCuentaCorriente'); })->name('venta.ListCuentaCorriente');
-    Route::get('/venta/express', function () {return view('venta.ventaExpress'); })->name('venta.ventaExpress');
+    Route::get('/dashboard', fn() => view('dashboard'))->name('dashboard');
 
-});
+    // Agrupación por prefijo para clientes, artículos, y ventas
+    Route::prefix('cliente')->group(function () {
+        Route::get('/', fn() => view('cliente.index'))->name('cliente.index');
+    });
 
-Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified',])->group(function () {
-    Route::get('/cierre', function () {return view('cierre.cierreCaja'); })->name('cierre.cierreCaja');
-});
-Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified',])->group(function () {
-    Route::get('/operacion', function () {return view('operacion.index'); })->name('operacion.index');
-    Route::get('/operacion/list', function () {return view('operacion.list'); })->name('operacion.list');
-});
+    Route::prefix('articulo')->group(function () {
+        Route::get('/', fn() => view('articulo.index'))->name('articulo.index');
+    });
 
-Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified',])->group(function () {
-    Route::get('/stock', function () {return view('stock.index'); })->name('stock.index');
-    Route::get('/stock/pedido', function () {return view('stock.pedido'); })->name('stock.pedido');
-    Route::get('/stock/pedido/confirmar', function () {return view('stock.confirmarPedido'); })->name('stock.confirmarPedido');
-    Route::get('/stock/pedido/pedido/{id}', [PrintPedido::class,'generateReport'])->name('pedidoImprimir');
-    Route::get('/stock/pedidorealizados', function () {return view('stock.pedidoRealizado'); })->name('stock.pedidoRealizado');
-    Route::get('/stock/stock', [StockImprimir::class,'generateReport'])->name('stockImprimir');
+    Route::prefix('venta')->group(function () {
+        Route::get('/', fn() => view('venta.index'))->name('venta.index');
+        Route::get('/list', fn() => view('venta.list'))->name('venta.list');
+        Route::get('/cuentacorriente', fn() => view('venta.cuentaCorriente'))->name('venta.cuentaCorriente');
+        Route::get('/listcuentacorriente', fn() => view('venta.ListCuentaCorriente'))->name('venta.ListCuentaCorriente');
+        Route::get('/express', fn() => view('venta.ventaExpress'))->name('venta.ventaExpress');
+    });
 
-});
-Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified',])->group(function () {
-    Route::get('report/comprobante/reporteVenta/{operacion}/{volver}',[ReportVentaController::class,'pasar'])->name('venta.reporte');
-    Route::get('/report/comprobante/{operacion}', [ReportVentaO::class,'generateReport'])->name('comprobante');
-});
+    // Agrupación para operaciones, cierre de caja y stock
+    Route::prefix('cierre')->group(function () {
+        Route::get('/', fn() => view('cierre.cierreCaja'))->name('cierre.cierreCaja');
+    });
 
-Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified',])->group(function () {
-    Route::get('/informes/masvendidos', function () {return view('informes.masVendidos'); })->name('informes.masVendidos');
-});
+    Route::prefix('operacion')->group(function () {
+        Route::get('/', fn() => view('operacion.index'))->name('operacion.index');
+        Route::get('/list', fn() => view('operacion.list'))->name('operacion.list');
+    });
 
-Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified',])->group(function () {
-    Route::get('/proveedor', function () {return view('proveedor.proveedor'); })->name('proveedor.proveedor');
-});
-Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified',])->group(function () {
-    Route::get('/proveedor/creargrupo', function () {return view('proveedor.crearGrupo'); })->name('proveedor.crearGrupo');
-    Route::get('/proveedor/grupoarticulo', function () {return view('proveedor.articuloGrupo'); })->name('proveedor.articuloGrupo');
-});
-Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified',])->group(function () {
-    Route::get('/gestion/precio/preciogrupo', function () {return view('gestion.precio.precioGrupo'); })->name('gestion.precio.precioGrupo');
-    Route::get('/gestion/precio/preciocambiar', function () {return view('gestion.precio.precioCambiar'); })->name('gestion.precio.precioCambiar');
-});
+    Route::prefix('stock')->group(function () {
+        Route::get('/', fn() => view('stock.index'))->name('stock.index');
+        Route::get('/pedido', fn() => view('stock.pedido'))->name('stock.pedido');
+        Route::get('/pedido/confirmar', fn() => view('stock.confirmarPedido'))->name('stock.confirmarPedido');
+        Route::get('/pedido/pedido/{id}', [PrintPedido::class, 'generateReport'])->name('pedidoImprimir');
+        Route::get('/pedidorealizados', fn() => view('stock.pedidoRealizado'))->name('stock.pedidoRealizado');
+        Route::get('/stock', [StockImprimir::class, 'generateReport'])->name('stockImprimir');
+    });
 
+    // Rutas para reportes y comprobantes
+    Route::prefix('report/comprobante')->group(function () {
+        Route::get('/reporteVenta/{operacion}/{volver}', [ReportVentaController::class, 'pasar'])->name('venta.reporte');
+        Route::get('/{operacion}', [ReportVentaO::class, 'generateReport'])->name('comprobante');
+    });
 
+    // Rutas para informes y proveedores
+    Route::prefix('informes')->group(function () {
+        Route::get('/masvendidos', fn() => view('informes.masVendidos'))->name('informes.masVendidos');
+    });
+
+    Route::prefix('proveedor')->group(function () {
+        Route::get('/', fn() => view('proveedor.proveedor'))->name('proveedor.proveedor');
+        Route::get('/creargrupo', fn() => view('proveedor.crearGrupo'))->name('proveedor.crearGrupo');
+        Route::get('/grupoarticulo', fn() => view('proveedor.articuloGrupo'))->name('proveedor.articuloGrupo');
+    });
+
+    // Rutas de gestión de precios
+    Route::prefix('gestion/precio')->group(function () {
+        Route::get('/preciogrupo', fn() => view('gestion.precio.precioGrupo'))->name('gestion.precio.precioGrupo');
+        Route::get('/preciocambiar', fn() => view('gestion.precio.precioCambiar'))->name('gestion.precio.precioCambiar');
+    });
+
+    // Rutas de ofertas
+    Route::prefix('oferta')->group(function () {
+        Route::get('/list', fn() => view('oferta.ofertaList'))->name('oferta.ofertaList');
+        Route::get('/crear', fn() => view('oferta.ofertaCreate'))->name('oferta.ofertaCreate');
+        Route::get('/gestion', fn() => view('oferta.ofertaGestion'))->name('oferta.ofertaGestion');
+
+    });
+});

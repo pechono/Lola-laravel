@@ -18,16 +18,17 @@ jobs:
       with:
         php-version: '8.2.6'
 
-   - name: Install dependencies
-     run: composer install --no-dev --prefer-dist --no-scripts --no-progress --no-suggest
-     run: php artisan migrate
-     run: npm run dev
+    - name: Install dependencies                # Corrección de indentación y agrupación de comandos
+      run: |
+        composer install --no-dev --prefer-dist --no-scripts --no-progress --no-suggest
+        php artisan migrate
+        npm run dev
 
-   - name: Configure env
-     env:
-       FTP_HOST: ${{ secrets.FTP_HOST }}
-       FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
-       FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+    - name: Configure env                       # Corrección de alineación de FTP_DESTINATION
+      env:
+        FTP_HOST: ${{ secrets.FTP_HOST }}
+        FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
+        FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
         FTP_DESTINATION: ${{ secrets.FTP_DESTINATION }}
       run: php artisan config:cache
 

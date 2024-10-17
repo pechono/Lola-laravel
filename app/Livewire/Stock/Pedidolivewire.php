@@ -61,6 +61,7 @@ class PedidoLivewire extends Component
             ->get();
 
             $inTheCar=PedidoCar::all();
+
         return view('livewire.stock.pedidolivewire',compact('articulos','inTheCar'));
     }
     public function sortby($field)

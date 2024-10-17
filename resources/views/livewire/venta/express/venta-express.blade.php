@@ -20,67 +20,7 @@
                         </div>
                         <div class="mt-3 w-full rounded-lg border shadow-lg p-4">
                         @if ($q)
-                            {{-- <table class="table-auto w-full">
-                                <thead>
-                                    <!-- Encabezados de la tabla -->
-                                    <tr>
-                                        <td class="px-4 py-2">Id</td>
-                                        <td class="px-4 py-2">Artículo</td>
-                                        <td class="px-4 py-2">Unidad Cantidad</td>
-                                        <td class="px-4 py-2">Precio Final</td>
-                                        <td class="px-4 py-2">Stock</td>
-                                        <td class="px-4 py-2">Acción</td>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($articulos as $articulo)
-                                        @php
-                                            $sta=false;
-                                        @endphp
-                                        @forelse ($inTheCar as $car)
-                                            @if ($car->articulo_id==$articulo->id)
-                                                @php
-                                                    $sta=true;
-                                                @endphp
-                                            @endif
-                                        @empty
 
-                                        @endforelse
-                                        @if ($sta)
-
-                                        <tr wire:dblclick="deletCar({{ $articulo->id }})" wire:loading.attr="disabled" class="cursor-pointer hover:text-white hover:bg-red-600">
-                                        @else
-
-                                        <tr  wire:dblclick="addCar({{ $articulo->id }})" wire:loading.attr="disabled" class="cursor-pointer hover:text-white hover:bg-green-300">
-
-                                        @endif
-
-                                            <td class="rounder border px-4 py-2">{{ $articulo->id }}</td>
-                                            <td class="rounder border px-4 py-2">{{ $articulo->articulo }}-{{ $articulo->presentacion }}-{{ $articulo->unidad }}</td>
-                                            <td class="rounder border px-4 py-2">{{ $articulo->unidadVenta }}</td>
-                                            <td class="rounder border px-4 py-2">{{ $articulo->precioF }}</td>
-                                            <td class="rounder border px-4 py-2">@if ($articulo->suelto==1)
-                                                <div class="w-8 h-8 p-2 grid justify-items-center content-center bg-green-400 rounded-full">{{ $articulo->stock }}</div>
-                                            @else
-                                                {{ $articulo->stock }}
-
-                                            @endif</td>
-                                            <td class="rounder border px-4 py-2">
-                                                @if ($sta)
-                                                    <x-danger-button wire:click="deletCar({{ $articulo->id }})" wire:loading.attr="disabled" >
-                                                        Eliminar
-                                                    </x-danger-button>
-                                                @else
-                                                    <x-secondary-button wire:click="addCar({{ $articulo->id }})" wire:loading.attr="disabled" class="bg-green-700 hover:bg-green-500">
-                                                        Agregar
-                                                    </x-secondary-button>
-                                                @endif
-                                            </td>
-
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table> --}}
                             <table class="table-auto w-full">
                                 <thead>
                                     <tr>
@@ -94,36 +34,36 @@
                                 </thead>
                                 <tbody>
                                     @foreach ($articulos as $articulo)
-                                        {{-- @php
-                                            $estaEnCarrito = $inTheCar->contains('articulo_id', $articulo->id);
-                                        @endphp --}}
-                                        <tr wire:key="{{ $articulo->id }}"
-                                            class="cursor-pointer {{ $estaEnCarrito ? 'hover:text-white hover:bg-red-600' : 'hover:text-white hover:bg-green-300' }}"
-                                            wire:dblclick="{{ $estaEnCarrito ? 'deletCar('.$articulo->id.')' : 'addCar('.$articulo->id.')' }}"
-                                            wire:loading.attr="disabled">
-                                            <td class="rounder border px-4 py-2">{{ $articulo->id }}</td>
-                                            <td class="rounder border px-4 py-2">{{ $articulo->articulo }}-{{ $articulo->presentacion }}-{{ $articulo->unidad }}</td>
-                                            <td class="rounder border px-4 py-2">{{ $articulo->unidadVenta }}</td>
-                                            <td class="rounder border px-4 py-2">{{ $articulo->precioF }}</td>
-                                            <td class="rounder border px-4 py-2">
-                                                @if ($articulo->suelto == 1)
-                                                    <div class="w-8 h-8 p-2 grid justify-items-center content-center bg-green-400 rounded-full">{{ $articulo->stock }}</div>
-                                                @else
-                                                    {{ $articulo->stock }}
-                                                @endif
-                                            </td>
-                                            <td class="rounder border px-4 py-2">
-                                                @if ($estaEnCarrito)
-                                                    <x-danger-button wire:click="deletCar({{ $articulo->id }})" wire:loading.attr="disabled">
-                                                        Eliminar
-                                                    </x-danger-button>
-                                                @else
-                                                    <x-secondary-button wire:click="addCar({{ $articulo->id }})" wire:loading.attr="disabled" class="bg-green-700 hover:bg-green-500">
-                                                        Agregar
-                                                    </x-secondary-button>
-                                                @endif
-                                            </td>
-                                        </tr>
+                                        @if (!$this->stockInsufisinte($articulo->id))
+                                            <tr wire:key="{{ $articulo->id }}"
+                                                class="cursor-pointer {{ $estaEnCarrito ? 'hover:text-white hover:bg-red-600' : 'hover:text-white hover:bg-green-300' }}"
+                                                wire:dblclick="{{ $estaEnCarrito ? 'deletCar('.$articulo->id.')' : 'addCar('.$articulo->id.')' }}"
+                                                wire:loading.attr="disabled">
+                                                <td class="rounder border px-4 py-2 {{ $this->Ofeta($articulo->id) ? 'text-green-500 font-bold':'' }}">{{ $articulo->id }}</td>
+                                                <td class="rounder border px-4 py-2 {{ $this->Ofeta($articulo->id) ? 'text-green-500 font-bold':'' }}">{{ $articulo->articulo }}-{{ $articulo->presentacion }}-{{ $articulo->unidad }}</td>
+                                                <td class="rounder border px-4 py-2 {{ $this->Ofeta($articulo->id) ? 'text-green-500 font-bold':'' }}">{{ $articulo->unidadVenta }}</td>
+                                                <td class="rounder border px-4 py-2 {{ $this->Ofeta($articulo->id) ? 'text-green-500 font-bold':'' }}">{{ $articulo->precioF }}</td>
+                                                <td class="rounder border px-4 py-2 {{ $this->Ofeta($articulo->id) ? 'text-green-500 font-bold':'' }}">
+                                                    @if ($articulo->suelto == 1)
+                                                        <div class="w-8 h-8 p-2 grid justify-items-center content-center bg-green-400 rounded-full">{{ $articulo->stock }}</div>
+                                                    @else
+                                                        {{ $articulo->stock }}
+                                                    @endif
+                                                </td>
+                                                <td class="rounder border px-4 py-2">
+                                                    @if ($estaEnCarrito)
+                                                        <x-danger-button wire:click="deletCar({{ $articulo->id }})" wire:loading.attr="disabled">
+                                                            Eliminar
+                                                        </x-danger-button>
+                                                    @else
+                                                        <x-secondary-button wire:click="addCar({{ $articulo->id }})" wire:loading.attr="disabled" class="bg-green-700 hover:bg-green-500">
+                                                            Agregar
+                                                        </x-secondary-button>
+                                                    @endif
+                                                </td>
+                                            </tr>      
+                                        @endif
+                                      
                                     @endforeach
                                 </tbody>
                             </table>
@@ -158,7 +98,7 @@
                                         $total=0;
                                     @endphp
                                         @foreach ($inTheCar as $item)
-                                            <tr>
+                                            <tr class="{{ $this->Ofeta($item->articulo_id) ? 'text-green-500 font-bold':'' }}">
                                                 <td class="rounder border px-4 py-2">{{ $item->articulo_id }}</td>
                                                 <td class="rounder border px-4 py-2">{{ $item->articulo }}</td>
                                                 <td class="rounder border px-4 py-2">{{ $item->presentacion }}-{{ $item->unidad  }}</td>
@@ -294,7 +234,7 @@
                                 </td>
 
                                 <td colspan="1"  class="px-4 py-2 border border-slate-300 bg-sky-400/50  font-semibold text-right">
-                                    <input id='cantidadArt' wire:model='cantidadArt' type="text" placeholder="0" class="text-center text-4xl shadow appearance-none border rounded w-40 h-20 py-2 px-3">
+                                    <input id='cantidadArt' wire:model='cantidadArt' wire:keydown.enter="save({{ $articulosMuestra->id }},{{ $articulosMuestra->stock }})" type="text" placeholder="0" class="text-center text-4xl shadow appearance-none border rounded w-40 h-20 py-2 px-3">
                                     <x-input-error for="cantidadArt" class="mt-2" />
 
                                 </td>
@@ -303,7 +243,7 @@
                         </tfoot>
                     </table>
                 </div>
-
+                <div>{{ $majStock }}</div>
             </x-slot>
 
             <x-slot name="footer">
@@ -311,7 +251,7 @@
                     {{ __('Cancelar') }}
                 </x-danger-button>
 
-                <x-secondary-button class="ms-3" wire:click="save({{ $articulosMuestra->id }})" wire:loading.attr="disabled">
+                <x-secondary-button class="ms-3" wire:click="save({{ $articulosMuestra->id }}, {{ $articulosMuestra->stock }})" wire:loading.attr="disabled">
                     {{ __('Agregar Cantidad') }}
                 </x-secondary-button>
             </x-slot>

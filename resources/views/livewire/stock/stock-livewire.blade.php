@@ -170,11 +170,17 @@
             {{ __('Editar Articulo') }}
         </x-slot>
         <x-slot name="content">
-            <div class="col-span-6 sm:col-span-4"> <x-label for="articulo" value="{{ __('Articulo') }}" />
-
-                <x-label for="articulo" value="{{ __('Articulo') }}" />
-                <x-input id="articulo" type="text" class="mt-1 block w-full text-xl" wire:model='articulo' placeholder="Articulo" readonly/>
-                <x-input-error for="articulo" class="mt-2" />
+            <div class="col-span-6 sm:col-span-4 flex w-full">
+                <div class=" w-40">
+                    <x-label for="idArt" value="{{ __('Id') }}" />
+                    <x-input id="idArt" type="text" class="mt-1 block w-full text-xl" wire:model='idArt' placeholder="idArt" readonly/>
+                    <x-input-error for="idArt" class="mt-2" />
+                </div>
+                <div class=" ml-5 w-full">
+                    <x-label for="articulo" value="{{ __('Articulo') }}" />
+                    <x-input id="articulo" type="text" class="mt-1 block w-full text-xl" wire:model='articulo' placeholder="Articulo" readonly/>
+                    <x-input-error for="articulo" class="mt-2" />
+                </div>
             </div>
             <div class="col-span-6 sm:col-span-4 mt-2 rounded">
                 <x-label for="categoria" value="{{ __('Categoria') }}" />
@@ -187,10 +193,8 @@
                     @endforeach
                 </select>
                 <x-input-error for="categoria" class="mt-2" />
-
             </div>
-
-        {{-- -----------------------------------stock--------------------------------- --}}
+            {{-- -----------------------------------stock--------------------------------- --}}
             <div class="col-span-6 sm:col-span-4 mt-2 rounded">
                 <x-label for="proveedor" value="{{ __('Proveedor') }}" />
                 <select id="proveedor"  class="block mt-1 w-full"  wire:model='proveedor_id' class="rounded" >
@@ -224,7 +228,7 @@
                 {{ __('Cancelar') }}
             </x-danger-button>
 
-            <x-secondary-button class="ms-3" wire:click="preguntaCambiarStock()" wire:loading.attr="disabled">
+            <x-secondary-button class="ms-3" wire:click="preguntaCambiarStock({{ $idArt }})" wire:loading.attr="disabled">
                 {{ __('Guardar') }}
             </x-secondary-button>
         </x-slot>
@@ -238,7 +242,7 @@
             </x-slot>
 
             <x-slot name="content">
-                {{ __('¿Esta seguro de Desea Realizar este cambio en el Stock') }}
+                {{ __('¿Esta seguro de Desea Realizar este cambio en el Stock') }}  
             </x-slot>
 
             <x-slot name="footer">
@@ -246,8 +250,8 @@
                     {{ __('Cancelar') }}
                 </x-danguer-button>
 
-                <x-secondary-button class="ms-3" wire:click="CambiarStock({{ $idArt }})" wire:loading.attr="disabled">
-                    {{ __('Realizar Venta') }}
+                <x-secondary-button class="ms-3" wire:click="CambiarStock({{ $ConfirmarCambioStock }})" wire:loading.attr="disabled">
+                    {{ __('Actualizar Stock') }}
                 </x-secondary-button>
             </x-slot>
     </x-dialog-modal>

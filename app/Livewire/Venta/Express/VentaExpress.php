@@ -5,6 +5,7 @@ namespace App\Livewire\Venta\Express;
 use App\Models\Articulo;
 use App\Models\Car;
 use App\Models\Cliente;
+use App\Models\Ofertas;
 use App\Models\Operacion;
 use App\Models\Stock;
 use App\Models\TipoVenta;
@@ -77,7 +78,7 @@ class VentaExpress extends Component
                 ->join('categorias', 'categorias.id', '=', 'articulos.categoria_id')
                 ->join('unidads', 'unidads.id', '=', 'articulos.unidad_id')
                 ->join('stocks', 'stocks.articulo_id', '=', 'articulos.id')
-                ->paginate(10);
+                ->get();
         }
 
        $inTheCar=Car::join('articulos','cars.articulo_id','=','articulos.id')
@@ -144,20 +145,24 @@ class VentaExpress extends Component
 
         $this->agregarCant=true;
     }
+    public $majStock='null';
+    public function save($idart,$stockArt){
+        if ($stockArt >= $this->cantidadArt){
+            $this->validate(['cantidadArt'=>'required|numeric']);
+            Car::create([
+                'articulo_id'=>$idart,
+                'cantidad'=>$this->cantidadArt,
+                'user_id'=>auth()->user()->id,
+                'operacionCar'=>100
+            ]);
+            $this->agregarCant=false;
+            $this->Total();
+            $this->q='';
 
-    public function save($idart){
-
-        $this->validate(['cantidadArt'=>'required|numeric']);
-        Car::create([
-            'articulo_id'=>$idart,
-            'cantidad'=>$this->cantidadArt,
-            'user_id'=>auth()->user()->id,
-            'operacionCar'=>100
-        ]);
-        $this->agregarCant=false;
-        $this->Total();
-        $this->q='';
-
+        }else{
+            $this->addCar($idart);
+            $this->majStock="Stock Insuficiente para realizar esta operacion";
+        }
     }
 
     public function deletCar($id){
@@ -344,6 +349,14 @@ class VentaExpress extends Component
          $this->tipo_id='';
          return redirect()->route('venta.ventaExpress');
      }
+     public function Ofeta($id){
+        $ofertaArt = Ofertas::where('articulo_id', $id)->exists();
+        return $ofertaArt ? true : false;
+    }
+    public function stockInsufisinte($id){
+        $stock=Stock::where('articulo_id',$id)->first();
 
+        return $stock->stock<=0 ? true : false;
+    }
 }
 

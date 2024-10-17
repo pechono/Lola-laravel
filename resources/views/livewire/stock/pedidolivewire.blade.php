@@ -146,7 +146,7 @@
                     @php
                        $sta=false;
                     @endphp
-                    @foreach ($inTheCar as $car)
+                   {{--  @foreach ($inTheCar as $car)
                         @if ($car->articulo_id==$articulo->id)
                             @php
                                 $sta=true;
@@ -176,7 +176,34 @@
                         </td>
 
 
-                    @endif
+                    @endif --}}
+                @php
+                    // Busca si el artículo está en el carrito
+                    $car = $inTheCar->firstWhere('articulo_id', $articulo->id);
+                @endphp
+
+                <td class="rounder border px-4 py-2">
+                    {{ $car ? $car->cantidad : '-' }}
+                </td>
+
+                @if ($car)
+                    <td class="rounder border-t border-b px-4 py-2">
+                        <x-button wire:click="ModCar({{ $articulo->id }})" wire:loading.attr="disabled" class="bg-blue-700 hover:bg-blue-500">
+                            Modificar
+                        </x-button>
+                    </td>
+                    <td class="rounder border-t border-b border-r px-4 py-2">
+                        <x-danger-button wire:click="elimCar({{ $articulo->id }})" wire:loading.attr="disabled" class="bg-green-700 hover:bg-green-500">
+                            Quitar
+                        </x-danger-button>
+                    </td>
+                @else
+                    <td class="rounder border px-4 py-2 content-center" colspan="3">
+                        <x-secondary-button wire:click="addCar({{ $articulo->id }})" wire:loading.attr="disabled" class="bg-green-700 hover:bg-green-500 text-white">
+                            Solicitar
+                        </x-secondary-button>
+                    </td>
+                @endif
 
 
                 </tr>
