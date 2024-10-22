@@ -1,29 +1,33 @@
 <?php
 
-<?php
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
-namespace Database\Factories;
-
-use App\Models\Venta;
-use App\Models\Operacion;
-use Illuminate\Database\Eloquent\Factories\Factory;
-
-class VentaFactory extends Factory
+return new class extends Migration
 {
-    protected $model = Venta::class;
-
-    public function definition()
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
     {
-        return [
-            'articulo_id' => $this->faker->numberBetween(1, 10), // Ajusta según los IDs disponibles en 'articulos'
-            'cantidad' => $this->faker->randomFloat(2, 1, 100), // Cantidad vendida
-            'operacion' => Operacion::factory(), // Crear una operación asociada
-            'precioI' => $this->faker->randomFloat(2, 10, 100), // Precio inicial
-            'precioF' => $this->faker->randomFloat(2, 10, 100), // Precio final
-            'descuento' => $this->faker->randomFloat(2, 0, 0.5), // Porcentaje de descuento
-            'created_at' => now(),
-            'updated_at' => now(),
-        ];
+        Schema::create('ventas', function (Blueprint $table) {
+            $table->id();      
+            $table->integer('articulo_id');
+            $table->float('cantidad' );
+            $table->integer('operacion');
+            $table->float('precioI' );
+            $table->float('precioF');
+            $table->integer('descuento');         
+            $table->timestamps();      
+        });
     }
-}
 
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('ventas');
+    }
+};

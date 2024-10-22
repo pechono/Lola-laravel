@@ -20,6 +20,7 @@ return new class extends Migration
             $table->float('precioF')->default(0);
             $table->float('precioO')->default(0);
             $table->timestamps();
+            
         });
 
     }

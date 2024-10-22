@@ -16,8 +16,8 @@ return new class extends Migration
             $table->string('oferta');
             $table->string('detalles')->nullable();
             $table->float('precio');
-            $table->time('tiempo')->nullable();
-            $table->date('tiempo')->nullable();
+            $table->time('hora')->nullable(); // Cambié 'tiempo' a 'hora' para el tipo TIME
+            $table->date('fecha')->nullable(); // Cambié 'tiempo' a 'fecha' para el tipo DATE
             $table->integer('articulo_id')->default(0);
             $table->timestamps();
         });
