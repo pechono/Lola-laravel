@@ -81,13 +81,16 @@ class VentaExpress extends Component
                 ->get();
         }
 
-       $inTheCar=Car::join('articulos','cars.articulo_id','=','articulos.id')
+        $inTheCar = Car::where('user_id', auth()->user()->id)
+        ->join('articulos', 'cars.articulo_id', '=', 'articulos.id')
         ->join('categorias', 'categorias.id', '=', 'articulos.categoria_id')
         ->join('unidads', 'unidads.id', '=', 'articulos.unidad_id')
-        ->join('stocks', 'stocks.articulo_id','=','articulos.id')
-        ->select( 'articulos.id', 'articulos.articulo', 'categorias.categoria', 'articulos.presentacion', 'unidads.unidad',
-        'articulos.descuento', 'articulos.unidadVenta', 'articulos.precioF', 'articulos.precioI', 'articulos.caducidad', 'articulos.detalles',
-        'articulos.suelto', 'articulos.activo','stocks.stock','stocks.stockMinimo', 'cars.cantidad','cars.articulo_id','cars.descuento')->get();
+        ->join('stocks', 'stocks.articulo_id', '=', 'articulos.id')
+        ->select('articulos.id', 'articulos.articulo', 'categorias.categoria', 'articulos.presentacion', 'unidads.unidad',
+            'articulos.descuento', 'articulos.unidadVenta', 'articulos.precioF', 'articulos.precioI', 'articulos.caducidad', 'articulos.detalles',
+            'articulos.suelto', 'articulos.activo', 'stocks.stock', 'stocks.stockMinimo', 'cars.cantidad', 'cars.articulo_id', 'cars.descuento')
+        ->get();
+    
         foreach ($articulos as $articulo){
              $this->estaEnCarrito = $inTheCar->contains('articulo_id', $articulo->id);
         }
@@ -99,10 +102,17 @@ class VentaExpress extends Component
         return view('livewire.venta.express.venta-express',compact('inTheCar','articulos','countCar','tipoVentas','clientes'));
     }
     public function Total(){
-        $inTheCar=Car::join('articulos','cars.articulo_id','=','articulos.id')
-        ->join('stocks', 'stocks.articulo_id','=','articulos.id')
-        ->select( 'articulos.id',
-        'articulos.precioF', 'articulos.precioI', 'articulos.caducidad', 'cars.cantidad','cars.articulo_id','cars.descuento')->get();
+        $inTheCar = Car::where('user_id', auth()->user()->id)
+    ->join('articulos', 'cars.articulo_id', '=', 'articulos.id')
+    ->join('categorias', 'categorias.id', '=', 'articulos.categoria_id')
+    ->join('unidads', 'unidads.id', '=', 'articulos.unidad_id')
+    ->join('stocks', 'stocks.articulo_id', '=', 'articulos.id')
+    ->select('articulos.id', 'articulos.articulo', 'categorias.categoria', 'articulos.presentacion', 'unidads.unidad',
+        'articulos.descuento', 'articulos.unidadVenta', 'articulos.precioF', 'articulos.precioI', 'articulos.caducidad', 'articulos.detalles',
+        'articulos.suelto', 'articulos.activo', 'stocks.stock', 'stocks.stockMinimo', 'cars.cantidad', 'cars.articulo_id', 'cars.descuento')
+    ->get();
+
+        
         $this->total=0;
         foreach($inTheCar as $car){
             $this->total+= ($car->cantidad*$car->precioF)-($car->cantidad*$car->precioF)*$car->descuento/100;
@@ -145,14 +155,17 @@ class VentaExpress extends Component
 
         $this->agregarCant=true;
     }
-    public $majStock='null';
+    public $majStock='';
     public function save($idart,$stockArt){
+        $this->addCar($idart);
         if ($stockArt >= $this->cantidadArt){
             $this->validate(['cantidadArt'=>'required|numeric']);
+            $this->addCar($idart);
             Car::create([
                 'articulo_id'=>$idart,
                 'cantidad'=>$this->cantidadArt,
                 'user_id'=>auth()->user()->id,
+                
                 'operacionCar'=>100
             ]);
             $this->agregarCant=false;
@@ -231,14 +244,16 @@ class VentaExpress extends Component
      public function ConfirmarVenta()
      {
 
-         $inTheCar=Car::join('articulos','cars.articulo_id','=','articulos.id')
-         ->join('categorias', 'categorias.id', '=', 'articulos.categoria_id')
-         ->join('unidads', 'unidads.id', '=', 'articulos.unidad_id')
-         ->join('stocks', 'stocks.articulo_id','=','articulos.id')
-         ->select( 'cars.articulo_id','articulos.id', 'articulos.articulo', 'categorias.categoria', 'articulos.presentacion', 'unidads.unidad',
-         'articulos.descuento', 'articulos.unidadVenta', 'articulos.precioF', 'articulos.precioI', 'articulos.caducidad', 'articulos.detalles',
-         'articulos.suelto', 'articulos.activo','stocks.stock','stocks.stockMinimo', 'cars.cantidad','cars.articulo_id','cars.descuento')->get();
-
+        $inTheCar = Car::where('user_id', auth()->user()->id)
+        ->join('articulos', 'cars.articulo_id', '=', 'articulos.id')
+        ->join('categorias', 'categorias.id', '=', 'articulos.categoria_id')
+        ->join('unidads', 'unidads.id', '=', 'articulos.unidad_id')
+        ->join('stocks', 'stocks.articulo_id', '=', 'articulos.id')
+        ->select('articulos.id', 'articulos.articulo', 'categorias.categoria', 'articulos.presentacion', 'unidads.unidad',
+            'articulos.descuento', 'articulos.unidadVenta', 'articulos.precioF', 'articulos.precioI', 'articulos.caducidad', 'articulos.detalles',
+            'articulos.suelto', 'articulos.activo', 'stocks.stock', 'stocks.stockMinimo', 'cars.cantidad', 'cars.articulo_id', 'cars.descuento')
+        ->get();
+    
         // $this->Total();
         $this->validate(['tipo_id'=>'required|numeric','cliente_id'=>'required|numeric']);
 
@@ -303,7 +318,7 @@ class VentaExpress extends Component
              }
          }
 
-         Car::truncate();
+         Car::where('user_id', auth()->user()->id)->delete();//Car::truncate();
          $this->cliente_id='';
          $this->tipo_id='';
          $this->cancelarBoton();

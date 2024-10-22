@@ -25,21 +25,21 @@ class CierreCaja extends Component
         $this->hoy = Carbon::today();
         $this->efectivo = Operacion::where('tipoVenta_id', 1)
             ->whereDate('created_at', $this->hoy)
-            ->where('cerrado', 0)
+            ->where('cerrado', 0)->where('usuario_id', auth()->user()->id)
             ->sum('venta');
 
         $this->debito = Operacion::where('tipoVenta_id', 2)
             ->whereDate('created_at', $this->hoy)
-            ->where('cerrado', 0)
+            ->where('cerrado', 0)->where('usuario_id', auth()->user()->id)
             ->sum('venta');
 
         $this->tarjeta = Operacion::where('tipoVenta_id', 3)
             ->whereDate('created_at', $this->hoy)
-            ->where('cerrado', 0)
+            ->where('cerrado', 0)->where('usuario_id', auth()->user()->id)
             ->sum('venta');
 
         $this->cuentaCorientes=CuentaCorriente::whereDate('created_at', $this->hoy)
-            ->where('cierreCaja', 0)
+            ->where('cierreCaja', 0)->where('usuario_id', auth()->user()->id)
             ->sum('entrega');
 
 
@@ -48,7 +48,7 @@ class CierreCaja extends Component
             ->join('tipo_ventas', 'tipo_ventas.id', '=', 'operacions.tipoVenta_id')
             ->select('tipo_ventas.id', 'tipo_ventas.tipoVenta', DB::raw('COUNT(*) as total_ventas'))
             ->whereDate('operacions.created_at', $this->hoy)
-            ->where('operacions.cerrado', 0)
+            ->where('operacions.cerrado', 0)->where('usuario_id', auth()->user()->id)
             ->groupBy('tipo_ventas.id', 'tipo_ventas.tipoVenta')
             ->get();
 
