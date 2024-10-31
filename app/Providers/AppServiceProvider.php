@@ -21,5 +21,8 @@ class AppServiceProvider extends ServiceProvider
     {
         
         Blade::component('components.menu-info', 'menuInfo');
+        Blade::if('admin', function () {
+            return auth()->check() && auth()->user()->user_type === 'Admin';
+        });
     }
 }

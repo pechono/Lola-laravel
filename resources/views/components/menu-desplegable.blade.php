@@ -83,6 +83,7 @@
                 <a href="{{ route('venta.list') }}" class="hover:text-xl block py-1 px-4 hover:bg-gray-600">Ventas</a>
             </div>
         </div>
+        @admin
         <div class="hoverDiv w-full text-gray-500">
 
                 <a href="javascript:void(0)" class=" py-2 px-2 hover:bg-gray-700 flex items-center" onclick="toggleSubMenu('gestionSubMenu')">
@@ -149,6 +150,7 @@
                 </a>
             </div>
         </div>
+        @endadmin
 
 
 

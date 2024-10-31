@@ -100,10 +100,12 @@
                             <x-sort-icon sortFiel='telefono': sort-by='$sortBy' : sort-asc='$sortAsc/'>
                         </div>
                     </td>
+                    @admin
                     <td class="px-4 py-2">
                         <div class="flex items-center">Accion</div>
 
                     </td>
+                    @endadmin
                 </tr>
             </thead>
             <tbody>
@@ -130,7 +132,8 @@
 
                         @endif
 
-                    </td>
+                    </td> 
+                    @admin
                     @if ($articulo->activo!=1)
 
                     <td class="rounder border px-4 py-2">
@@ -155,6 +158,7 @@
                         </x-danger-button>
                     </td>
                     @endif
+                    @endadmin
                 </tr>
                 @endforeach
             </tbody>

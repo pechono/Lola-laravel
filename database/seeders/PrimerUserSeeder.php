@@ -12,8 +12,10 @@ class PrimerUserSeeder extends Seeder
     {
         DB::table('users')->insert([
             'name' => 'Admin',
-            'email' => 'admin@example.com', // Cambia el email si lo necesitas
+            'email' => 'balsamo2@hotmail.com', // Cambia el email si lo necesitas
             'password' => Hash::make('VivaLaPatria'), // Cifra la contraseña antes de guardarla
+            'user_type' =>'Admin', // Guardar el user_type
+
             'created_at' => now(),
             'updated_at' => now(),
         ]);

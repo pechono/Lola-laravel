@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Date;
 use Livewire\Component;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 
 class CierreCaja extends Component
@@ -62,27 +63,33 @@ class CierreCaja extends Component
     public function cerrarModal(){
         $this->confirmarCierre=true;
     }
-    public function realizarCierre(){
-        ModelsCierreCaja::create([
-            'efectivo'=>$this->efectivo,
-            'debito'=>$this->debito,
-            'tarjeta'=>$this->tarjeta,
-            'cuentaCorriente'=>$this->cuentaCorientes,
-            'usuario'=>auth()->user()->id
-        ]);
-        $cuentaC=CuentaCorriente::whereDate('created_at', $this->hoy)->where('cierreCaja', 0)->get();
-        foreach($cuentaC as $item){
-            $cuenta=CuentaCorriente::find($item->id)->update(['cierreCaja'=>1]);
-        }
+    public function realizarCierre()
+{
+    // Realiza el cierre de caja
+    ModelsCierreCaja::create([
+        'efectivo' => $this->efectivo,
+        'debito' => $this->debito,
+        'tarjeta' => $this->tarjeta,
+        'cuentaCorriente' => $this->cuentaCorientes,
+        'usuario' => auth()->user()->id,
+    ]);
 
-        $tipos = Operacion::whereDate('created_at', $this->hoy)->where('cerrado', 0)->get();
-        foreach($tipos as $items){
-            Operacion::whereDate('created_at', $this->hoy)->where('cerrado', 0)->update(['cerrado'=>1]);
-        }
-        $this->confirmarCierre=false;
-        $this->mount();
-
+    $cuentaC = CuentaCorriente::whereDate('created_at', $this->hoy)->where('cierreCaja', 0)->get();
+    foreach ($cuentaC as $item) {
+        CuentaCorriente::find($item->id)->update(['cierreCaja' => 1]);
     }
+
+    $tipos = Operacion::whereDate('created_at', $this->hoy)->where('cerrado', 0)->get();
+    foreach ($tipos as $items) {
+        Operacion::whereDate('created_at', $this->hoy)->where('cerrado', 0)->update(['cerrado' => 1]);
+    }
+
+    auth()->guard('web')->logout();
+
+    // Redirige a la página de inicio de sesión
+    return redirect('/');
+}
+
     public function render()
     {
         return view('livewire.cierre.cierre-caja');

@@ -2,7 +2,7 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     <meta charset="UTF-8">
-    <title>Landing Page de Ejemplo</title>
+    <title>Albornoz Distribuuidora</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
   
      <style>
@@ -19,6 +19,9 @@
         .carousel-item {
             flex: 0 0 calc(100% / 5 - 0.5rem); /* Mostrar 3 tarjetas */
         }
+       
+       
+
     </style>
 </head>
 <body class="bg-gray-100 text-gray-800">
@@ -26,7 +29,11 @@
     <!-- Header -->
    <header class="bg-white shadow-md">
     <div class="container mx-auto flex justify-between items-center py-4 px-6">
-        <div class="text-2xl font-bold text-indigo-600">MiEmpresa</div>
+       <div class="flex flex-col transition-colors group">
+            <div class="text-4xl font-bold text-indigo-800 group-hover:text-red-600 transition-colors duration-300">Albornoz</div>
+            <div class="text-lg font-bold text-red-600 group-hover:text-indigo-800 transition-colors duration-300 text-right">Distribuidora</div>
+        </div>
+        
         <nav class="hidden md:flex space-x-4">
             <a href="#" class="text-gray-700 hover:text-indigo-600 transition duration-700">Inicio</a>
             <a href="#features" class="text-gray-700 hover:text-indigo-600 transition duration-700" >Características</a>
