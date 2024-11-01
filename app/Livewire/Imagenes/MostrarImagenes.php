@@ -13,7 +13,7 @@ class MostrarImagenes extends Component
     public function mount()
     {
         // Lee las imágenes desde la carpeta 'public/images' y convierte a array de strings (rutas)
-        $files = File::files(public_path('images/marcas/'));
+        $files = File::files(public_path('storage/images/marcas/'));
 
         // Extraemos solo los nombres de archivo (o rutas completas si lo prefieres)
         $this->imagenes = array_map(function($file) {

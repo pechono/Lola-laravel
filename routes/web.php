@@ -6,14 +6,16 @@ use App\Livewire\Print\PrintPedido;
 use App\Livewire\Print\ReportVentaO;
 use App\Livewire\Print\StockImprimir;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Livewire\CargarImagenes;
 Route::get('/', function () {
     return view('welcome');
 });
 
+
+
 // Agrupa todas las rutas que requieren autenticación y verificación
 Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified'])->group(function () {
-
+   
     Route::get('/dashboard', fn() => view('dashboard'))->name('dashboard');
 
     // Agrupación por prefijo para clientes, artículos, y ventas
@@ -81,5 +83,6 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
         Route::get('/crear', fn() => view('oferta.ofertaCreate'))->name('oferta.ofertaCreate');
         Route::get('/gestion', fn() => view('oferta.ofertaGestion'))->name('oferta.ofertaGestion');
 
-    });
+    }); 
+    Route::get('/imagenes/cargar', fn() => view('imagenes.imagenes'))->name('imagenes.imagenes');
 });
