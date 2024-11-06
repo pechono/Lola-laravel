@@ -1,4 +1,3 @@
-
 <div class="flex ">
         <div class=" h-auto  md:w-[70%]  m-5 ">
 
@@ -29,14 +28,15 @@
                                         <th class="px-4 py-2">Unidad Cantidad</th>
                                         <th class="px-4 py-2">Precio Final</th>
                                         <th class="px-4 py-2">Stock</th>
-                                        <th class="px-4 py-2">Acción</th>
+                                        <th class=" py-2">Acción</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($articulos as $articulo)
+                                    @foreach ($articulos as $articulo)                
+                                    
                                         @if (!$this->stockInsufisinte($articulo->id))
                                             <tr wire:key="{{ $articulo->id }}"
-                                                class="cursor-pointer {{ $estaEnCarrito ? 'hover:text-white hover:bg-red-600' : 'hover:text-white hover:bg-green-300' }}"
+                                                class="cursor-pointer {{ $this->estaEnCarrito($articulo->id) ? 'hover:text-white hover:bg-red-400' : 'hover:text-white hover:bg-green-300' }}"
                                                 wire:dblclick="{{ $estaEnCarrito ? 'deletCar('.$articulo->id.')' : 'addCar('.$articulo->id.')' }}"
                                                 wire:loading.attr="disabled">
                                                 <td class="rounder border px-4 py-2 {{ $this->Ofeta($articulo->id) ? 'text-green-500 font-bold':'' }}">{{ $articulo->id }}</td>
@@ -50,15 +50,21 @@
                                                         {{ $articulo->stock }}
                                                     @endif
                                                 </td>
-                                                <td class="rounder border px-4 py-2">
-                                                    @if ($estaEnCarrito)
-                                                        <x-danger-button wire:click="deletCar({{ $articulo->id }})" wire:loading.attr="disabled">
-                                                            Eliminar
-                                                        </x-danger-button>
+                                                <td class="rounder border flex p-1 flex-wrap">
+                                                    @if ($this->estaEnCarrito($articulo->id))
+
+                                                        <button wire:click="deletCar({{ $articulo->id }})" wire:loading.attr="disabled" class="flex-1 bg-red-500 hover:bg-red-700 text-white font-bold p-2 rounded-lg ">
+                                                            Elim
+                                                        </button>
+                                                        <button wire:click="modCar({{ $articulo->id }})" wire:loading.attr="disabled" class="ml-1 flex-1 bg-blue-500 hover:bg-blue-700 text-white font-bold p-2 rounded-lg "">
+                                                            Mod
+                                                        </button> 
+                                                       
                                                     @else
-                                                        <x-secondary-button wire:click="addCar({{ $articulo->id }})" wire:loading.attr="disabled" class="bg-green-700 hover:bg-green-500">
+                                                        <button wire:click="addCar({{ $articulo->id }})" wire:loading.attr="disabled" class="flex-1 bg-green-500 hover:bg-green-700 text-white font-bold p-2 rounded-lg ">
                                                             Agregar
-                                                        </x-secondary-button>
+                                                        </button>
+
                                                     @endif
                                                 </td>
                                             </tr>      
@@ -76,18 +82,18 @@
                 <div class=" bg-white p-4 rounded-lg shadow-lg w-auto mt-10">
                         {{-- seleccionados --}}
                         <div class="mt-3 w-full rounded-lg border shadow-lg p-4">
-                            <table class="table-auto ">
+                            <table class="">
                                 <thead>
                                     <tr>
                                         <td class="px-4 py-2"><div class="flex items-center" >Id</div></td>
                                         <td class="px-4 py-2"><div class="flex items-center">Articulo</div></td>
                                         <td class="px-4 py-2"><div class="flex items-center">Presentacion</div> </td>
-                                        <td class="px-4 py-2"><div class="flex items-center">Unidad Cantidad</div></td>
+                                       
                                         <td class="px-4 py-2"><div class="flex items-center">Precio Final</div></td>
-                                        <td class="px-4 py-2"><div class="flex items-center"> Stock Minimo</div></td>
+                                        <td class="px-4 py-2"><div class="flex items-center">S Min.</div></td>
                                         <td class="px-4 py-2"><div class="flex items-center">Stock</div></td>
-                                        <td class="px-4 py-2"><div class="flex items-center">Cantidad</div></td>
-                                        <td class="px-4 py-2"><div class="flex items-center">Descuento</div></td>
+                                        <td class="px-4 py-2"><div class="flex items-center">Cant.</div></td>
+                                        <td class="px-4 py-2"><div class="flex items-center">Descuento.</div></td>
                                         <td class="px-4 py-2"><div class="flex items-center">Sub Total</div></td>
                                         <td class="px-4 py-2"><div class="flex items-center">Accion</div></td>
                                     </tr>
@@ -101,8 +107,7 @@
                                             <tr class="{{ $this->Ofeta($item->articulo_id) ? 'text-green-500 font-bold':'' }}">
                                                 <td class="rounder border px-4 py-2">{{ $item->articulo_id }}</td>
                                                 <td class="rounder border px-4 py-2">{{ $item->articulo }}</td>
-                                                <td class="rounder border px-4 py-2">{{ $item->presentacion }}-{{ $item->unidad  }}</td>
-                                                <td class="rounder border px-4 py-2">{{ $item->unidadVenta }}</td>
+                                                <td class="rounder border px-4 py-2">{{ $item->presentacion }} - {{ $item->unidad  }} / {{ $item->unidadVenta }}</td>
                                                 <td class="rounder border px-4 py-2">{{ $item->precioF  }}</td>
                                                 <td class="rounder border px-4 py-2">{{ $item->stockMinimo }}</td>
                                                 <td class="rounder border px-4 py-2">{{ $item->stock }}</td>
@@ -122,10 +127,15 @@
                                                 $total+=$subtotal;
                                                 @endphp
                                                 <td class="rounder border px-4 py-2">{{ $subtotal}}</td>
-                                                <td class="rounder border px-4 py-2">
-                                                    <x-danger-button wire:click="deletCar({{ $item->articulo_id }})" wire:loading.attr="disabled" >
-                                                        Eliminar
-                                                    </x-danger-button>
+                                                <td class="rounder border  py-1 flex p-1 flex-wrap">
+                                                        <button wire:click="deletCar({{$item->articulo_id}})" wire:loading.attr="disabled" class="flex-1 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-lg ">
+                                                            Elim
+                                                        </button>
+                                                        <button wire:click="modCar({{$item->articulo_id}})" wire:loading.attr="disabled" class="ml-1 flex-1 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg "">
+                                                            Mod
+                                                        </button> 
+                                                       
+                                                   
                                                 </td>
                                             </tr>
                                         @endforeach
@@ -234,8 +244,19 @@
                                 </td>
 
                                 <td colspan="1"  class="px-4 py-2 border border-slate-300 bg-sky-400/50  font-semibold text-right">
-                                    <input id='cantidadArt' wire:model='cantidadArt' wire:keydown.enter="save({{ $articulosMuestra->id }},{{ $articulosMuestra->stock }})" type="text" placeholder="0" class="text-center text-4xl shadow appearance-none border rounded w-40 h-20 py-2 px-3">
-                                    <x-input-error for="cantidadArt" class="mt-2" />
+                                    <input 
+                                    id="cantidadArt" 
+                                    wire:model="cantidadArt" 
+                                    @if ($agregarCant === 1)
+                                        wire:keydown.enter="save({{ $articulosMuestra->id }}, {{ $articulosMuestra->stock }})"
+                                    @elseif ($agregarCant === 2)
+                                        wire:keydown.enter="updateSave({{ $articulosMuestra->id }}, {{ $articulosMuestra->stock }})"
+                                    @endif
+                                    type="text" 
+                                    placeholder="0" 
+                                    class="text-center text-4xl shadow appearance-none border rounded w-40 h-20 py-2 px-3"
+                                />
+                                <x-input-error for="cantidadArt" class="mt-2" />
 
                                 </td>
 
@@ -250,10 +271,16 @@
                 <x-danger-button wire:click="$toggle('agregarCant', false)" wire:loading.attr="disabled">
                     {{ __('Cancelar') }}
                 </x-danger-button>
-
-                <x-secondary-button class="ms-3" wire:click="save({{ $articulosMuestra->id }}, {{ $articulosMuestra->stock }})" wire:loading.attr="disabled">
+                @if ($agregarCant==1 )
+                    <x-secondary-button class="ms-3" wire:click="save({{ $articulosMuestra->id }}, {{ $articulosMuestra->stock }})" wire:loading.attr="disabled">
                     {{ __('Agregar Cantidad') }}
-                </x-secondary-button>
+                    </x-secondary-button>
+                @else<x-secondary-button class="ms-3" wire:click="updateSave({{ $articulosMuestra->id }}, {{ $articulosMuestra->stock }})" wire:loading.attr="disabled">
+                    {{ __('Modificar Cantidad') }}
+                    </x-secondary-button>
+                    
+                @endif
+                
             </x-slot>
         </x-dialog-modal>
         @endif

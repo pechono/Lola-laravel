@@ -1,18 +1,20 @@
 <div>
     <div class="relative mt-12">
         <div class="carousel-container overflow-hidden">
-            <div class=" flex">
+            <!-- Contenedor de la cuadrícula, con hasta 6 columnas y espacio entre elementos -->
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
                 @foreach ($imagenes as $imagen)
-                    <div class=" p-2 rounded-lg shadow-md mx-1 w-2/5 justify-center items-center">
-                        <img src="{{ asset('storage/images/marcas/' . basename($imagen)) }}" alt="Imagen" class="w-full h-auto ">
-                        <h2 class="p-2 border mt-2">{{$this->detallesResc($imagen)}}</h2>
-                        
+                    <div class="p-2 rounded-lg shadow-md flex flex-col items-center">
+                        <img src="{{ asset('storage/images/marcas/' . basename($imagen)) }}" alt="Imagen" class="w-full h-auto">
+                        <h2 class="p-2 border mt-2 text-center">
+                            {{ $this->detallesResc($imagen) }}
+                        </h2>
                     </div>
                 @endforeach
             </div>
         </div>
     </div>
-
+    
 
 
     @if (session()->has('message'))

@@ -33,6 +33,8 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
         Route::get('/cuentacorriente', fn() => view('venta.cuentaCorriente'))->name('venta.cuentaCorriente');
         Route::get('/listcuentacorriente', fn() => view('venta.ListCuentaCorriente'))->name('venta.ListCuentaCorriente');
         Route::get('/express', fn() => view('venta.ventaExpress'))->name('venta.ventaExpress');
+        Route::get('/card', fn() => view('venta.ventaCard'))->name('venta.ventaCard');
+
     });
 
     // Agrupación para operaciones, cierre de caja y stock

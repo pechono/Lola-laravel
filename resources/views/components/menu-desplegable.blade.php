@@ -9,10 +9,7 @@
                 </svg>
                 <span class="movableDiv transition-transform duration-300 ease-in-out">Home</span>
             </a>
-            <div id="homeSubMenu" class="pl-8 hidden text-lg">
-                <a href="#" class="block py-1 px-4 hover:bg-gray-600">Sub Home 1</a>
-                <a href="#" class="block py-1 px-4 hover:bg-gray-600">Sub Home 2</a>
-            </div>
+           
         </div>
         <div class="hoverDiv w-full text-green-400">
             <a href="javascript:void(0)" class=" py-2 px-2 hover:bg-gray-700 flex items-center" onclick="toggleSubMenu('ventaSubMenu')">
@@ -26,6 +23,8 @@
             </a>
             <div id="ventaSubMenu" class="pl-8 hidden text-lg  text-white">
                 <a href="{{ route('venta.ventaExpress') }}" class="hover:text-xl block py-1 px-4 hover:bg-gray-600">Venta Express</a>
+                <a href="{{ route('venta.ventaCard') }}" class="hover:text-xl block py-1 px-4 hover:bg-gray-600">Venta Card</a>
+
                 <a href="{{ route('venta.cuentaCorriente') }}" class="hover:text-xl block py-1 px-4 hover:bg-gray-600">Cuenta Corriente</a>
                 <a href="{{ route('venta.ListCuentaCorriente') }}" class="hover:text-xl block py-1 px-4 hover:bg-gray-600">Pago Cuenta Corriente</a>
                 <a href="{{ route('cierre.cierreCaja') }}" class="hover:text-xl block py-1 px-4 hover:bg-gray-600">Cierre Caja</a>

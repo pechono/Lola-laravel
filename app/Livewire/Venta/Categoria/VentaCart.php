@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Livewire\Venta\Express;
+namespace App\Livewire\Venta\Categoria;
 
 use App\Models\Articulo;
 use App\Models\Car;
+use App\Models\Categoria;
 use App\Models\Cliente;
 use App\Models\Ofertas;
 use App\Models\Operacion;
@@ -18,7 +19,7 @@ use Livewire\Component;
 use Livewire\WithPagination;
 use PhpParser\Node\Stmt\If_;
 
-class VentaExpress extends Component
+class VentaCart extends Component
 {
     use WithPagination;
 
@@ -64,29 +65,23 @@ class VentaExpress extends Component
     {
         $articulos = collect(); // Colección vacía por defecto
 
-        if ($this->q) {
+       
             $articulos = Articulo::where('activo', $this->active)
-                ->where(function ($query) {
-                    $query->where('articulo', 'like', '%' . $this->q . '%')
-                        ->orWhere('detalles', 'like', '%' . $this->q . '%')
-                        ->orWhere('categoria', 'like', '%' . $this->q . '%');
-                })
-                ->orderBy($this->sortBy, $this->sortAsc ? 'ASC' : 'DESC')
                 ->select('articulos.id', 'articulos.articulo', 'categorias.categoria', 'articulos.presentacion', 'unidads.unidad',
                     'articulos.descuento', 'articulos.unidadVenta', 'articulos.precioF', 'articulos.precioI', 'articulos.caducidad', 'articulos.detalles',
-                    'articulos.suelto', 'articulos.activo', 'stocks.stock', 'stocks.stockMinimo')
+                    'articulos.suelto', 'articulos.activo', 'stocks.stock', 'stocks.stockMinimo','articulos.categoria_id')
                 ->join('categorias', 'categorias.id', '=', 'articulos.categoria_id')
                 ->join('unidads', 'unidads.id', '=', 'articulos.unidad_id')
                 ->join('stocks', 'stocks.articulo_id', '=', 'articulos.id')
                 ->get();
-        }
+        
 
         $inTheCar = Car::where('user_id', auth()->user()->id)
         ->join('articulos', 'cars.articulo_id', '=', 'articulos.id')
         ->join('categorias', 'categorias.id', '=', 'articulos.categoria_id')
         ->join('unidads', 'unidads.id', '=', 'articulos.unidad_id')
         ->join('stocks', 'stocks.articulo_id', '=', 'articulos.id')
-        ->select('articulos.id', 'articulos.articulo', 'categorias.categoria', 'articulos.presentacion', 'unidads.unidad',
+        ->select('articulos.id', 'articulos.articulo','articulos.categoria_id', 'categorias.categoria', 'articulos.presentacion', 'unidads.unidad',
             'articulos.descuento', 'articulos.unidadVenta', 'articulos.precioF', 'articulos.precioI', 'articulos.caducidad', 'articulos.detalles',
             'articulos.suelto', 'articulos.activo', 'stocks.stock', 'stocks.stockMinimo', 'cars.cantidad', 'cars.articulo_id', 'cars.descuento')
         ->get();
@@ -97,9 +92,10 @@ class VentaExpress extends Component
         $countCar = Car::count();
         $tipoVentas=TipoVenta::all();
         $clientes=Cliente::all();
+        $categoris=Categoria::all();
         $this->cancelarBoton();
 
-        return view('livewire.venta.express.venta-express',compact('inTheCar','articulos','countCar','tipoVentas','clientes'));
+        return view('livewire.venta.categoria.venta-cart',compact('inTheCar','articulos','countCar','tipoVentas','clientes','categoris'));
     }
     public function Total(){
         $inTheCar = Car::where('user_id', auth()->user()->id)
@@ -357,7 +353,7 @@ class VentaExpress extends Component
          $this->cliente_id='';
          $this->tipo_id='';
          $this->cancelarBoton();
-         return redirect()->route('venta.reporte',['operacion'=>$operacion,'volver'=>'venta.ventaExpress']);
+         return redirect()->route('venta.reporte',['operacion'=>$operacion,'volver'=>'venta.ventaCard']);
      }
 
      public $apellido;
@@ -397,7 +393,7 @@ class VentaExpress extends Component
          Car::truncate();
          $this->cliente_id='';
          $this->tipo_id='';
-         return redirect()->route('venta.ventaExpress');
+         return redirect()->route('venta.ventaCard');
      }
      public function Ofeta($id){
         $ofertaArt = Ofertas::where('articulo_id', $id)->exists();
@@ -409,8 +405,9 @@ class VentaExpress extends Component
         return $stock->stock<=0 ? true : false;
     }
     public function estaEnCarrito ($articulo){
-       return $inTheCar = Car::where('user_id', auth()->user()->id)->get()->contains('articulo_id', $articulo);
+        return $inTheCar = Car::where('user_id', auth()->user()->id)->get()->contains('articulo_id', $articulo);
 
    }
+
 }
 
