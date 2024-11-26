@@ -7,6 +7,8 @@ use App\Livewire\Print\ReportVentaO;
 use App\Livewire\Print\StockImprimir;
 use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\CargarImagenes;
+use App\Livewire\Print\Mayorista;
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -87,4 +89,10 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
 
     }); 
     Route::get('/imagenes/cargar', fn() => view('imagenes.imagenes'))->name('imagenes.imagenes');
+   
+    Route::prefix('mayorista')->group(function () {
+        Route::get('/crearlista', fn() => view('mayorista.crearLista'))->name('mayorista.crearLista');
+        Route::get('/mayorista/{enviarM}', [Mayorista::class, 'generateReport'])->name('mayorista');
+        
+    });
 });

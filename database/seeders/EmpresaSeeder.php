@@ -14,9 +14,9 @@ class EmpresaSeeder extends Seeder
     public function run(): void
     {
         Empresa::create([
-            'empresa'=>'Forrajeria Lola',
+            'empresa'=>'Albornozz Distribuidora',
             'direccion'=>'Majul Ayan 280',
-            'telefono'=>' 3826 54-0417',
+            'telefono'=>' 3826-540417',
             'mail'=>'-'
         ]);
     }

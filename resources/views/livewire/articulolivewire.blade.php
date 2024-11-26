@@ -149,7 +149,7 @@
                 @endforeach
 
                 </tbody>
-            </table>
+        </table>
     </div>
     <div class="mt-2">
       {{ $articulos->links() }}

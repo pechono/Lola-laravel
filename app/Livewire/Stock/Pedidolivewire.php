@@ -5,15 +5,15 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 
 use App\Models\Articulo;
-use App\Models\Categoria;
-use App\Models\HistoriasPrecio;
+/* use App\Models\Categoria;
+use App\Models\HistoriasPrecio; */
 use App\Models\PedidoCar;
-use App\Models\Proveedor;
+/* use App\Models\Proveedor;
 use App\Models\Stock;
 use App\Models\Suelto;
-use App\Models\Unidad;
+use App\Models\Unidad; */
 use Livewire\Component;
-use Livewire\Features\SupportNavigate\ThirdPage;
+/* use Livewire\Features\SupportNavigate\ThirdPage; */
 use Livewire\WithPagination;
 
 use function Laravel\Prompts\select;
