@@ -6,6 +6,7 @@ use App\Models\Cliente;
 use App\Models\Color;
 use App\Models\Marca;
 use App\Models\TipoBike;
+use App\Models\Proceso;
 use Livewire\Component;
 
 class IngresarBike extends Component
@@ -46,22 +47,58 @@ class IngresarBike extends Component
         $this->colors=Color::all();
         $this->brands=Marca::all();
         $this->types=TipoBike::all();
+        $this->cargarProcesos();
+
      }
-     public function submitForm()
+    public function submitForm()
     {
         $this->message = "Colores seleccionados: " . implode(', ', $this->selectedColors) . 
                          " | Marcas seleccionadas: " . implode(', ', $this->selectedBrands) . 
                          " | Tipos seleccionados: " . implode(', ', $this->selectedTypes);
     }
-    public $parchadaD;
-    public $parchadaT;
-    public $frenoT;
-    public $frenoD;
-    public $servisG;
-    public $servisR;
-    public $tubelizadoD;
-    public $tubelizadoT;
+   
+    
+    
+    public $procesosSeleccionados = []; // Array para almacenar IDs seleccionados
+    public $procesos; // Lista completa de procesos
+    public $filtroActivos = true;
+
     
 
+    public function cargarProcesos()
+    {
+        $this->procesos = Proceso::when($this->filtroActivos, function($query) {
+                return $query->where('activo', true);
+            })
+            ->orderBy('nombre')
+            ->get();
+    }
+    
 
+    public function updatedFiltroActivos()
+    {
+        $this->cargarProcesos();
+    }
+
+    public function guardarSeleccion()
+    {
+        // Validación
+        $this->validate([
+            'procesosSeleccionados' => 'required|array|min:1',
+            'procesosSeleccionados.*' => 'exists:procesos,id',
+        ]);
+
+        // Aquí puedes procesar los seleccionados
+        // $this->procesosSeleccionados contiene los IDs
+        
+        session()->flash('message', 'Procesos seleccionados guardados correctamente');
+        
+        // Ejemplo de cómo acceder a los modelos completos:
+        $procesosSeleccionados = Proceso::findMany($this->procesosSeleccionados);
+        
+        // Puedes hacer algo con ellos o pasar a otra vista
+    }
+    public function ver(){
+        $this->message=$this->message.'hola';
+    }
 }
