@@ -14,25 +14,38 @@ class UnidadSeeder extends Seeder
     public function run(): void
     {
         Unidad::create([
-            'unidad'=>'Kg',
+// <<<<<<< HEAD
+//             'unidad'=>'Kg',
+//         ]);
+//         Unidad::create([
+//             'unidad'=>'g',
+//         ]);
+//         Unidad::create([
+//             'unidad'=>'L',
+//         ]);
+//         Unidad::create([
+//             'unidad'=>'ml',
+//         ]);
+//         Unidad::create([
+//             'unidad'=>'Unds',
+//         ]);
+//         Unidad::create([
+//             'unidad'=>'M',
+//         ]);
+//         Unidad::create([
+//             'unidad'=>'cc',
+// =======
+            'unidad'=>'unidad',
         ]);
         Unidad::create([
-            'unidad'=>'g',
+            'unidad'=>'Metro',
         ]);
         Unidad::create([
-            'unidad'=>'L',
+            'unidad'=>'Litro',
         ]);
         Unidad::create([
-            'unidad'=>'ml',
-        ]);
-        Unidad::create([
-            'unidad'=>'Unds',
-        ]);
-        Unidad::create([
-            'unidad'=>'M',
-        ]);
-        Unidad::create([
-            'unidad'=>'cc',
+            'unidad'=>'MLitro',
+
         ]);
     }
 }

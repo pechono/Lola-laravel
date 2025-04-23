@@ -45,6 +45,7 @@ class VentaExpress extends Component
         'apellido'=>'required|string|min:4',
         'nombre'=>'required|string|min:4',
         'telefono'=>'required|string|min:4',
+        'dni' => 'required|regex:/^\d{7,9}$/|unique:clientes,dni',
         'activo'=>'boolean',
         'tipo_id'=>'required|integer',
         'cliente_id'=>'required|integer',
@@ -362,6 +363,8 @@ class VentaExpress extends Component
 
      public $apellido;
      public $nombre;
+
+     public $dni;
      public $telefono;
      public $activo=1;
 
@@ -378,11 +381,13 @@ class VentaExpress extends Component
          Cliente::create([
              'apellido'=>$this->apellido,
              'nombre'=>$this->nombre,
+             'dni'=>$this->dni,
              'telefono'=>$this->telefono,
              'activo'=>1
          ]);
          $this->apellido='';
          $this->nombre='';
+         $this->dni='';
          $this->telefono='';
          $this->confirmingClienteAdd=false;
      }

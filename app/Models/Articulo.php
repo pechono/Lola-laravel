@@ -8,5 +8,18 @@ use Illuminate\Database\Eloquent\Model;
 class Articulo extends Model
 {
     use HasFactory;
-    protected $guarded=[];
+    protected $fillable = [
+        'articulo',
+        'categoria_id',
+        'presentacion',
+        'unidad_id',
+        'descuento',
+        'unidadVenta',
+        'precioF',
+        'precioI',
+        'caducidad',
+        'detalles',
+        'suelto',
+        'activo',
+    ];
 }

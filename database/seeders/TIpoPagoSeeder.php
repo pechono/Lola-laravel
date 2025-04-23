@@ -25,8 +25,5 @@ class TIpoPagoSeeder extends Seeder
         TipoVenta::create([
             'tipoVenta'=>'Cuenta Corriente'
         ]);
-        TipoVenta::create([
-            'tipoVenta'=>'Canje'
-        ]);
     }
 }

@@ -87,4 +87,8 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
 
     }); 
     Route::get('/imagenes/cargar', fn() => view('imagenes.imagenes'))->name('imagenes.imagenes');
+
+    Route::get('/servicio/ingresar', fn() => view('Service.ingresarBike'))->name('Service.ingresarBike');
+
+
 });

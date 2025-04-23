@@ -102,7 +102,7 @@ class Articulolivewire extends Component
          $this->presentacion='';
          $this->unidad_id='';
          $this->descuento='';
-         $this->unidadVenta='';
+         $this->unidadVenta='Unidad';
          $this->precioF='';
          $this->precioI='';
          $this->caducidad='';
@@ -114,7 +114,9 @@ class Articulolivewire extends Component
      }
 
     public $articulo, $categoria_id, $presentacion, $unidad_id;
-    public $descuento, $unidadVenta, $precioF, $precioI, $caducidad;
+
+    public $descuento, $unidadVenta='Unidad', $precioF, $precioI, $caducidad;
+
     public $detalles, $suelto, $porcentaje, $idArtitulo;
     public $proveedor_id, $stock, $stockMinimo;
 
@@ -126,6 +128,7 @@ class Articulolivewire extends Component
     public $confirmingArticuloAdd=false;
     public $confirmingArticuloEdit=false;
     // //reglas de validacion de Articulo
+
      protected $rules=[
         'articulo'=>'required|string|min:4',
         'categoria_id'=>'required',
@@ -143,22 +146,36 @@ class Articulolivewire extends Component
         'proveedor_id'=>'required'
     ];
 
+    
+
+
     public function confirmarArticuloAdd()
     {
        $this->confirmingArticuloAdd=true;
     }
+
     public function saveArticulo(){
-        if($this->cad){
-            $this->caducidad='Si';
-        }else{
+
             $this->caducidad='No';
-        }
-
-        if(!$this->suelto){
             $this->suelto=0;
-        }
+        
 
-        $this->validate();
+         $this->validate([
+            'articulo'=>'required|string|min:4',
+            'categoria_id'=>'required',
+            'presentacion'=>'required|string|min:1',
+            'unidad_id'=>'required',
+            'descuento'=>'required|numeric',
+            'unidadVenta'=>'required|string|min:1',
+            'precioI'=>'required|numeric|min:1',
+            'precioF'=>'required|numeric|min:1',
+            'caducidad'=>'required|string|min:2',
+            'detalles'=>'required|string',
+            'suelto'=>'boolean',
+            'stock'=>'required|numeric|min:1',
+            'stockMinimo'=>'required|integer|min:1',
+            'proveedor_id'=>'required'
+        ]);
 
         Articulo::create([
             'articulo'=>  $this->articulo,
@@ -174,6 +191,27 @@ class Articulolivewire extends Component
             'suelto'=>  $this->suelto,
             'activo'=>1
         ]);
+        try {
+            Articulo::create([
+                'articulo'=>  $this->articulo,
+                'categoria_id'=>  $this->categoria_id,
+                'presentacion'=>  $this->presentacion,
+                'unidad_id'=>  $this->unidad_id,
+                'descuento'=>  $this->descuento,
+                'unidadVenta'=>  $this->unidadVenta,
+                'precioF'=>  $this->precioF,
+                'precioI'=>  $this->precioI,
+                'caducidad'=>  $this->caducidad,
+                'detalles'=>  $this->detalles,
+                'suelto'=>  $this->suelto,
+                'activo'=>1
+            ]);        
+        } 
+            catch (\Exception $e) {
+            dd($e->getMessage());
+        }
+        
+
 
         $ultimo=Articulo::latest()->first();
         Stock::create([
@@ -189,12 +227,10 @@ class Articulolivewire extends Component
             ]);
         }
 
-
-
         HistoriasPrecio::create([
-            'articulo_id'=>$ultimo->id,
-            'precioFinal'=>$this->precioF,
-            'precioIcial'=>$this->precioI
+             'articulo_id'=>$ultimo->id,
+             'precioFinal'=>$this->precioF,
+             'precioIcial'=>$this->precioI
         ]);
         $this->borrarCampos();
         $this->confirmingArticuloAdd=false;

@@ -77,34 +77,56 @@ class Clientelivewire extends Component
     /* ----------------------Agregar Cliente--------------------------- */
     public $apellido;
     public $nombre;
+    public $dni;
+
     public $telefono;
     public $activo=1;
 
     public $confirmingClienteAdd=false;
     //reglas de validacion de Cliente
-    protected $rules=[
-        'apellido'=>'required|string|min:4',
-        'nombre'=>'required|string|min:4',
-        'telefono'=>'required|string|min:4',
-        'activo'=>'boolean'
-    ];
 
+    protected $rules = [
+        'dni' => 'required|regex:/^\d{7,9}$/|unique:clientes,dni',
+        'apellido' => 'required|string|max:255',
+        'nombre' => 'required|string|max:255',
+        'telefono' => 'nullable|string|max:20',
+        'activo' => 'boolean',
+    ];
+    
     public function confirmarClienteAdd()
     {
         //$this->reset(['cliente']);
         $this->confirmingClienteAdd=true;
     }
     public function saveCliente(){
-        $this->validate();
-        Cliente::create([
-            'apellido'=>$this->apellido,
-            'nombre'=>$this->nombre,
-            'telefono'=>$this->telefono,
-            'activo'=>1
-        ]);
+    
+
+    // Limpiar el formato del DNI
+    $this->dni = str_replace('.', '', $this->dni);
+    $this->validate([
+        'dni' => 'required|regex:/^\d{7,9}$/|unique:clientes,dni',
+        'apellido' => 'required|string|max:255',
+        'nombre' => 'required|string|max:255',
+        'telefono' => 'nullable|string|max:20',
+        'activo' => 'boolean',
+    ]);
+    Cliente::create([
+        'dni' => $this->dni,
+        'apellido' => $this->apellido,
+        'nombre' => $this->nombre,
+        'telefono' => $this->telefono,
+        'activo' => $this->activo,
+    ]);
+
+    session()->flash('message', 'Cliente agregado exitosamente.');
+    
         $this->apellido='';
         $this->nombre='';
         $this->telefono='';
+
+        $this->dni='';
+
+
         $this->confirmingClienteAdd=false;
     }
 
@@ -120,6 +142,8 @@ class Clientelivewire extends Component
         $this->idC=$id;
         $this->apellido=$client->apellido;
         $this->nombre=$client->nombre;
+
+        $this->dni=$client->dni;
         $this->telefono=$client->telefono;
 
         $this->confirmingClienteEdit=true;
@@ -127,20 +151,47 @@ class Clientelivewire extends Component
 
      public $msj='';
      public function editCliente(){
-         $this->validate();
-         $client=Cliente::find($this->idC);
-         $client->update([
-             'apellido'=>$this->apellido,
-             'nombre'=>$this->nombre,
-             'telefono'=>$this->telefono,
-             'activo'=>1
-         ]);
-         $this->apellido='';
-         $this->nombre='';
-         $this->telefono='';
-         $this->confirmingClienteEdit=false;
 
-         return $this->msj='se edito correctamente'. $this->idC;
-     }
-     
-}
+        // Validación de datos generales, sin incluir el DNI si no ha cambiado
+        $this->validate([
+            'apellido' => 'required|string|max:255',
+            'nombre' => 'required|string|max:255',
+            'telefono' => 'nullable|string|max:20',
+            'activo' => 'boolean',
+        ]);
+    
+        $client = Cliente::find($this->idC);
+    
+        // Verificar si el DNI ha cambiado
+        if ($client->dni !== $this->dni) {
+            // Validar el DNI solo si ha cambiado
+            $this->validate([
+                'dni' => 'required|regex:/^\d{7,9}$/|unique:clientes,dni',
+            ]);
+            // Actualizar el DNI si ha cambiado
+            $client->dni = $this->dni;
+        }
+    
+        // Actualizar otros campos
+        $client->update([
+            'apellido' => $this->apellido,
+            'nombre' => $this->nombre,
+            'telefono' => $this->telefono,
+            'activo' => 1, // Manteniendo el cliente activo por defecto
+        ]);
+    
+        // Limpiar los campos del formulario
+        $this->apellido = '';
+        $this->nombre = '';
+        $this->dni = '';
+        $this->telefono = '';
+        $this->confirmingClienteEdit = false;
+    
+        // Mensaje de éxito
+        $this->msj = 'Se editó correctamente el cliente con ID ' . $this->idC;
+    }
+    
+    
+
+ }
+

@@ -14,11 +14,19 @@ class CategoriaSeeder extends Seeder
     public function run(): void
     {
         Categoria::create(['categoria'=>'Oferta']);
-        Categoria::create(['categoria'=>'Alimento Balanceado']);
-        Categoria::create(['categoria'=>'Pañales']);
-        Categoria::create(['categoria'=>'Higiene']);
-        Categoria::create(['categoria'=>'Higiene Bebe']);
-        Categoria::create(['categoria'=>'Higien Personal']);
+// <<<<<<< HEAD
+//         Categoria::create(['categoria'=>'Alimento Balanceado']);
+//         Categoria::create(['categoria'=>'Pañales']);
+//         Categoria::create(['categoria'=>'Higiene']);
+//         Categoria::create(['categoria'=>'Higiene Bebe']);
+//         Categoria::create(['categoria'=>'Higien Personal']);
+// =======
+        Categoria::create(['categoria'=>'Camara']);
+        Categoria::create(['categoria'=>'Cubierta']);
+        Categoria::create(['categoria'=>'Rueda']);
+        Categoria::create(['categoria'=>'Trasmicion']);
+        Categoria::create(['categoria'=>'Formas']);
+
 
 
     }

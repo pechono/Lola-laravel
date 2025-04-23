@@ -47,6 +47,13 @@
                     </td>
                     <td class="px-4 py-2">
                         <div class="flex items-center">
+                            <Button wire:click="sortby('Dni')">Dni</Button>
+                            <x-sort-icon sortFiel='nombre': sort-by='$sortBy' : sort-asc='$sortAsc'/>
+                        </div>
+                    </td>
+                    
+                    <td class="px-4 py-2">
+                        <div class="flex items-center">
                             <Button wire:click="sortby('telefono')">Telefono</Button>
                             <x-sort-icon sortFiel='telefono': sort-by='$sortBy' : sort-asc='$sortAsc/'>
                         </div>
@@ -62,6 +69,7 @@
                     <td class="rounder border px-4 py-2">{{ $cliente->id }}</td>
                     <td class="rounder border px-4 py-2">{{ $cliente->apellido }}</td>
                     <td class="rounder border px-4 py-2">{{ $cliente->nombre }}</td>
+                    <td class="rounder border px-4 py-2">{{ $cliente->dni }}</td>
                     <td class="rounder border px-4 py-2">{{ $cliente->telefono }}</td>
                     <td class="rounder border px-2 py-2">
                         <form action="">
@@ -125,8 +133,13 @@
                     <x-label for="nombre" value="{{ __('Nombre') }}" />
                     <x-input id="nombre" type="text" class="mt-1 block w-full" wire:model="nombre" name='nombre' />
                     <x-input-error for="nombre" class="mt-2" />
-
-                </div><div class="col-span-6 sm:col-span-4 mt-2">
+                </div>
+                <div class="col-span-6 sm:col-span-4 mt-2">
+                    <x-label for="dni" value="{{ __('DNI') }}" />
+                    <x-input id="dni" type="text" class="mt-1 block w-full" wire:model="dni" name='dni' />
+                    <x-input-error for="dni" class="mt-2" />
+                </div>
+                <div class="col-span-6 sm:col-span-4 mt-2">
                     <x-label for="telefono" value="{{ __('Telefono') }}" />
                     <x-input id="telefono" type="text" class="mt-1 block w-full" wire:model="telefono"  />
                     <x-input-error for="telefono" class="mt-2" />
@@ -161,7 +174,14 @@
                     <x-input id="nombre" type="text" class="mt-1 block w-full" wire:model="nombre" name='nombre' />
                     <x-input-error for="nombre" class="mt-2" />
 
-                </div><div class="col-span-6 sm:col-span-4 mt-2">
+                </div>
+                <div class="col-span-6 sm:col-span-4 mt-2">
+                    <x-label for="dni" value="{{ __('DNI') }}" />
+                    <x-input id="dni" type="text" class="mt-1 block w-full" wire:model="dni" name='dni' />
+                    <x-input-error for="dni" class="mt-2" />
+
+                </div>
+                <div class="col-span-6 sm:col-span-4 mt-2">
                     <x-label for="telefono" value="{{ __('Telefono') }}" />
                     <x-input id="telefono" type="text" class="mt-1 block w-full" wire:model="telefono"  />
                     <x-input-error for="telefono" class="mt-2" />

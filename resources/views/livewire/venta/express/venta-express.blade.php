@@ -390,7 +390,20 @@
                     <x-input id="nombre" type="text" class="mt-1 block w-full" wire:model="nombre" name='nombre' />
                     <x-input-error for="nombre" class="mt-2" />
 
+<<<<<<< HEAD
                 </div><div class="col-span-6 sm:col-span-4 mt-2">
+=======
+                </div>
+                
+                <div class="col-span-6 sm:col-span-4 mt-2">
+                    <div>
+                        <x-label for="dni" value="DNI " />
+                        <x-input id="dni" type="text" class="mt-1 block w-full" wire:model='Ingresar DNI' placeholder="Descuento"/>
+                        <x-input-error for="dni" class="mt-2" />
+                    </div>
+                </div>
+                <div class="col-span-6 sm:col-span-4 mt-2">
+>>>>>>> Servicios
                     <x-label for="telefono" value="{{ __('Telefono') }}" />
                     <x-input id="telefono" type="text" class="mt-1 block w-full" wire:model="telefono"  />
                     <x-input-error for="telefono" class="mt-2" />
