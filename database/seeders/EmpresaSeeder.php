@@ -14,11 +14,7 @@ class EmpresaSeeder extends Seeder
     public function run(): void
     {
         Empresa::create([
-// <<<<<<< HEAD
-//             'empresa'=>'Forrajeria Lola',
-//             'direccion'=>'Majul Ayan 280',
-//             'telefono'=>' 3826 54-0417',
-// =======
+
             'empresa'=>'Bicicleteria Balsamo',
             'direccion'=>'Hipolito Yrigoyen',
             'telefono'=>' 3826 54-1085',

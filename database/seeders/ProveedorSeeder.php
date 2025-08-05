@@ -17,7 +17,7 @@ class ProveedorSeeder extends Seeder
             'nombre'=>'Sin Definir',
             'telefono'=>'-',
             'rubro'=>'Sin Defenir',
-           'direccion'=>'-',
+            'direccion'=>'-',
             'localidad'=>'-',
             'mail'=>'correo@correo.com',
             'activo'=>'1'

@@ -17,7 +17,8 @@ class ClienteSeeder extends Seeder
             'apellido'=>'Consumidor Final',
             'nombre'=>'-',
             'telefono'=>'-',
-            'activo'=>1
-        ]);
+            'activo'=>1,
+            'dni'=>0,       
+         ]);
     }
 }

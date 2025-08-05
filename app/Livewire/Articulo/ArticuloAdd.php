@@ -1,0 +1,147 @@
+<?php
+
+namespace App\Livewire\Articulo;
+use App\Models\Articulo;
+use App\Models\Categoria;
+use App\Models\HistoriasPrecio;
+use App\Models\Ofertas;
+use App\Models\Proveedor;
+use App\Models\Stock;
+use App\Models\Suelto;
+use App\Models\Unidad;
+use Livewire\Component;
+use Illuminate\Validation\Rule;
+
+class ArticuloAdd extends Component
+{
+    public $categorias, $a;
+    public $suel=0;
+    public $cad='No';
+    public $confirmingArticuloAdd=false;
+    public $codigo, $articulo, $categoria_id, $presentacion, $unidad_id, $descuento, $unidadVenta, $precioF, $precioI, $caducidad, $detalles, $suelto, $stockMinimo, $stock, $proveedor_id;
+
+    public function render()
+    {
+        $this->categorias=Categoria::All();
+        $unidades=Unidad::all();
+        $proveedores=Proveedor::all();
+        return view('livewire.articulo.articulo-add', compact('unidades', 'proveedores'));
+    }
+    
+    public function confirmarArticuloAdd()
+    {
+        $this->confirmingArticuloAdd=true;
+    }
+     public function saveArticulo(){
+
+            $this->caducidad='No';
+            $this->suelto=0;
+        
+
+         $this->validate([
+            'articulo'=>'required|string|min:4',
+            'categoria_id'=>'required',
+             'codigo' => [
+             'nullable',
+                function ($attribute, $value, $fail) {
+                    if ($value && Articulo::where('codigo', $value)
+                        ->when($this->articulo_id, fn($q) => $q->where('id', '!=', $this->articulo_id))
+                        ->exists()) {
+                        $fail('El código ya está en uso');
+                    }
+                }
+            ],
+            'presentacion'=>'required|string|min:1',
+            'unidad_id'=>'required',
+            'descuento'=>'required|numeric',
+            'unidadVenta'=>'required|string|min:1',
+            'precioI'=>'required|numeric|min:1',
+            'precioF'=>'required|numeric|min:1',
+            'caducidad'=>'required|string|min:2',
+            'detalles'=>'required|string',
+            'suelto'=>'boolean',
+            'stock'=>'required|numeric|min:1',
+            'stockMinimo'=>'required|integer|min:1',
+            'proveedor_id'=>'required'
+        ]);
+
+        Articulo::create([
+            'articulo'=>  $this->articulo,
+            'codigo'=>  $this->codigo,
+            'categoria_id'=>  $this->categoria_id,
+            'presentacion'=>  $this->presentacion,
+            'unidad_id'=>  $this->unidad_id,
+            'descuento'=>  $this->descuento,
+            'unidadVenta'=>  $this->unidadVenta,
+            'precioF'=>  $this->precioF,
+            'precioI'=>  $this->precioI,
+            'caducidad'=>  $this->caducidad,
+            'detalles'=>  $this->detalles,
+            'suelto'=>  $this->suelto,
+            'activo'=>1
+        ]);
+        // try {
+        //     Articulo::create([
+        //         'articulo'=>  $this->articulo,
+        //         'codigo'=>  $this->codigo,
+        //         'categoria_id'=>  $this->categoria_id,
+        //         'presentacion'=>  $this->presentacion,
+        //         'unidad_id'=>  $this->unidad_id,
+        //         'descuento'=>  $this->descuento,
+        //         'unidadVenta'=>  $this->unidadVenta,
+        //         'precioF'=>  $this->precioF,
+        //         'precioI'=>  $this->precioI,
+        //         'caducidad'=>  $this->caducidad,
+        //         'detalles'=>  $this->detalles,
+        //         'suelto'=>  $this->suelto,
+        //         'activo'=>1
+        //     ]);        
+        // } 
+        //     catch (\Exception $e) {
+        //     dd($e->getMessage());
+        // }
+        
+
+
+        $ultimo=Articulo::latest()->first();
+        Stock::create([
+            'articulo_id'=>$ultimo->id,
+            'stockMinimo'=>$this->stockMinimo,
+            'stock'=>$this->stock,
+            'proveedor_id'=>$this->proveedor_id
+        ]);
+
+        if($this->suelto==1){
+            Suelto::create([
+                'articulo_id'=>$this->suelto
+            ]);
+        }
+
+        HistoriasPrecio::create([
+             'articulo_id'=>$ultimo->id,
+             'precioFinal'=>$this->precioF,
+             'precioIcial'=>$this->precioI
+        ]);
+        //$this->borrarCampos();
+        $this->confirmingArticuloAdd=false;
+    }
+
+    
+    public function borrarCampos(){
+        $this->articulo='';
+         $this->categoria_id='';
+         $this->presentacion='';
+         $this->unidad_id='';
+         $this->descuento='';
+         $this->unidadVenta='Unidad';
+         $this->precioF='';
+         $this->precioI='';
+         $this->caducidad='';
+         $this->detalles='';
+         $this->suelto='';
+         $this->stockMinimo='';
+         $this->stock='';
+         $this->proveedor_id='';
+     }
+}
+
