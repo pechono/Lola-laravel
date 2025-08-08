@@ -16,6 +16,7 @@ class ArticuloAdd extends Component
 {
     public $categorias, $a;
     public $suel=0;
+    public $articulo_id;
     public $cad='No';
     public $confirmingArticuloAdd=false;
     public $codigo, $articulo, $categoria_id, $presentacion, $unidad_id, $descuento, $unidadVenta, $precioF, $precioI, $caducidad, $detalles, $suelto, $stockMinimo, $stock, $proveedor_id;
@@ -38,19 +39,9 @@ class ArticuloAdd extends Component
             $this->suelto=0;
         
 
-         $this->validate([
+        $this->validate([
             'articulo'=>'required|string|min:4',
             'categoria_id'=>'required',
-             'codigo' => [
-             'nullable',
-                function ($attribute, $value, $fail) {
-                    if ($value && Articulo::where('codigo', $value)
-                        ->when($this->articulo_id, fn($q) => $q->where('id', '!=', $this->articulo_id))
-                        ->exists()) {
-                        $fail('El código ya está en uso');
-                    }
-                }
-            ],
             'presentacion'=>'required|string|min:1',
             'unidad_id'=>'required',
             'descuento'=>'required|numeric',
@@ -62,7 +53,18 @@ class ArticuloAdd extends Component
             'suelto'=>'boolean',
             'stock'=>'required|numeric|min:1',
             'stockMinimo'=>'required|integer|min:1',
-            'proveedor_id'=>'required'
+            'proveedor_id'=>'required',
+            'codigo' => [
+            'nullable',
+            'alpha_num',
+            function ($attribute, $value, $fail) {
+                if ($value && Articulo::where('codigo', $value)
+                    ->when($this->articulo_id, fn($q) => $q->where('id', '!=', $this->articulo_id))
+                    ->exists()) {
+                    $fail('El código ya está en uso.');
+                    }
+                 }
+             ],
         ]);
 
         Articulo::create([
@@ -124,9 +126,10 @@ class ArticuloAdd extends Component
         ]);
         //$this->borrarCampos();
         $this->confirmingArticuloAdd=false;
+        $this->dispatch('articuloActualizado');
+
     }
 
-    
     public function borrarCampos(){
         $this->articulo='';
          $this->categoria_id='';
@@ -143,5 +146,23 @@ class ArticuloAdd extends Component
          $this->stock='';
          $this->proveedor_id='';
      }
+      public $categoriaAdd=false;
+    public $categoria;
+    public function addCategoria(){
+        $this->categoriaAdd=true;
+
+    }
+    public function saveCategoria()  {
+        $this->validate(['categoria'=>'required|min:3']);
+        Categoria::create([
+            'categoria'=>$this->categoria
+        ]);
+        $this->categorias=Categoria::All();
+        $this->categoriaAdd=false;
+    }
+    public function Ofeta($id){
+        $ofertaArt = Ofertas::where('articulo_id', $id)->exists();
+        return $ofertaArt ? true : false;
+    }
 }
 

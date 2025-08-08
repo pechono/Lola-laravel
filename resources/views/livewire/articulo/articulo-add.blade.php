@@ -1,4 +1,4 @@
-<div>
+<div class="w-auto p-2 sm:px-5 bg-white">
    <div class="mt-4 text-2xl flex justify-between shadow-inner">
             <div>Articulo</div>
             <div class="mr-2">
@@ -174,5 +174,30 @@
         </x-slot>
     </x-dialog-modal>
       <!--Fin Add  Confirmation Modal **************************************************************-->
+
+
+         {{-- ---- Fin modal confirmar venta---- --}}
+    <x-dialog-modal wire:model.live="categoriaAdd" maxWidth="2xl">
+        <x-slot name="title">
+            {{ __('Cargar Categoria') }}
+        </x-slot>
+        <x-slot name="content">
+            <div class="col-span-6 sm:col-span-4">
+                <x-label for="categoria" value="{{ __('Categoria') }}" />
+                <x-input id="categoria" type="text" class="mt-1 block w-full" wire:model="categoria" name='categoria' />
+                <x-input-error for="categoria" class="mt-2" />
+            </div>
+
+        </x-slot>
+        <x-slot name="footer">
+            <x-danger-button wire:click="$toggle('categoriaAdd', false)" wire:loading.attr="disabled">
+                {{ __('Cancelar') }}
+            </x-danger-button>
+
+            <x-secondary-button class="ms-3" wire:click="saveCategoria()" wire:loading.attr="disabled">
+                {{ __('Guardar') }}
+            </x-secondary-button>
+        </x-slot>
+    </x-dialog-modal>
 
 </div>

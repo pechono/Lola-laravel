@@ -44,7 +44,7 @@ class ArticuloLista extends Component
                                         });
                                     })
             ->orderBy($this->sortBy, $this->sortAsc ? 'ASC' : 'DESC')
-            ->select('articulos.id', 'articulos.articulo', 'categorias.categoria', 'articulos.presentacion', 'unidads.unidad',
+            ->select('articulos.id','codigo', 'articulos.articulo', 'categorias.categoria', 'articulos.presentacion', 'unidads.unidad',
             'articulos.descuento', 'articulos.unidadVenta', 'articulos.precioF', 'articulos.precioI', 'articulos.caducidad', 'articulos.detalles',
             'articulos.suelto', 'articulos.activo','stocks.stock','stocks.stockMinimo','articulos.activo')
             ->join('categorias', 'categorias.id', '=', 'articulos.categoria_id')
@@ -74,5 +74,35 @@ class ArticuloLista extends Component
         $this->resetPage();
     }
     
+    protected $listeners = ['articuloActualizado' => 'render'];
     
+    public ?int $articuloId = null;
+    public bool $mostrarModal = false;
+
+    public function editar($id)
+    {
+        $this->articuloId = $id;
+        $this->mostrarModal = true;
+    }
+
+    public $confirmingArticuloDeletion=false;
+     public $idArt;
+     public function confirmarArticuloDeletion($id)
+     {
+         $this->confirmingArticuloDeletion=true;
+         $this->idArt=$id;
+     }
+
+     public function deleteArticulo()
+     {
+        $art=Articulo::find($this->idArt);
+        $art->update([
+            'activo'=>0,
+         ]);
+
+         $this->confirmingArticuloDeletion=false;
+     }
+
 }
+
+

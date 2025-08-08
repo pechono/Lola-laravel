@@ -1,5 +1,5 @@
    
-<div>
+<div class="w-full px-6 py-4 bg-white rounded-lg shadow-md">
         
         <table class="table-auto w-full">
             <thead>
@@ -45,14 +45,15 @@
                         </td>
                         <td class="rounder border px-4 py-2">
                             @if ($articulo->activo != 1)
-                                <x-secondary-button wire:click="ActivarArticuloEdit({{ $articulo->id }})" wire:loading.attr="disabled" class="bg-green-700 hover:bg-green-500">
+                                   
+                               <x-secondary-button wire:click="ActivarArticuloEdit({{ $articulo->id }})" wire:loading.attr="disabled" class="bg-green-700 hover:bg-green-500">
                                     Activar
                                 </x-secondary-button>
                             @else
-                                <x-secondary-button wire:click="confirmarArticuloEdit({{ $articulo->id }})" wire:loading.attr="disabled" class="bg-green-700 hover:bg-green-500">
+                                <x-secondary-button wire:click="editar({{ $articulo->id }})" wire:loading.attr="disabled" class="bg-green-600 hover:bg-green-500">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
-                                    </svg>
+
+knhlnln                                    </svg>
                                 </x-secondary-button>
                                 <x-danger-button wire:click="confirmarArticuloDeletion({{ $articulo->id }})" wire:loading.attr="disabled">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
@@ -67,8 +68,34 @@
 
                 </tbody>
             </table>
-    </div>
-    {{-- <div class="mt-2">
-      {{ $articulos->links() }}
-    </div> --}}
+            @if($mostrarModal)
+                <div class="modal">
+                    <livewire:articulo.articulo-edit 
+                :articulo-id="$articuloId" 
+                :confirming-articulo-edit="true" 
+            />
+                </div>
+            @endif
+    <!-- Delete User Confirmation Modal ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+    <x-dialog-modal wire:model.live="confirmingArticuloDeletion">
+        <x-slot name="title">
+            {{ __('Eliminar articulo') }}
+        </x-slot>
+
+        <x-slot name="content">
+            {{ __('¿Esta seguro de Desea Eliminar Un articulo?') }}
+        </x-slot>
+
+        <x-slot name="footer">
+            <x-secondary-button wire:click="$toggle('confirmingArticuloDeletion', false)" wire:loading.attr="disabled">
+                {{ __('Cancelar') }}
+            </x-secondary-button>
+
+            <x-danger-button class="ms-3" wire:click="deleteArticulo({{ $confirmingArticuloDeletion }})" wire:loading.attr="disabled">
+                {{ __('Eliminar') }}
+            </x-danger-button>
+        </x-slot>
+    </x-dialog-modal>
+    <!--Fin Delete  Confirmation Modal +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+
 </div>
