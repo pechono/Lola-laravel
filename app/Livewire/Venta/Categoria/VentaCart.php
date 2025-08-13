@@ -67,7 +67,7 @@ class VentaCart extends Component
 
        
             $articulos = Articulo::where('activo', $this->active)
-                ->select('articulos.id', 'articulos.articulo', 'categorias.categoria', 'articulos.presentacion', 'unidads.unidad',
+                ->select('articulos.id', 'articulos.codigo','articulos.articulo', 'categorias.categoria', 'articulos.presentacion', 'unidads.unidad',
                     'articulos.descuento', 'articulos.unidadVenta', 'articulos.precioF', 'articulos.precioI', 'articulos.caducidad', 'articulos.detalles',
                     'articulos.suelto', 'articulos.activo', 'stocks.stock', 'stocks.stockMinimo','articulos.categoria_id')
                 ->join('categorias', 'categorias.id', '=', 'articulos.categoria_id')
@@ -81,7 +81,7 @@ class VentaCart extends Component
         ->join('categorias', 'categorias.id', '=', 'articulos.categoria_id')
         ->join('unidads', 'unidads.id', '=', 'articulos.unidad_id')
         ->join('stocks', 'stocks.articulo_id', '=', 'articulos.id')
-        ->select('articulos.id', 'articulos.articulo','articulos.categoria_id', 'categorias.categoria', 'articulos.presentacion', 'unidads.unidad',
+        ->select('articulos.id', 'articulos.codigo', 'articulos.articulo','articulos.categoria_id', 'categorias.categoria', 'articulos.presentacion', 'unidads.unidad',
             'articulos.descuento', 'articulos.unidadVenta', 'articulos.precioF', 'articulos.precioI', 'articulos.caducidad', 'articulos.detalles',
             'articulos.suelto', 'articulos.activo', 'stocks.stock', 'stocks.stockMinimo', 'cars.cantidad', 'cars.articulo_id', 'cars.descuento')
         ->get();
@@ -103,7 +103,7 @@ class VentaCart extends Component
     ->join('categorias', 'categorias.id', '=', 'articulos.categoria_id')
     ->join('unidads', 'unidads.id', '=', 'articulos.unidad_id')
     ->join('stocks', 'stocks.articulo_id', '=', 'articulos.id')
-    ->select('articulos.id', 'articulos.articulo', 'categorias.categoria', 'articulos.presentacion', 'unidads.unidad',
+    ->select('articulos.id', 'articulos.articulo', 'articulos.codigo', 'categorias.categoria', 'articulos.presentacion', 'unidads.unidad',
         'articulos.descuento', 'articulos.unidadVenta', 'articulos.precioF', 'articulos.precioI', 'articulos.caducidad', 'articulos.detalles',
         'articulos.suelto', 'articulos.activo', 'stocks.stock', 'stocks.stockMinimo', 'cars.cantidad', 'cars.articulo_id', 'cars.descuento')
     ->get();
@@ -116,6 +116,7 @@ class VentaCart extends Component
     }
     public $id;
     public $art;
+    public $codigo;
     public $categoria;
     public $presentacion;
     public $unidad;
@@ -140,7 +141,7 @@ class VentaCart extends Component
     public $articulosMuestra=[];
     public function addCar($id)
     {
-        $this->articulosMuestra = Articulo::select('articulos.id','articulos.articulo','categorias.categoria','articulos.presentacion','unidads.unidad','articulos.descuento','articulos.unidadVenta',
+        $this->articulosMuestra = Articulo::select('articulos.id','articulos.articulo', 'articulos.codigo','categorias.categoria','articulos.presentacion','unidads.unidad','articulos.descuento','articulos.unidadVenta',
             'articulos.precioF','articulos.precioI','articulos.caducidad','articulos.detalles','articulos.suelto','articulos.activo','stocks.stock','stocks.stockMinimo')
         ->join('categorias', 'categorias.id', '=', 'articulos.categoria_id')
         ->join('unidads', 'unidads.id', '=', 'articulos.unidad_id')
@@ -152,7 +153,7 @@ class VentaCart extends Component
         $this->agregarCant=1;
     }
     public function modCar($id){
-        $this->articulosMuestra = Articulo::select('articulos.id','articulos.articulo','categorias.categoria','articulos.presentacion','unidads.unidad','articulos.descuento','articulos.unidadVenta',
+        $this->articulosMuestra = Articulo::select('articulos.id', 'articulos.codigo','articulos.articulo','categorias.categoria','articulos.presentacion','unidads.unidad','articulos.descuento','articulos.unidadVenta',
         'articulos.precioF','articulos.precioI','articulos.caducidad','articulos.detalles','articulos.suelto','articulos.activo','stocks.stock','stocks.stockMinimo')
         ->join('categorias', 'categorias.id', '=', 'articulos.categoria_id')
         ->join('unidads', 'unidads.id', '=', 'articulos.unidad_id')
@@ -218,7 +219,7 @@ class VentaCart extends Component
     public $cDescuento=false;
     public function descuentoArt($id){
 
-        $articulos=Articulo::select('articulos.id','articulos.articulo','categorias.categoria','articulos.presentacion','unidads.unidad','articulos.descuento','articulos.unidadVenta',
+        $articulos=Articulo::select('articulos.id', 'articulos.codigo','articulos.articulo','categorias.categoria','articulos.presentacion','unidads.unidad','articulos.descuento','articulos.unidadVenta',
                                     'articulos.precioF','articulos.precioI','articulos.caducidad','articulos.detalles','articulos.suelto','articulos.activo','stocks.stock','stocks.stockMinimo')
             ->join('categorias', 'categorias.id', '=', 'articulos.categoria_id')
             ->join('unidads', 'unidads.id', '=', 'articulos.unidad_id')
@@ -227,6 +228,7 @@ class VentaCart extends Component
             ->find($id);
 
             $this->id=$articulos->id;
+            $this->codigo=$articulos->codigo;
             $this->art=$articulos->articulo;
             $this->categoria=$articulos->categoria;
             $this->presentacion=$articulos->presentacion;
@@ -280,7 +282,7 @@ class VentaCart extends Component
         ->join('categorias', 'categorias.id', '=', 'articulos.categoria_id')
         ->join('unidads', 'unidads.id', '=', 'articulos.unidad_id')
         ->join('stocks', 'stocks.articulo_id', '=', 'articulos.id')
-        ->select('articulos.id', 'articulos.articulo', 'categorias.categoria', 'articulos.presentacion', 'unidads.unidad',
+        ->select('articulos.id', 'articulos.codigo', 'articulos.articulo', 'categorias.categoria', 'articulos.presentacion', 'unidads.unidad',
             'articulos.descuento', 'articulos.unidadVenta', 'articulos.precioF', 'articulos.precioI', 'articulos.caducidad', 'articulos.detalles',
             'articulos.suelto', 'articulos.activo', 'stocks.stock', 'stocks.stockMinimo', 'cars.cantidad', 'cars.articulo_id', 'cars.descuento')
         ->get();

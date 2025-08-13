@@ -64,6 +64,10 @@ class ArticuloAdd extends Component
                     $fail('El código ya está en uso.');
                     }
                  }
+             ],[
+            'categoria_id.required' => 'Debe seleccionar una categoría.',
+            'grupo_id.required' => 'Debe seleccionar un grupo.', // 👈 mensaje para grupo
+            'proveedor_id.required' => 'Debe seleccionar un proveedor.'
              ],
         ]);
 

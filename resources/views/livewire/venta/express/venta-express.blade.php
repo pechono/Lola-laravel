@@ -24,6 +24,7 @@
                                 <thead>
                                     <tr>
                                         <th class="px-4 py-2">Id</th>
+                                        <th class="px-4 py-2">Codigo</th>
                                         <th class="px-4 py-2">Artículo</th>
                                         <th class="px-4 py-2">Unidad Cantidad</th>
                                         <th class="px-4 py-2">Precio Final</th>
@@ -40,6 +41,8 @@
                                                 wire:dblclick="{{ $estaEnCarrito ? 'deletCar('.$articulo->id.')' : 'addCar('.$articulo->id.')' }}"
                                                 wire:loading.attr="disabled">
                                                 <td class="rounder border px-4 py-2 {{ $this->Ofeta($articulo->id) ? 'text-green-500 font-bold':'' }}">{{ $articulo->id }}</td>
+                                                <td class="rounder border px-4 py-2 {{ $this->Ofeta($articulo->id) ? 'text-green-500 font-bold':'' }}">{{ $articulo->codigo }}</td>
+
                                                 <td class="rounder border px-4 py-2 {{ $this->Ofeta($articulo->id) ? 'text-green-500 font-bold':'' }}">{{ $articulo->articulo }}-{{ $articulo->presentacion }}-{{ $articulo->unidad }}</td>
                                                 <td class="rounder border px-4 py-2 {{ $this->Ofeta($articulo->id) ? 'text-green-500 font-bold':'' }}">{{ $articulo->unidadVenta }}</td>
                                                 <td class="rounder border px-4 py-2 {{ $this->Ofeta($articulo->id) ? 'text-green-500 font-bold':'' }}">{{ $articulo->precioF }}</td>
@@ -86,9 +89,8 @@
                                 <thead>
                                     <tr>
                                         <td class="px-4 py-2"><div class="flex items-center" >Id</div></td>
+                                        <td class="px-4 py-2"><div class="flex items-center">Codigo</div></td>
                                         <td class="px-4 py-2"><div class="flex items-center">Articulo</div></td>
-                                        <td class="px-4 py-2"><div class="flex items-center">Presentacion</div> </td>
-                                       
                                         <td class="px-4 py-2"><div class="flex items-center">Precio Final</div></td>
                                         <td class="px-4 py-2"><div class="flex items-center">S Min.</div></td>
                                         <td class="px-4 py-2"><div class="flex items-center">Stock</div></td>
@@ -106,8 +108,9 @@
                                         @foreach ($inTheCar as $item)
                                             <tr class="{{ $this->Ofeta($item->articulo_id) ? 'text-green-500 font-bold':'' }}">
                                                 <td class="rounder border px-4 py-2">{{ $item->articulo_id }}</td>
-                                                <td class="rounder border px-4 py-2">{{ $item->articulo }}</td>
-                                                <td class="rounder border px-4 py-2">{{ $item->presentacion }} - {{ $item->unidad  }} / {{ $item->unidadVenta }}</td>
+                                                 <td class="rounder border px-4 py-2">{{ $item->codigo }}</td>
+
+                                                <td class="rounder border px-4 py-2">{{ $item->articulo }} {{ $item->presentacion }} - {{ $item->unidad  }}</td>
                                                 <td class="rounder border px-4 py-2">{{ $item->precioF  }}</td>
                                                 <td class="rounder border px-4 py-2">{{ $item->stockMinimo }}</td>
                                                 <td class="rounder border px-4 py-2">{{ $item->stock }}</td>
@@ -128,10 +131,10 @@
                                                 @endphp
                                                 <td class="rounder border px-4 py-2">{{ $subtotal}}</td>
                                                 <td class="rounder border  py-1 flex p-1 flex-wrap">
-                                                        <button wire:click="deletCar({{$item->articulo_id}})" wire:loading.attr="disabled" class="flex-1 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-lg ">
+                                                        <button wire:click="deletCar({{$item->articulo_id}})" wire:loading.attr="disabled" class="flex-1 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-2 rounded-lg ">
                                                             Elim
                                                         </button>
-                                                        <button wire:click="modCar({{$item->articulo_id}})" wire:loading.attr="disabled" class="ml-1 flex-1 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg "">
+                                                        <button wire:click="modCar({{$item->articulo_id}})" wire:loading.attr="disabled" class="ml-1 flex-1 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-2 rounded-lg "">
                                                             Mod
                                                         </button> 
                                                        
