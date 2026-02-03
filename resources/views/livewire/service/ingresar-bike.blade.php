@@ -1,210 +1,382 @@
-<div class="flex flex-col md:flex-row gap-4">
-    <!-- Primer div (comandos de búsqueda) - 30% -->
-    <div class="w-full md:w-4/12 bg-white dark:bg-gray-800 overflow-hidden shadow-xl sm:rounded-lg sm:px-6 lg:px-8">
-        <div class="p-2 w-full sm:px-5 bg-white dark:bg-gray-800 dark:bg-gradient-to-bl dark:from-gray-700/50 dark:via-transparent border-b border-gray-200 dark:border-gray-700">
-            <div class="text-xl">Ingresar Rodado</div>
-            {{$message}}
-            <button wire:click='ver'>ver</button>
-            <div class="mt-3 w-full">
-                <div class="mb-4">
-                    <div><strong>Buscar Cliente</strong></div>
-                </div>
-    
-                <!-- Formulario de búsqueda -->
-                <div class="col-span-6 sm:col-span-4 mt-2 grid grid-flow-col justify-stretch">
-                    <div class="flex items-center space-x-4 w-full">
-                        <div class="w-1/3">
-                            <x-label for="dni" value="Buscar DNI" />
-                            <x-input id="dni" type="text" class="mt-1 block w-full" wire:model='dni' placeholder="Ingrese DNI"/>
-                            <x-input-error for="dni" class="mt-2" />
-                        </div>
-                        <div class="w-1/6">
-                            <button wire:click="buscarCliente" class="mt-6 bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600">
-                                Buscar
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            @if ($cliente)
-                <div class="flex space-x-6 p-2 border my-3 border-cyan-500 rounded">
-                    <div> 
-                        <strong>Apellido y Nombre:</strong> {{$cliente->apellido}}, {{$cliente->nombre}}
-                    </div>
-                    <div class="ml-4"> 
-                        <strong>DNI:</strong> {{$cliente->dni}}
-                    </div> 
-                    <div class="ml-4"> 
-                        <strong>Teléfono:</strong> {{$cliente->telefono}}
-                    </div>
-                </div> 
-            @endif
-        </div>
-        <div>
-        </div>
-    </div>
+<div class="space-y-4">
 
-    @if ($cliente)
-    <!-- Contenedor para los dos divs derechos - 70% -->
-    <div class="w-full md:w-8/12 flex ">
-        <!-- Div superior (selección de bicicleta) - 60% del espacio derecho -->
-        <div class="flex-1 bg-white dark:bg-gray-800 overflow-hidden shadow-xl sm:rounded-lg p-5">
-            <div class="text-xl">Selecciona tu Bicicleta</div>
-            
-            <!-- Contenedores de selección (colores, marcas, tipos) -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
-                <!-- Colores -->
-                <div class="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
-                    <div class="font-bold mb-2">Color</div>
-                    <div class="flex flex-wrap gap-2">
-                        @foreach($colors as $color)
-                            <label class="flex items-center">
-                                <input type="checkbox" wire:model="selectedColors" value="{{ $color->color }}" class="mr-2">
-                                {{ $color->color }}
-                            </label>
-                        @endforeach
-                    </div>
-                    <div class="mt-3">
-                        <x-input wire:model="newColor" placeholder="Nuevo color" class="w-full"/>
-                        <x-button wire:click="addColor" class="mt-2">Agregar</x-button>
-                    </div>
-                </div>
-                
-                <!-- Marcas -->
-                <div class="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
-                    <div class="font-bold mb-2">Marca</div>
-                    <div class="flex flex-wrap gap-2">
-                        @foreach($brands as $brand)
-                            <label class="flex items-center">
-                                <input type="checkbox" wire:model="selectedBrands" value="{{ $brand->marca }}" class="mr-2">
-                                {{ $brand->marca }}
-                            </label>
-                        @endforeach
-                    </div>
-                    <div class="mt-3">
-                        <x-input wire:model="newBrand" placeholder="Nueva marca" class="w-full"/>
-                        <x-button wire:click="addBrand" class="mt-2">Agregar</x-button>
-                    </div>
-                </div>
-                
-                <!-- Tipos -->
-                <div class="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
-                    <div class="font-bold mb-2">Tipo</div>
-                    <div class="flex flex-wrap gap-2">
-                        @foreach($types as $type)
-                            <label class="flex items-center">
-                                <input type="checkbox" wire:model="selectedTypes" value="{{ $type->tipo }}" class="mr-2">
-                                {{ $type->tipo }}
-                            </label>
-                        @endforeach
-                    </div>
-                    <div class="mt-3">
-                        <x-input wire:model="newType" placeholder="Nuevo tipo" class="w-full"/>
-                        <x-button wire:click="addType" class="mt-2">Agregar</x-button>
-                    </div>
-                </div>
-            </div>
-        </div>
+    {{-- ================= BUSCAR CLIENTE ================= --}}
+    @if(!$cliente)
+        <div class="bg-white shadow rounded p-4">
+            <h2 class="text-lg font-semibold mb-3">Buscar Cliente</h2>
 
-        <!-- Div inferior (comentarios) - 40% del espacio derecho -->
-        <div class="flex-1 bg-white dark:bg-gray-800 overflow-hidden shadow-xl sm:rounded-lg p-5">
-            <div class="text-xl">Deja tu Comentario</div>
-            <div class="flex mt-4">
-                
-                
-{{-- oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo --}}
+            <div class="flex items-end gap-4">
+                <x-input
+                    wire:model.defer="dni"
+                    wire:keydown.enter="buscarCliente"
+                />
 
-                <div class="p-6 bg-white rounded-lg shadow-md">
-                <h2 class="text-xl font-semibold mb-4">Selección de Procesos</h2>
-                
-                <!-- Filtros -->
-                <div class="mb-4 flex items-center space-x-4">
-                    <label class="flex items-center">
-                        <input 
-                            type="checkbox" 
-                            wire:model.live="filtroActivos" 
-                            class="rounded border-gray-300 text-indigo-600 shadow-sm"
-                        >
-                        <span class="ml-2">Mostrar solo procesos activos</span>
-                    </label>
-                </div>
-                
-                <!-- Lista de checkboxes -->
-                <div class="space-y-2 mb-4 max-h-96 overflow-y-auto p-2 border rounded flex">
-                    @forelse($procesos as $proceso)
-                        <label class="flex items-center p-2 hover:bg-gray-50 rounded">
-                            <input 
-                                type="checkbox" 
-                                wire:model.live="procesosSeleccionados" 
-                                value="{{ $proceso->id }}" 
-                                class="rounded border-gray-300 text-indigo-600 shadow-sm"
-                            >
-                            <div class="ml-3">
-                                <span class="block font-medium">{{ $proceso->nombre }}</span>
-                               
-                            </div>
-                        </label>
-                    @empty
-                        <p class="text-gray-500">No hay procesos disponibles</p>
-                    @endforelse
-                </div>
-                
-                <!-- Visualización de seleccionados -->
-                @if(count($procesosSeleccionados) > 0)
-                    <div class="mb-4 p-3 bg-gray-50 rounded">
-                        <h3 class="font-medium">Procesos seleccionados ({{ count($procesosSeleccionados) }}):</h3>
-                        <ul class="mt-2 space-y-1">
-                            @foreach($procesos as $proceso)
-                                @if(in_array($proceso->id, $procesosSeleccionados))
-                                    <li class="flex items-center">
-                                        <svg class="h-5 w-5 text-green-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                                        </svg>
-                                        {{ $proceso->nombre }}
-                                    </li>
-                                @endif
-                            @endforeach
-                        </ul>
-                    </div>
-                @else
-                    <div class="mb-4 p-3 bg-yellow-50 text-yellow-700 rounded">
-                        No has seleccionado ningún proceso
-                    </div>
-                @endif
-                
-                <!-- Botón de acción -->
-                <div class="flex justify-end space-x-3">
-                    <button 
-                        wire:click="guardarSeleccion" 
-                        wire:loading.attr="disabled"
-                        class="px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700 disabled:opacity-50"
-                    >
-                        <span wire:loading.remove>Guardar Selección</span>
-                        <span wire:loading>Procesando...</span>
-                    </button>
-                </div>
-                
-                <!-- Mensajes -->
-                @if(session()->has('message'))
-                    <div class="mt-4 p-3 bg-green-100 text-green-800 rounded">
-                        {{ session('message') }}
-                    </div>
-                @endif
-                </div>
-            </div>
-            
-            <div class="mt-4">
-                <label for="comment" class="block font-medium">Comentario</label>
-                <textarea id="comment" rows="4" class="mt-1 block w-full border-gray-300 rounded shadow-sm"></textarea>
-            </div>
-
-            <div class="mt-4">
-                <button class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600">
-                    Guardar
+                <button
+                    wire:click="buscarCliente"
+                    class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
+                    Buscar
                 </button>
             </div>
         </div>
-    </div>
     @endif
+
+    {{-- ================= DATOS CLIENTE ================= --}}
+    @if($cliente)
+        <div class="bg-cyan-50 border border-cyan-400 rounded p-3 flex justify-between items-center">
+            <div class="text-sm">
+                <strong>{{ $cliente->apellido }}, {{ $cliente->nombre }}</strong> |
+                DNI: {{ $cliente->dni }} |
+                Tel: {{ $cliente->telefono }}
+            </div>
+
+            <button
+                wire:click="$set('cliente', null)"
+                class="text-sm text-red-600 hover:underline"
+            >
+                Cambiar cliente
+            </button>
+        </div>
+    @endif
+
+    {{-- ================= CONTENIDO ================= --}}
+    @if($cliente)
+
+    <div class="flex flex-col lg:flex-row gap-4">
+
+        {{-- ================= IZQUIERDA ================= --}}
+        <div class="lg:w-[35%] space-y-3">
+
+            {{-- Tipo --}}
+            <div class="bg-white shadow rounded p-3">
+                <h3 class="font-semibold mb-1">Tipo de bicicleta</h3>
+                <select
+                    wire:model.live="selectedTypes"
+                    class="w-full border rounded px-2 py-1 text-sm"
+                >
+                    <option value="">Seleccionar</option>
+                    @foreach($types as $type)
+                        <option value="{{ $type->id }}">{{ $type->tipo }}</option>
+                    @endforeach
+                </select>
+                <div class="flex justify-between items-center mb-1">
+                    <h3 class="font-semibold"></h3>
+
+                    <button
+                        wire:click="$set('modalTipo', true)"
+                        class="text-xs px-2 py-1 bg-green-600 text-white rounded hover:bg-green-700"
+                    >
+                        ➕ Agregar
+                    </button>
+                </div>
+            </div>
+
+            {{-- Marca --}}
+            <div class="bg-white shadow rounded p-3">
+                <h3 class="font-semibold mb-1">Marca</h3>
+                <select
+                        wire:model.live="selectedBrands"
+                        class="w-full border rounded px-2 py-1 text-sm"
+                    >         
+                        <option value="">Seleccionar</option>
+                        @foreach($brands as $brand)
+                            <option value="{{ $brand->id }}">{{ $brand->marca }}</option>
+                        @endforeach
+                    </select>
+
+                    <div class="flex justify-between items-center mb-1">
+                    <h3 class="font-semibold"></h3>
+
+                        <button
+                            wire:click="$set('modalMarca', true)"
+                            class="text-xs px-2 py-1 bg-green-600 text-white rounded hover:bg-green-700"
+                        >
+                            ➕ Agregar
+                        </button>
+                    </div>
+
+
+
+
+
+
+            </div>
+
+            {{-- Colores --}}
+            <div class="bg-white shadow rounded p-3">
+                <h3 class="font-semibold mb-1">Color</h3>
+                <div class="flex flex-wrap gap-2 text-sm">
+                    @foreach($colors as $color)
+                        <label class="flex items-center gap-1">
+                            <input type="checkbox" 
+                                wire:modellive="selectedColors" 
+                                
+                                value="{{ $color->id }}">
+                            {{ $color->color }}
+                        </label>
+                    @endforeach
+                </div>
+                
+            </div>
+        </div>
+
+        {{-- ================= DERECHA ================= --}}
+        <div class="lg:w-[65%] bg-white shadow rounded p-4 relative overflow-hidden">
+
+            <h3 class="text-lg font-semibold mb-2">Procesos</h3>
+
+            {{-- BOTÓN NOTA --}}
+            <div class="flex justify-end mb-2">
+                <button
+                    wire:click="$toggle('mostrarNotaProceso')"
+                    class="px-3 py-1 text-sm bg-indigo-600 text-white rounded hover:bg-indigo-700"
+                >
+                    📝 Nota
+                </button>
+            </div>
+
+            {{-- Buscador --}}
+            <div class="flex items-center gap-4 mb-3">
+                <input
+                    type="text"
+                    wire:model.live="buscarProceso"
+                    placeholder="Buscar proceso..."
+                    class="w-full border rounded px-2 py-1 text-sm"
+                >
+
+               
+
+
+
+
+                <label class="text-sm flex items-center gap-1">
+                    <input type="checkbox" wire:model="filtroActivos">
+                    Solo activos
+                </label>
+            </div>
+
+            <div class="grid grid-cols-2 gap-3">
+
+                {{-- DISPONIBLES --}}
+                <div class="border rounded p-2 max-h-[320px] overflow-y-auto">
+                    <h4 class="font-semibold text-sm mb-2">Disponibles</h4>
+
+                    @foreach($procesos as $proceso)
+                        @if(!in_array($proceso->id, $procesosSeleccionados))
+                            <button
+                                wire:click="agregarProceso({{ $proceso->id }})"
+                                class="w-full text-left px-2 py-1 text-sm rounded hover:bg-gray-100"
+                            >
+                                ➕ {{ $proceso->articulo }}
+                            </button>
+                        @endif
+                    @endforeach
+                </div>
+
+                {{-- SELECCIONADOS --}}
+                <div class="border rounded p-2 max-h-[320px] overflow-y-auto bg-gray-50">
+                    <h4 class="font-semibold text-sm mb-2">
+                        Seleccionados ({{ count($procesosSeleccionados) }})
+                    </h4>
+
+                    @foreach($procesos as $proceso)
+                        @if(in_array($proceso->id, $procesosSeleccionados))
+                            <button
+                                wire:click="quitarProceso({{ $proceso->id }})"
+                                class="w-full text-left px-2 py-1 text-sm rounded bg-white hover:bg-red-50"
+                            >
+                                ❌ {{ $proceso->articulo }}
+                            </button>
+                        @endif
+                    @endforeach
+                </div>
+            </div>
+
+            {{-- ===== PANEL FLOTANTE DESDE LA DERECHA ===== --}}
+            <div
+                class="absolute top-0 right-0 h-full w-96 bg-white border-l shadow-xl
+                       transform transition-transform duration-300
+                       {{ $mostrarNotaProceso ? 'translate-x-0' : 'translate-x-full' }}"
+            >
+                <button
+                    wire:click="$toggle('mostrarNotaProceso')"
+                    class="absolute -left-4 top-4 bg-indigo-600 text-white w-8 h-8 rounded-full flex items-center justify-center shadow"
+                >
+                    {{ $mostrarNotaProceso ? '→' : '←' }}
+                </button>
+
+                <div class="p-4">
+                    <h3 class="font-semibold mb-2">Nota del proceso</h3>
+                    <textarea
+                        wire:model.defer="notaProceso"
+                        rows="8"
+                        class="w-full border rounded px-2 py-1 text-sm resize-none"
+                        placeholder="Escriba aquí la observación..."
+                    ></textarea>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    {{-- ================= GUARDAR ================= --}}
+    <div class="flex justify-end">
+        <button
+            wire:click="guardarIngreso"
+            class="px-6 py-2 bg-green-600 text-white rounded hover:bg-green-700"
+        >
+            Guardar ingreso
+        </button>
+    </div>
+
+    @endif
+
+    {{-- ================= RESÚMENES ================= --}}
+    <div>
+        @if($selectedBrands)
+           <h3 class="text-lg font-semibold mb-2">Marca seleccionada:</h3>
+            <ul class="list-disc list-inside">
+                <li>{{ $brands->firstWhere('id', $selectedBrands)?->marca }}</li>
+            </ul>
+        @endif
+        @if($selectedTypes)
+           <h3 class="text-lg font-semibold mb-2">Tipo seleccionado:</h3>
+            <ul class="list-disc list-inside">
+                <li>{{ $types->firstWhere('id', $selectedTypes)?->tipo }}</li>
+            </ul>
+        @endif
+
+         @if(count($selectedColors))
+        <div>
+            <h3 class="text-sm font-semibold mb-1">Colores seleccionados</h3>
+            <ul class="flex flex-wrap gap-2 text-sm">
+                @foreach ($selectedColors as $colorId)
+                    @php
+                        $color = $colors->firstWhere('id', $colorId);
+                    @endphp
+                    @if ($color)
+                        <li class="px-2 py-1 bg-white border rounded">
+                            🎨 {{ $color->color }}
+                        </li>
+                    @endif
+                @endforeach
+            </ul>
+        </div>
+        @endif
+
+
+
+        
+        @if ($procesosSeleccionados)
+            <h3 class="text-lg font-semibold mb-2">Procesos Seleccionados</h3>
+            <ul class="list-disc list-inside">
+                @foreach ($procesosSeleccionados as $procesoId)
+                    @php
+                        $proceso = $procesos->firstWhere('id', $procesoId);
+                    @endphp
+                    @if ($proceso)
+                        <li>{{ $proceso->articulo }}</li>
+                    @endif
+                @endforeach
+            </ul>
+            
+        @endif
+    </div>
+
+            {{-- @if($modalTipo)
+            <div class="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
+
+                <div class="bg-white w-full max-w-md rounded shadow-lg p-4 relative">
+
+                    <h2 class="text-lg font-semibold mb-3">Agregar Tipo</h2>
+
+                    <div>
+                    <x-label for="nuevoTipo" value="nuevoTipo" />
+                        <x-input
+                            id="nuevoTipo"
+                            type="text"
+                            class="mt-1 block w-full"
+                            wire:model.defer="nuevoTipo"
+                        />
+
+                        <x-input-error for="nuevoTipo" class="mt-2" />
+                    </div>
+
+
+                    <div class="flex justify-end gap-2 mb-3">
+                        <button
+                            wire:click="$set('modalTipo', false)"
+                            class="px-3 py-1 text-sm border rounded"
+                        >
+                            Cancelar
+                        </button>
+
+                        <button
+                            wire:click="guardarTipo"
+                            class="px-3 py-1 text-sm bg-blue-600 text-white rounded hover:bg-blue-700"
+                        >
+                            Guardar Tipo
+                        </button>
+                    </div>
+
+                    <h3 class="text-sm font-semibold mb-1">Tipos cargados</h3>
+
+                    <ul class="max-h-40 overflow-y-auto text-sm border rounded p-2">
+                        @foreach($types as $type)
+                            <li class="border-b last:border-b-0 py-1">
+                                {{ $type->tipo }}
+                            </li>
+                        @endforeach
+                    </ul>
+
+                </div>
+            </div>
+            @endif --}}
+
+            @if($modalMarca)
+<div class="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
+
+    <div class="bg-white w-full max-w-md rounded shadow-lg p-4 relative">
+
+        <h2 class="text-lg font-semibold mb-3">Agregar Marca</h2>
+
+        <input
+            type="text"
+            wire:model.defer="nuevaMarca"
+            placeholder="Nombre de la marca"
+            class="w-full border rounded px-2 py-1 mb-3 text-sm"
+        >
+
+        <div class="flex justify-end gap-2 mb-3">
+            <button
+                wire:click="$set('modalMarca', false)"
+                class="px-3 py-1 text-sm border rounded"
+            >
+                Cancelar
+            </button>
+
+            <button
+                wire:click="guardarMarca"
+                class="px-3 py-1 text-sm bg-blue-600 text-white rounded hover:bg-blue-700"
+            >
+                Guardar
+            </button>
+        </div>
+
+        <h3 class="text-sm font-semibold mb-1">Marcas cargadas</h3>
+
+        <ul class="max-h-40 overflow-y-auto text-sm border rounded p-2">
+            @foreach($brands as $brand)
+                <li class="border-b last:border-b-0 py-1">
+                    {{ $brand->marca }}
+                </li>
+            @endforeach
+        </ul>
+
+    </div>
+</div>
+@endif
+
+
+
+
 </div>

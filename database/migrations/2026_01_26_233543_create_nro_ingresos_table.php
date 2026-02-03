@@ -11,9 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('articulos', function (Blueprint $table) {
-             $table->string('codigo', 20)->nullable()->change();
-        });
+        Schema::create('nro_ingresos', function (Blueprint $table) {
+        $table->id();
+
+        $table->text('detalles')->nullable();
+        $table->date('fecha_retiro')->nullable()->after('numeroIngreso');
+
+
+        $table->timestamps();
+});
+
     }
 
     /**
@@ -21,8 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('articulos', function (Blueprint $table) {
-            $table->string('codigo', 20)->nullable(false)->change();
-        });
+        Schema::dropIfExists('nro_ingresos');
     }
 };

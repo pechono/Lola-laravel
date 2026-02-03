@@ -5,13 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Car extends Model
+class NroEgreso extends Model
 {
     use HasFactory;
-    protected $guarded=[];
-
-    public function articulo()
-    {
-        return $this->belongsTo(Articulo::class);
-    }
+    protected $fillable = [
+        'numeroEgreso',
+        'monto',
+        'detalles',
+    ];
 }

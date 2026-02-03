@@ -12,6 +12,10 @@ use App\Models\Unidad;
 use Livewire\Component;
 use Illuminate\Validation\Rule;
 
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
+use Illuminate\Support\Facades\Storage;
+use SimpleSoftwareIO\QrCode\Generator;
+
 class ArticuloAdd extends Component
 {
     public $categorias, $a;
@@ -86,6 +90,7 @@ class ArticuloAdd extends Component
             'suelto'=>  $this->suelto,
             'activo'=>1
         ]);
+
         // try {
         //     Articulo::create([
         //         'articulo'=>  $this->articulo,
@@ -110,6 +115,32 @@ class ArticuloAdd extends Component
 
 
         $ultimo=Articulo::latest()->first();
+        $qrData =  $ultimo->id;
+        $qr = new Generator('gd'); // Forzamos el motor GD
+        $qrImage = $qr->format('png')
+            ->size(200)
+            ->generate($qrData);
+        
+            $fileName = 'qrcodes/articulo_'.$ultimo->id.'.png';
+
+
+        Storage::disk('public')->put($fileName, $qrImage);
+        
+        //---------------------------
+        
+       
+
+        Storage::disk('public')->put($fileName, $qrImage);
+
+        // 4. Guardar la ruta del QR en la base de datos
+        $articulo = Articulo::find($ultimo->id);
+        $articulo->qr_code = $fileName;
+        $articulo->save();
+
+        // 5. Mensaje o redirección
+        session()->flash('message', 'Artículo creado con QR generado correctamente.');
+        //---------------------------
+        
         Stock::create([
             'articulo_id'=>$ultimo->id,
             'stockMinimo'=>$this->stockMinimo,

@@ -11,15 +11,20 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('service_operacions', function (Blueprint $table) {
+        Schema::create('ingreso_bicis', function (Blueprint $table) {
             $table->id();
-            $table->integer('userMec');
-            $table->float('precio')->default(0);
-            $table->integer('clientes_id');
-            $table->string('bike')->nullable();
-            $table->string('detalles');
+
+            $table->foreignId('bici_id');
+            $table->foreignId('articulo_id');
+            $table->string('nro_ingreso');
+            $table->enum('estado', ['pendiente', 'en_proceso', 'terminado'])->default('pendiente');
+
+            $table->text('detalles')->nullable();
             $table->timestamps();
         });
+
+        
+
     }
 
     /**
@@ -27,6 +32,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('service_operacions');
+        Schema::dropIfExists('ingreso_bicis');
     }
 };

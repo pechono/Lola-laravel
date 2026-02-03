@@ -11,9 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('articulos', function (Blueprint $table) {
-            $table->string('codigo', 20)->unique()->after('id');
-        });
+        Schema::create('nro_egresos', function (Blueprint $table) {
+    $table->id();
+
+    $table->string('numeroEgreso')->unique(); // ej: EGR-000001
+    $table->float('monto')->default(0);
+    $table->text('detalles')->nullable();
+    $table->integer('mecanico_id');
+    $table->timestamps();
+});
+
     }
 
     /**
@@ -21,8 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('articulos', function (Blueprint $table) {
-            $table->dropColumn('codigo');
-        });
+        Schema::dropIfExists('nro_egresos');
     }
 };

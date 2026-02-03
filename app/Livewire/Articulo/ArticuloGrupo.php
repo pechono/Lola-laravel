@@ -14,6 +14,10 @@ use App\Models\Ofertas;
 use App\Models\Stock;
 use App\Models\Suelto;
 use App\Models\Unidad;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
+use Illuminate\Support\Facades\Storage;
+use SimpleSoftwareIO\QrCode\Generator;
+
 
 class ArticuloGrupo extends Component
 {
@@ -97,7 +101,7 @@ class ArticuloGrupo extends Component
 
         Articulo::create([
             'articulo'=>  $this->articulo,
-            'codigo'=>  $this->codigo,
+            'codigo'=>  $this->codigo ?: null, // 👈 transforma '' en null
             'categoria_id'=>  $this->categoria_id,
             'presentacion'=>  $this->presentacion,
             'unidad_id'=>  $this->unidad_id,
@@ -111,6 +115,27 @@ class ArticuloGrupo extends Component
             'activo'=>1
         ]);
         $ultimo=Articulo::latest()->first();
+        //---------------------------
+        $qrData =  $ultimo->id;
+        $qr = new Generator('gd'); // Forzamos el motor GD
+        $qrImage = $qr->format('png')
+            ->size(200)
+            ->generate($qrData);
+        
+            $fileName = 'qrcodes/articulo_'.$ultimo->id.'.png';
+
+
+        Storage::disk('public')->put($fileName, $qrImage);
+
+        // 4. Guardar la ruta del QR en la base de datos
+        $articulo = Articulo::find($ultimo->id);
+        $articulo->qr_code = $fileName;
+        $articulo->save();
+
+        // 5. Mensaje o redirección
+        session()->flash('message', 'Artículo creado con QR generado correctamente.');
+        //---------------------------
+        
         Stock::create([
             'articulo_id'=>$ultimo->id,
             'stockMinimo'=>$this->stockMinimo,
@@ -145,7 +170,7 @@ class ArticuloGrupo extends Component
     }
     public function borrarCampos(){
         $this->articulo='';
-                 $this->codigo='';
+        $this->codigo = null;
 
          $this->presentacion='';
          $this->unidad_id='';

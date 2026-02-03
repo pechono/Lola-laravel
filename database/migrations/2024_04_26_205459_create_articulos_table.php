@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('articulos', function (Blueprint $table) {
             $table->id();
+                        $table->string('codigo', 20)->nullable();
             $table->string('articulo');
             $table->integer('categoria_id');
             $table->string('presentacion');
@@ -25,6 +26,7 @@ return new class extends Migration
             $table->string('detalles')->nullable();
             $table->boolean('suelto');
             $table->boolean('activo');
+                                    $table->string('qr_code')->nullable(); // o después de otro campo
             $table->timestamps();
         });
     }

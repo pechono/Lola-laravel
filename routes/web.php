@@ -91,6 +91,10 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
     Route::get('/imagenes/cargar', fn() => view('imagenes.imagenes'))->name('imagenes.imagenes');
 
     Route::get('/servicio/ingresar', fn() => view('Service.ingresarBike'))->name('Service.ingresarBike');
+Route::get('/servicio/ingreso-imp/{nro_ingreso}', function ($nro_ingreso) {
+    return view('service.ingresoImp', compact('nro_ingreso'));
+})->name('Service.ingreso-imp');
 
+    //Route::get('/servicio//ingreso-imp{nro_ingreso}', fn() => view('Service.ingresoImp'))->name('Service.ingreso-imp');
 
 });
