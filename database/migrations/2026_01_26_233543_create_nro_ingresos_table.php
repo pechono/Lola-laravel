@@ -15,7 +15,7 @@ return new class extends Migration
         $table->id();
 
         $table->text('detalles')->nullable();
-        $table->date('fecha_retiro')->nullable()->after('numeroIngreso');
+        $table->date('fecha_retiro')->nullable();
 
 
         $table->timestamps();
