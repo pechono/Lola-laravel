@@ -61,7 +61,7 @@ class BicicletaCatalogoSeeder extends Seeder
                 'updated_at' => $now,
             ],
             [
-                'nombre' => 'Cambio de cámara',
+                'nombre' => 'Servicio Generañ',
                 'descripcion' => 'Reemplazo de cámara dañada',
                 'activo' => true,
                 'created_at' => $now,

@@ -8,8 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class NroIngreso extends Model
 {
     use HasFactory;
-    protected $fillable = [
-        'numeroIngreso',
-        'detalles',
-    ];
+    protected $guarded = [];
 }
