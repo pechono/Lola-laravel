@@ -30,6 +30,33 @@
                 <a href="{{ route('cierre.cierreCaja') }}" class="hover:text-xl block py-1 px-4 hover:bg-gray-600">Cierre Caja</a>
             </div>
         </div>
+
+        {{-- ---------------------------------------- --}}
+
+        <div class="hoverDiv w-full text-green-400">
+            <a href="javascript:void(0)" class=" py-2 px-2 hover:bg-gray-700 flex items-center" onclick="toggleSubMenu('servicioSubMenu')">
+                <div class="flex justify-between items-center w-full">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-12 h-12">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 0 0 2.25-2.25V6.75A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25v10.5A2.25 2.25 0 0 0 4.5 19.5Z" />
+                      </svg>
+
+                    <span class="movableDiv text-2xl rounded-lg transition-transform duration-300 ease-in-out text-white">Venta</span>
+                </div>
+            </a>
+            <div id="servicioSubMenu" class="pl-8 hidden text-lg  text-white">
+                <a href="{{ route('Service.ingresarBike') }}" class="hover:text-xl block py-1 px-4 hover:bg-gray-600">Ingresar Bicicleta</a>
+                {{-- <a href="{{ route('venta.ventaCard') }}" class="hover:text-xl block py-1 px-4 hover:bg-gray-600">Venta Card</a>
+
+                <a href="{{ route('venta.cuentaCorriente') }}" class="hover:text-xl block py-1 px-4 hover:bg-gray-600">Cuenta Corriente</a>
+                <a href="{{ route('venta.ListCuentaCorriente') }}" class="hover:text-xl block py-1 px-4 hover:bg-gray-600">Pago Cuenta Corriente</a>
+                <a href="{{ route('cierre.cierreCaja') }}" class="hover:text-xl block py-1 px-4 hover:bg-gray-600">Cierre Caja</a>
+             --}}
+            </div>
+        </div>
+
+
+
+        {{-- ---------------------------------------- --}}
         <div class="hoverDiv w-full text-yellow-300">
             <a href="javascript:void(0)" class=" py-2 px-2 hover:bg-gray-700 flex items-center" onclick="toggleSubMenu('stockSubMenu')">
                 <div class="flex justify-between items-center w-full">
